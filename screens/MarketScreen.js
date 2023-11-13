@@ -15,6 +15,7 @@ import {COLORS} from '../components/constants';
 import Button1 from "../components/marketScreen/Button1";
 import SheetComponent from "../components/marketScreen/BottomSheetItem";
 import { FlashList } from "@shopify/flash-list";
+import { Spinner, YStack } from "tamagui";
 function MarketScreen(){
     const refRBSheet = useRef();
     const navigation = useNavigation();
@@ -105,7 +106,12 @@ function MarketScreen(){
                     // estimatedItemSize={500}
                     // />
                     )
-                    : <ActivityIndicator/>
+                    // : <ActivityIndicator/>
+                    : 
+                    
+                    <YStack padding="$3" space="$4" alignItems="center">
+                        <Spinner size="large" color="$green10" />
+                    </YStack>
                 }
                 {/* <BottomSheet refRBSheet={refRBSheet} coinName={"Tron"} price={"12"} coin={currentCoin} /> */}
                 <RBSheet

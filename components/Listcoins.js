@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 
   },
   flatListContainer:{
-    
+    // marginLeft: 10
   }
 });
 export default ListCoins;

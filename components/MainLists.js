@@ -7,6 +7,7 @@ import {getMarketHighChangedData, getTopCoins } from '../Services/requests';
 import { getExchanges,getTopCoinsCoinMarketCap } from "../Services/requestsCoinMarketCap";
 import { AlertDialog, Button, XStack, YStack } from "tamagui";
 import { Activity, Airplay } from '@tamagui/lucide-icons'
+import { Paragraph } from "tamagui";
 function MainLists(){
     const [arrayData,setArrayData] = useState([]);
     const [topCoins,setTopCoins] = useState([]);
@@ -48,9 +49,10 @@ function MainLists(){
     return(
         <View style={styles.container}>
             {/* <Button>Hello World...!!!</Button> */}
-            
+            <Paragraph size="$7" fontWeight="800">Newly Launched</Paragraph>
+            <Paragraph>Explore more assets for your portfolio</Paragraph>
             {/* Newly Launched */}
-            <TitleText title="Newly Launched..." descriptionText="Explore more assets for your portfolio"/>
+            {/* <TitleText title="Newly Launched..." descriptionText="Explore more assets for your portfolio"/> */}
             <ListCoins coinData={MostGainedCoins} type={"NewlyLaunched"} />
             {/* Most Gained Coins */}
             <TitleText title="Top Gainers..." descriptionText="Coins that have gain the most in 24 hours"/>
@@ -65,7 +67,8 @@ function MainLists(){
 }
 const styles = StyleSheet.create({
     container:{
-        marginEnd: 10
+        marginEnd: 10,
+        padding: 10
     }
 });
 

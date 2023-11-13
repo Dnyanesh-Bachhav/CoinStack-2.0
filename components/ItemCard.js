@@ -59,10 +59,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     width: CARD_WIDTH,
     borderRadius: 12,
-    marginLeft: 10,
+    marginRight: 10,
+    marginLeft: 2,
     paddingLeft: 8,
     paddingVertical: 10,
-    // elevation: 5,
+    elevation: 2,
   },
   imgStyle: {
     width: 40,
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   coinNameText:{
     color: '#000',
-    textAlign: 'left',
+    // textAlign: 'left',
     fontWeight: 'bold',
   },
   coinPercentage:{

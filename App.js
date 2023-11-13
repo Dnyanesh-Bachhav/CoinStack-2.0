@@ -20,17 +20,16 @@ import { TamaguiProvider } from 'tamagui'
 import config from './tamagui.config'
 
 export default function App() {
+  const [loaded] = useFonts({
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+  });
   const [connected,setConnected] = useState(true);
   async function getNetworkData(){
     const data = await NetInfo.fetch();
     setConnected(data.isConnected);
   }
-  function loadFonts(){
-    const [loaded] = useFonts({
-      Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-      InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-    });
-  }
+
   useEffect(()=>{
     getNetworkData();
   },[]);

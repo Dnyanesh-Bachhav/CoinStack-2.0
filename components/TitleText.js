@@ -12,8 +12,8 @@ function TitleText({title,descriptionText}){
 const styles = StyleSheet.create({
   container:{
     width: '100%',
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    // paddingVertical: 10,
+    // paddingHorizontal: 10,
   },
   textStyle:{
     fontWeight: "400",
