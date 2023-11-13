@@ -5,7 +5,7 @@ import ListCoins from "./Listcoins";
 import TitleText from "./TitleText";
 import {getMarketHighChangedData, getTopCoins } from '../Services/requests';
 import { getExchanges,getTopCoinsCoinMarketCap } from "../Services/requestsCoinMarketCap";
-import { AlertDialog, Button, XStack, YStack } from "tamagui";
+import { AlertDialog, Button, SizableText, XStack, YStack } from "tamagui";
 import { Activity, Airplay } from '@tamagui/lucide-icons'
 import { Paragraph } from "tamagui";
 function MainLists(){
@@ -50,15 +50,19 @@ function MainLists(){
         <View style={styles.container}>
             {/* <Button>Hello World...!!!</Button> */}
             <Paragraph size="$7" fontWeight="800">Newly Launched</Paragraph>
-            <Paragraph>Explore more assets for your portfolio</Paragraph>
+            <SizableText theme="alt2" size={"$3"}>Explore more assets for your portfolio</SizableText>
             {/* Newly Launched */}
             {/* <TitleText title="Newly Launched..." descriptionText="Explore more assets for your portfolio"/> */}
             <ListCoins coinData={MostGainedCoins} type={"NewlyLaunched"} />
             {/* Most Gained Coins */}
-            <TitleText title="Top Gainers..." descriptionText="Coins that have gain the most in 24 hours"/>
+            {/* <TitleText title="Top Gainers..." descriptionText="Coins that have gain the most in 24 hours"/> */}
+            <Paragraph size="$7" fontWeight="800">Top Gainers</Paragraph>
+            <SizableText theme="alt2" size={"$3"}>Coins that have gain the most in 24 hours</SizableText>
             <ListCoins coinData={arrayData} type={"MostGained"} />
             {/* Most Lossed Coins */}
-            <TitleText title="Popular coins..." descriptionText="People usually buy these coins..."/>
+            {/* <TitleText title="Popular coins..." descriptionText="People usually buy these coins..."/> */}
+            <Paragraph size="$7" fontWeight="800">Popular coins</Paragraph>
+            <SizableText theme="alt2" size={"$3"}>People usually buy these coins</SizableText>
             <ListCoins coinData={topCoins} type={"Popular"} />
             {/* <TitleText title="Crypto News" descriptionText="News in the market..."/> */}
 
