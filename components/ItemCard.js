@@ -8,6 +8,10 @@ function ItemCard({coinName,percentage,price,coinId,imgUrl }){
   const navigation = useNavigation();
   return(
     <View style={styles.container}>
+      {/* <View style={styles.innerContainer}> */}
+
+        
+      <View style={styles.card}>
       <TouchableOpacity onPress={()=>{
         console.log("CoinName: "+percentage);
         navigation.navigate("coinDetails",{
@@ -16,8 +20,6 @@ function ItemCard({coinName,percentage,price,coinId,imgUrl }){
           imgUrl: imgUrl || "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
         });
       }} >
-        
-      <View style={styles.card}>
         <Image
         style={styles.imgStyle}
         source={{
@@ -31,8 +33,10 @@ function ItemCard({coinName,percentage,price,coinId,imgUrl }){
         <Text style={styles.coinPercentage}>{percentage.toFixed(2)}%</Text>
         : <Text style={styles.coinPercentageRed}>{Number.parseFloat(percentage).toFixed(2)}%</Text>
         }
-      </View>
       </TouchableOpacity>
+      </View>
+      {/* </View> */}
+
     </View>
 
   );
@@ -45,18 +49,26 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     elevation: 5
   },
+  innerContainer:{
+    
+  },
   card:{
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: COLORS.white,
     width: CARD_WIDTH,
     borderRadius: 12,
     marginLeft: 10,
     paddingLeft: 8,
-    paddingVertical: 10
+    paddingVertical: 10,
+    // elevation: 5,
   },
   imgStyle: {
-    width: 50,
+    width: 40,
     height: 40,
-    alignSelf: 'flex-start',
+    marginBottom: 5,
+    // alignSelf: 'flex-start',
     resizeMode: 'contain',
     marginTop: 5
   },

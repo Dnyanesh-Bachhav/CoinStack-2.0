@@ -14,12 +14,22 @@ import 'react-native-get-random-values';
 import WatchlistProvider from './Contexts/WatchListContext';
 import DrawerNavigator from './Navigation/drawer/DrawerNavigator';
 import AppNavigator from './Navigation/AppNavigator';
+import { useFonts } from 'expo-font'
+import { TamaguiProvider } from 'tamagui'
+
+import config from './tamagui.config'
 
 export default function App() {
   const [connected,setConnected] = useState(true);
   async function getNetworkData(){
     const data = await NetInfo.fetch();
     setConnected(data.isConnected);
+  }
+  function loadFonts(){
+    const [loaded] = useFonts({
+      Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+      InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+    });
   }
   useEffect(()=>{
     getNetworkData();
@@ -34,11 +44,13 @@ export default function App() {
       <PortfolioContextProvider>
         <WatchlistProvider>
           <TransactionContextProvider>
-          <NavigationContainer>
-              {/* <Tabs/> */}
-              {/* <DrawerNavigator/> */}
-              <AppNavigator/>
-          </NavigationContainer>
+          <TamaguiProvider config={config}>
+            <NavigationContainer>
+                {/* <Tabs/> */}
+                {/* <DrawerNavigator/> */}
+                <AppNavigator/>
+            </NavigationContainer>
+          </TamaguiProvider>
           </TransactionContextProvider>
         </WatchlistProvider>
       </PortfolioContextProvider>
