@@ -4,15 +4,17 @@ import { COLORS } from './constants';
 const CARD_HEIGHT = Dimensions.get('window').height/4.5;
 const CARD_WIDTH = Dimensions.get('window').width/3;
 import {useNavigation} from '@react-navigation/native';
-import { Paragraph } from 'tamagui';
+import { Button, Paragraph } from 'tamagui';
 import { SizableText } from 'tamagui';
+
+import { AntDesign } from '@expo/vector-icons';
+import { ChevronDown } from "@tamagui/lucide-icons";
 function ItemCard({coinName,percentage,price,coinId,imgUrl }){
   const navigation = useNavigation();
   return(
     <View style={styles.container}>
 
-        
-      <View >
+      
       <TouchableOpacity onPress={()=>{
         console.log("CoinName: "+percentage);
         navigation.navigate("coinDetails",{
@@ -28,14 +30,20 @@ function ItemCard({coinName,percentage,price,coinId,imgUrl }){
         }}
         // source={require("../assets/MANA_Logo.jpg")}
         />
+        {/* // <Text style={styles.coinPercentage}>{percentage.toFixed(2)}%</Text> */}
         <Paragraph size={"$4"} fontWeight={"500"} style={styles.coinNameText} numberOfLines={1}>{coinName}</Paragraph>
         <SizableText theme='alt1' size={"$3"} >₹{price ? price : 500 }</SizableText>
         { percentage > 0 ?
-        <Text style={styles.coinPercentage}>{percentage.toFixed(2)}%</Text>
-        : <Text style={styles.coinPercentageRed}>{Number.parseFloat(percentage).toFixed(2)}%</Text>
+        <TouchableOpacity style={{ marginTop: 7, borderRadius: 50, backgroundColor: COLORS.backgroundGreen, borderWidth: 1, paddingVertical: 2, paddingHorizontal: 5, borderColor: COLORS.borderGreen, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Text style={{ fontSize: 12, color: COLORS.success, fontWeight: 500, marginRight: 2 }} > {Number.parseFloat(percentage).toFixed(2)}%</Text>
+          <AntDesign name="caretup" size={16} color={COLORS.success } />
+      </TouchableOpacity>
+        : <TouchableOpacity style={{ marginTop: 7, borderRadius: 50, backgroundColor: COLORS.backgroundRed, borderWidth: 1, paddingVertical: 2, paddingHorizontal: 5, borderColor: COLORS.borderRed, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Text style={{ fontSize: 12, color: COLORS.red, fontWeight: 500, marginRight: 2 }} > {Number.parseFloat(percentage).toFixed(2)}%</Text>
+            <AntDesign name="caretdown" size={16} color={COLORS.red} />
+          </TouchableOpacity>
         }
       </TouchableOpacity>
-      </View>
 
     </View>
 
@@ -58,7 +66,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginRight: 10,
     marginLeft: 2,
-    paddingLeft: 8,
+    // borderWidth: 1,
+    paddingHorizontal: 5 ,
     paddingVertical: 10,
     elevation: 2,
   },
