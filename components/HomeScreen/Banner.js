@@ -1,22 +1,25 @@
 import React,{useRef} from 'react';
 import {View,Text,StyleSheet,Dimensions,Image} from 'react-native';
-import {COLORS} from './constants';
-const BANNER_HEIGHT = Dimensions.get('window').height/6;
-import Carousel from 'react-native-snap-carousel';
-import {MostGainedCoins,banners  } from '../components/constants';
+import {COLORS } from '../constants';
+const BANNER_HEIGHT = Dimensions.get('window').height/4.5;
+import Carousel from 'react-native-reanimated-carousel';
+import {MostGainedCoins,banners  } from '../constants';
 
 function Banner(){
+  
+  const width = Dimensions.get('window').width;
   const CardItem = ({item,index})=>{
     return(
       <View style={styles.container} >
-        {/* <Text>{index+" "+item.name}</Text> */}
-        <Image source={item.imgSrc} 
-        style={{
-          width: '100%',
-          resizeMode: 'contain'
-        }}
-        />
-      </View>
+        
+        <Image source={item.imgSrc } 
+          style={{
+            width: '100%',
+            resizeMode: 'contain'
+
+          }}
+          />
+        </View>
     );
   }
   const ref = useRef(null);
@@ -30,14 +33,23 @@ function Banner(){
             <View style={styles.bannerDot}></View>
         </View> */}
         <View style={{ justifyContent: 'center' }}>
-                <Carousel
-                  layout={"default"}
-                  ref={ref}
-                  data={banners}
-                  sliderWidth={350}
-                  itemWidth={300}
-                  renderItem={CardItem}
-                  // onSnapToItem = { index => this.setState({activeIndex:index}) } 
+        <Carousel
+              loop
+              width={width}
+              height={BANNER_HEIGHT}
+              // autoPlay={true}
+              snapEnabled={false}
+              data={banners}
+              scrollAnimationDuration={1000}
+              
+        mode="parallax"
+        modeConfig={{
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: 50,
+        }}
+              onSnapToItem={(index) => console.log('current index:', index)}
+              
+              renderItem={ CardItem }
                   />
             </View>
     </View>
@@ -52,7 +64,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
-    marginTop: 10,
     overflow: 'hidden',
   },
   bannerDotsView:{

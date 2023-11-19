@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react";
 import {View,Text,StyleSheet,ScrollView,TouchableOpacity} from 'react-native';
-import Banner from "../components/Banner";
+import Banner from "../components/HomeScreen/Banner";
 import Header from '../components/Header';
 import MainLists from "../components/MainLists";
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
