@@ -37,7 +37,7 @@ const DrawerNavigator = () => {
                     <FontAwesome name="home" size={24} color={color} />
                 )
             }} />
-            <Drawer.Screen name="Home " component={HomeStack} options={{
+            {/* <Drawer.Screen name="Home " component={HomeStack} options={{
                 drawerIcon: ({color})=>(
                     <FontAwesome name="home" size={24} color={color} />
                 )
@@ -64,7 +64,7 @@ const DrawerNavigator = () => {
                 drawerIcon: ({color})=>(
                     <FontAwesome name="line-chart" size={24} color={color} />
                 )
-            }} />
+            }} /> */}
             <Drawer.Screen name="Greed and Fear Index" component={GreedAndFearIndexScreen} 
             options={{
                 drawerIcon: ({color})=>(
