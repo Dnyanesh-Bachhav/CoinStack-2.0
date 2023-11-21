@@ -1,6 +1,5 @@
 import react,{useEffect,useState} from "react";
 import {View,Text,StyleSheet,TextInput} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { COLORS } from "../constants";
 import SearchableDropDown from "react-native-searchable-dropdown";
 import {getAllCoins} from '../../Services/requests';

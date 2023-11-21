@@ -1,4 +1,3 @@
-import react from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants";
 import {useNavigation} from '@react-navigation/native';
