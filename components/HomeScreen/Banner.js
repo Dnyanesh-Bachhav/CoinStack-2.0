@@ -1,9 +1,9 @@
 import React,{useRef} from 'react';
-import {View,Text,StyleSheet,Dimensions,Image} from 'react-native';
+import {View,StyleSheet,Dimensions,Image} from 'react-native';
 import {COLORS } from '../constants';
 const BANNER_HEIGHT = Dimensions.get('window').height/4.5;
 import Carousel from 'react-native-reanimated-carousel';
-import {MostGainedCoins,banners  } from '../constants';
+import { banners  } from '../constants';
 
 function Banner(){
   

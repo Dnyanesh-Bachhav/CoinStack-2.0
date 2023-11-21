@@ -1,4 +1,3 @@
-import react from "react";
 import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native';
 import { COLORS } from "../constants";
 import { AntDesign } from '@expo/vector-icons';

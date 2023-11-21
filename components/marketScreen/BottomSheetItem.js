@@ -3,7 +3,6 @@ import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native';
 import { COLORS } from "../constants";
 import Button1 from "./Button1";
 import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useWatchlist } from "../../Contexts/WatchListContext";
 function SheetComponent({coinName, coinId, symbol,current_price,uri,price_change_percentage_24h}){
