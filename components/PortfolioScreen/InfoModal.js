@@ -1,4 +1,3 @@
-import react from "react";
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 function InfoModal({ setVisible }){

@@ -1,7 +1,6 @@
 import react,{useContext} from 'react';
 import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native';
 import { COLORS } from '../constants';
-import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { portfolioContext } from '../../Contexts/PortfolioContext';
 
