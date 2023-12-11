@@ -3,6 +3,7 @@ import {View,Text,StyleSheet,ActivityIndicator,ScrollView} from 'react-native';
 import { getCoinDataById } from '../../Services/requests';
 import Button from './Button';
 import { COLORS } from '../constants';
+import { Paragraph, SizableText } from 'tamagui';
 function CoinData({coinId,coinName }){
     const[loading,setLoading] = useState(true);
     const[coinData,setCoinData] = useState(null);
@@ -24,13 +25,13 @@ function CoinData({coinId,coinName }){
             { !loading 
             ? 
             <View style={styles.coinDataContainer}>
-                <Text style={styles.textStyle}>{coinName}</Text>
-                <Text style={styles.descriptionText}>
+                <SizableText size="$7" fontWeight="800" >{coinName}</SizableText>
+                <Paragraph size="$2" style={styles.descriptionText}>
                     { !coinData ?
                         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam iusto doloremque dolores quis dolorum soluta id molestiae facere cumque ullam repellat ex, maiores perspiciatis? Reiciendis magnam quas possimus nemo at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui obcaecati cum explicabo est, suscipit architecto nam earum. Recusandae expedita iure consectetur sed nihil possimus, nisi optio alias sunt vel ducimus!"
                         : coinData.description.en
                     }
-                </Text>
+                </Paragraph>
                 {/* <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore itaque suscipit a, repellendus laboriosam quaerat magni, sequi nesciunt esse odit officia consectetur omnis doloremque expedita! Maxime sapiente doloremque ab eius? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo harum sed enim nihil, quo eius veniam distinctio, dolores sapiente quam laborum quibusdam saepe facere. Sed incidunt nisi nemo voluptatum quod?</Text>
                 <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore itaque suscipit a, repellendus laboriosam quaerat magni, sequi nesciunt esse odit officia consectetur omnis doloremque expedita! Maxime sapiente doloremque ab eius? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo harum sed enim nihil, quo eius veniam distinctio, dolores sapiente quam laborum quibusdam saepe facere. Sed incidunt nisi nemo voluptatum quod?</Text> */}
                 <View style={styles.btnGroup}>

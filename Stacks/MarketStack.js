@@ -5,6 +5,7 @@ import BuyCoinScreen from '../screens/BuyCoinScreen';
 import SellCoinScreen from '../screens/SellCoinScreen';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import WatchListScreen from '../screens/WatchListScreen';
+import CoinDetailedScreen from '../screens/CoinChartScreen';
 const MarketScreenStack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 function TopBar(){
@@ -26,6 +27,12 @@ function MarketStack(){
                 headerShown: false,
             }}
             />
+            <MarketScreenStack.Screen name="coinDetails" component={CoinDetailedScreen}
+            options={{
+                headerShown: false,
+            }}
+            />
+            
             <MarketScreenStack.Screen name="BuyCoinScreen" component={BuyCoinScreen}
             options={{
                 headerShown: false,

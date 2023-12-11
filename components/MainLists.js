@@ -49,8 +49,8 @@ function MainLists(){
     return(
         <View style={styles.container}>
             {/* <Button>Hello World...!!!</Button> */}
-            <Paragraph size="$7" fontWeight="800">Newly Launched</Paragraph>
-            <SizableText theme="alt2" size={"$3"}>Explore more assets for your portfolio</SizableText>
+            <Paragraph size="$7" fontWeight="800">Popular coins</Paragraph>
+            <SizableText theme="alt2" size={"$3"}>People usually buy these coins</SizableText>
             {/* Newly Launched */}
             {/* <TitleText title="Newly Launched..." descriptionText="Explore more assets for your portfolio"/> */}
             <ListCoins coinData={MostGainedCoins} type={"NewlyLaunched"} />

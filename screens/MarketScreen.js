@@ -72,7 +72,13 @@ function MarketScreen(){
                     renderItem={({item})=>(
                         <TouchableOpacity onPress={()=>{
                                 setCurrentCoin(item);
-                                refRBSheet.current.open();
+                                console.log("Item clicked: ",item.name);
+                                navigation.navigate("coinDetails",{
+                                    coin: item.name,
+                                    coinId: item.id,
+                                    imgUrl: item.image
+                                  });
+                                // refRBSheet.current.open();
                                 
                             }} >
                                 <CoinItem coinName={item.name} coinId={item.id} symbol={item.symbol} current_price={item.current_price} uri={item.image} price_change_percentage_24h={item.price_change_percentage_24h} />
