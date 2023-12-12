@@ -4,16 +4,19 @@ import {useNavigation} from '@react-navigation/native';
 import Header from '../components/CoinDetailedScreen/Header';
 import { AntDesign } from '@expo/vector-icons';
 import { getCoinHistory,getCoinDataById } from '../Services/requests';
-import { COLORS } from '../components/constants';
+import { COLORS, bitcoin_data } from '../components/constants';
 import CoinData from '../components/CoinDetailedScreen/coinData';
 import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
+    VictoryAxis,
+    VictoryChart,
+    VictoryLabel,
+    VictoryLine,
+    VictoryTheme,
+    VictoryTooltip,
+    VictoryVoronoiContainer,
+    VictoryZoomContainer,
+    createContainer,
+  } from "victory-native";
 const {width: SIZE} = Dimensions.get('window');
 
 function CoinDetailedScreen ({route}){
@@ -27,52 +30,60 @@ function CoinDetailedScreen ({route}){
         fetchdata();
     },[]);
    const navigation = useNavigation();
+   const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
+
     return(
         <View style={styles.container}>
             <Header coinName={route.params.coin} imgUrl={route.params.imgUrl} />
             <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{alignSelf: 'center'}} >
-            <LineChart
-                data={{
-                datasets: [
-                    {
-                    data: [
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100
-                    ]
-                    }
-                ]
-                }}
-                width={Dimensions.get("window").width/10*9.5} // from react-native
-                height={220}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} // optional, defaults to 1
-                chartConfig={{
-                backgroundColor: COLORS.primary,
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 12, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 12, ${opacity})`,
-                style: {
-                    borderRadius: 16,
-                    backgroundColor: COLORS.primary,
-                },
-                propsForDots: {
-                    r: "6",
-                    strokeWidth: "2",
-                    stroke: "#ffa726"
-                }
-                }}
-                bezier
-                style={{
-                marginVertical: 8,
-                borderRadius: 16
-            }}
+            
+    <VictoryChart
+      containerComponent={
+        <VictoryZoomVoronoiContainer
+          voronoiDimension="x"
+          labels={({ datum }) => `${datum?.y?.toFixed(5)}`}
+          labelComponent={
+            <VictoryTooltip
+              style={{ borderColor: "red" }}
+              cornerRadius={2}
+              flyoutPadding={{ top: 2, bottom: 2, left: 9, right: 9 }}
+              flyoutStyle={{ fill: "white" }}
+              renderInPortal={false}
             />
+          }
+        />
+      }
+    >
+      <VictoryAxis
+        style={{
+          axis: { stroke: "transparent" },
+          ticks: { stroke: "transparent" },
+          tickLabels: { fill: "none" },
+        }}
+      />
+      <VictoryLine
+        interpolation={"natural"}
+        style={{
+          data: { stroke: "#892ECC" },
+          labels: { fill: "blue" },
+          //   parent: { border: "1px solid #ccc" },
+        }}
+        data={bitcoin_data}
+        labelComponent={<VictoryLabel active={false} />}
+      />
+      {/* <VictoryLine
+        interpolation={"natural"}
+        style={{
+          data: { stroke: "red" },
+          labels: { fill: "red" },
+          //   parent: { border: "1px solid #ccc" },
+        }}
+        // labels={({ datum }) => `y: ${datum.y}`}
+        labelComponent={<VictoryTooltip cornerRadius={2} />}
+        data={data}
+      /> */}
+    </VictoryChart>
         </View>
         <CoinData coinId={ route.params.coinId} coinName={route.params.coin} />
         </ScrollView>
