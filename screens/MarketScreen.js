@@ -119,26 +119,7 @@ function MarketScreen(){
                         <Spinner size="large" color="$green10" />
                     </YStack>
                 }
-                {/* <BottomSheet refRBSheet={refRBSheet} coinName={"Tron"} price={"12"} coin={currentCoin} /> */}
-                <RBSheet
-                ref={refRBSheet}
-                animationType="none"
-                closeOnDragDown={true}
-                closeOnPressMask={true}
-                customStyles={{
-                    container:{
-                        backgroundColor: COLORS.white,
-                    },
-                wrapper: {
-                    backgroundColor: "transparent",
-                },
-                draggableIcon: {
-                    backgroundColor: "#000"
-                }                
-                }}
-            >
-                <SheetComponent coinName={currentCoin.name} coinId={ currentCoin.id } symbol={currentCoin.symbol} current_price={currentCoin.current_price||1000} uri={currentCoin.image||"https://assets.coingecko.com/coins/images/1/small/bitcoin.png"} price_change_percentage_24h={currentCoin.price_change_percentage_24h||"1.2"} />
-      </RBSheet>
+                
             </View>)
             : <NoInternetScreen/>
         }
