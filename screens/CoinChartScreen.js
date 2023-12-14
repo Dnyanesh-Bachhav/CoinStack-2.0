@@ -47,8 +47,9 @@ function CoinDetailedScreen({ route }) {
       route.params.coinId,
       selectedRangeValue
     );
-    setCoinMarketData(fetchedCoinMarketData);
-    console.log("Data: "+coinMarketData);
+    console.log(fetchedCoinMarketData.prices);
+    setCoinMarketData(fetchedCoinMarketData.prices.map(([marketCap, price])=> ({y: price})));
+    // console.log(coinMarketData);
 
     setLoading(false);
   };
@@ -107,7 +108,7 @@ function CoinDetailedScreen({ route }) {
                 labels: { fill: "blue" },
                 //   parent: { border: "1px solid #ccc" },
               }}
-              data={bitcoin_data}
+              data={coinMarketData}
               labelComponent={<VictoryLabel active={false} />}
             />
             {/* <VictoryLine
@@ -126,7 +127,7 @@ function CoinDetailedScreen({ route }) {
         <View style={styles.filterContainer}>
           {
             filterDaysArray.map((day)=>(
-              <FilterComponent filterDay={day.filterDay} filterText={day.filterText} selectedRange={selectedRange} setSelectedRange={onSelectedRangeChange}><Text>Day</Text></FilterComponent>
+              <FilterComponent filterDay={day.filterDay} filterText={day.filterText} selectedRange={selectedRange} setSelectedRange={onSelectedRangeChange} key={day.filterDay}><Text>Day</Text></FilterComponent>
               ))
           }
               </View>
