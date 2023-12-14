@@ -246,6 +246,9 @@ const styles = StyleSheet.create({
   
   btnGroup:{
     position: 'absolute',
+    width: '100%',
+    paddingVertical: 7,
+    elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
@@ -253,8 +256,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     bottom: 0,
     right: 0,
-    zIndex: 2,
-    width: '100%'
 },
 });
 export default CoinDetailedScreen;
