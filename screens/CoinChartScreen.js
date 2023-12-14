@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Header from "../components/CoinDetailedScreen/Header";
 import { AntDesign } from "@expo/vector-icons";
-import { getCoinHistory, getCoinDataById } from "../Services/requests";
+import { getCoinHistory, getCoinDataById, getCoinMarketChart } from "../Services/requests";
 import { COLORS, bitcoin_data } from "../components/constants";
 import CoinData from "../components/CoinDetailedScreen/coinData";
 import {
@@ -37,7 +37,21 @@ function CoinDetailedScreen({ route }) {
   ];
   
   const [selectedRange, setSelectedRange ] = useState("1");
+  const [coinMarketData, setCoinMarketData ] = useState();
+  const [loading, setLoading] = useState(false);
 
+  const fetchMarketCoinData = async (selectedRangeValue) => {
+    setLoading(true);
+    
+    const fetchedCoinMarketData = await getCoinMarketChart(
+      route.params.coinId,
+      selectedRangeValue
+    );
+    setCoinMarketData(fetchedCoinMarketData);
+    console.log("Data: "+coinMarketData);
+
+    setLoading(false);
+  };
   async function fetchdata() {
     getCoinDataById(route.params.coinId).then((data) => {
       // console.log("CoinName: "+route.params.coinId);
@@ -45,8 +59,15 @@ function CoinDetailedScreen({ route }) {
     });
   }
   useEffect(() => {
-    fetchdata();
+    // fetchdata();
+    fetchMarketCoinData(1);
   }, []);
+  const onSelectedRangeChange = (selectedRangeValue)=>{
+    setSelectedRange(selectedRangeValue);
+    fetchMarketCoinData(selectedRangeValue);
+
+
+  }
   const navigation = useNavigation();
   const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 
@@ -105,7 +126,7 @@ function CoinDetailedScreen({ route }) {
         <View style={styles.filterContainer}>
           {
             filterDaysArray.map((day)=>(
-              <FilterComponent filterDay={day.filterDay} filterText={day.filterText} selectedRange={selectedRange} setSelectedRange={setSelectedRange}><Text>Day</Text></FilterComponent>
+              <FilterComponent filterDay={day.filterDay} filterText={day.filterText} selectedRange={selectedRange} setSelectedRange={onSelectedRangeChange}><Text>Day</Text></FilterComponent>
               ))
           }
               </View>
