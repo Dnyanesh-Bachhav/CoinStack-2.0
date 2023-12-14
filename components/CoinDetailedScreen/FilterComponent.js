@@ -8,16 +8,18 @@ function FilterComponent({ filterDay, filterText, selectedRange, setSelectedRang
         <TouchableOpacity style={{backgroundColor: isFilterSelected(filterDay) ? COLORS.primary : COLORS.white, ...styles.filter}} onPress={()=>{
             setSelectedRange(filterDay);
         }} >
-            <Text style={{ color: isFilterSelected(filterDay) ? COLORS.white : COLORS.black }}>{filterText}</Text>
+            <Text style={{ color: isFilterSelected(filterDay) ? COLORS.white : COLORS.black, fontWeight: 500 }}>{filterText}</Text>
         </TouchableOpacity>
     );
 }
 const styles = StyleSheet.create({
     filter:{
-        
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 40,
-        paddingVertical: 7,
-        paddingHorizontal: 20,
+        paddingVertical: 3,
+        paddingHorizontal: 12,
         elevation: 5
       }
 })

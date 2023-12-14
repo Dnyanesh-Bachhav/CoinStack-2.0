@@ -45,10 +45,7 @@ function CoinData({coinId,coinName }){
                 {/* </Paragraph> */}
                 {/* <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore itaque suscipit a, repellendus laboriosam quaerat magni, sequi nesciunt esse odit officia consectetur omnis doloremque expedita! Maxime sapiente doloremque ab eius? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo harum sed enim nihil, quo eius veniam distinctio, dolores sapiente quam laborum quibusdam saepe facere. Sed incidunt nisi nemo voluptatum quod?</Text>
                 <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore itaque suscipit a, repellendus laboriosam quaerat magni, sequi nesciunt esse odit officia consectetur omnis doloremque expedita! Maxime sapiente doloremque ab eius? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo harum sed enim nihil, quo eius veniam distinctio, dolores sapiente quam laborum quibusdam saepe facere. Sed incidunt nisi nemo voluptatum quod?</Text> */}
-                <View style={styles.btnGroup}>
-                    <Button button_text="Buy" backColor={COLORS.success} />
-                    <Button button_text="Sell" backColor={COLORS.red} />
-                </View>
+                
                 <View style={styles.contractAddress}>
                     
                 </View>
@@ -61,7 +58,8 @@ function CoinData({coinId,coinName }){
 }
 const styles = StyleSheet.create({
     container:{
-        paddingHorizontal: 15,
+        flex: 1,
+        paddingHorizontal : 10,
     },
     textStyle:{
         fontSize: 24,
