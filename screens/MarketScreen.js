@@ -76,7 +76,9 @@ function MarketScreen(){
                                 navigation.navigate("coinDetails",{
                                     coin: item.name,
                                     coinId: item.id,
-                                    imgUrl: item.image
+                                    imgUrl: item.image,
+                                    symbol: item.symbol,
+                                    currentPrice: item.current_price,
                                   });
                                 // refRBSheet.current.open();
                                 

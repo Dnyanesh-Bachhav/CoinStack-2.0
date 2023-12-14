@@ -4,7 +4,8 @@ import banner3 from '../assets/banner3.png';
 import banner4 from '../assets/banner4.png';
 import banner5 from '../assets/banner5.png';
 const COLORS = {
-    primary: '#211DDD',
+    // primary: '#211DDD',
+    primary: "#892ECC",
     secondary: '#EBEBFE',
     white: '#ffffff',
     black: '#000000',

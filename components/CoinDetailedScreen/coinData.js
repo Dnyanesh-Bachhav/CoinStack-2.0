@@ -58,9 +58,7 @@ function CoinData({ coinId, coinName }) {
                     /> */}
 
           {/* </Paragraph> */}
-          {/* <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore itaque suscipit a, repellendus laboriosam quaerat magni, sequi nesciunt esse odit officia consectetur omnis doloremque expedita! Maxime sapiente doloremque ab eius? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo harum sed enim nihil, quo eius veniam distinctio, dolores sapiente quam laborum quibusdam saepe facere. Sed incidunt nisi nemo voluptatum quod?</Text>
-                <Text style={styles.descriptionText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore itaque suscipit a, repellendus laboriosam quaerat magni, sequi nesciunt esse odit officia consectetur omnis doloremque expedita! Maxime sapiente doloremque ab eius? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo harum sed enim nihil, quo eius veniam distinctio, dolores sapiente quam laborum quibusdam saepe facere. Sed incidunt nisi nemo voluptatum quod?</Text> */}
-
+        
           <View style={styles.contractAddress}></View>
         </View>
       ) : (
