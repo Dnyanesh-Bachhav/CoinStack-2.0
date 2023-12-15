@@ -242,7 +242,7 @@ const HorizontalTabs = ({ coinId, coinName }) => {
 
       <Tabs.Content value="tab2">
         {/* <H5>Connections</H5> */}
-        <NewsComponent/>
+        <NewsComponent coinName={coinName} />
       </Tabs.Content>
 
       <Tabs.Content value="tab3">
