@@ -50,18 +50,17 @@ function NewsComponent({ coinName }) {
               <View
                 style={{
                   flexDirection: "row",
-                  flexWrap: "wrap",
                   marginLeft: 5,
-                  paddingRight: 4,
+                  alignSelf: 'center',
                 }}
               >
-                <Text
-                  style={{ flexWrap: 'wrap' }}
+                <SizableText
+                  style={{ flexWrap: "wrap",}}
                   numberOfLines={3}
                   adjustsFontSizeToFit={true}
                 >
                   { item?.title }
-                </Text>
+                </SizableText>
               </View>
             </View>
           )}
@@ -76,7 +75,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // width: WIDTH,
     marginHorizontal: 10,
-    marginBottom: 25,
+    marginBottom: 50,
+    marginTop: 10
     // marginVertical: 10
   },
 
@@ -84,21 +84,18 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     padding: 2,
-    alignSelf: 'center'
-    // marginLeft: 40,
-    // elevation: 5
-    // borderWidth: 1,
+    alignSelf: 'flex-start'
   },
 
   NewsContainer: {
     flexDirection: "row",
     // borderWidth: 1,
     backgroundColor: COLORS.white,
-    marginTop: 10,
+    marginTop: 5,
+    marginBottom: 10,
+    paddingRight: 100,
     borderRadius: 10,
     padding: 4,
-    justifyContent: "center",
-    alignItems: "center",
     overflow: "hidden",
     elevation: 5,
   },
