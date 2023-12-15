@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SizableText, Image, YStack } from "tamagui";
 import { FontAwesome } from "@expo/vector-icons";
 import { COLORS } from "../constants";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getAllNews } from "../../Services/requestsNewsApi";
 import { Spinner } from "tamagui";
 import { FlashList } from "@shopify/flash-list";
+import { useNavigation } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get("window").width;
 function NewsComponent({ coinName }) {
@@ -18,6 +19,7 @@ function NewsComponent({ coinName }) {
     setNewsData([data.articles[0], data.articles[1], data.articles[2]]);
     setLoading(false);
   }
+  const navigation = useNavigation();
   useEffect(() => {
     getNewsData();
   }, []);
@@ -32,6 +34,20 @@ function NewsComponent({ coinName }) {
         <FlashList
           data={newsData}
           renderItem={({ item }) => (
+            <TouchableOpacity onPress={()=>{
+                navigation.navigate("DetailNews",{
+                    sourceName : item.source.name,
+                    imageUrl : item.urlToImage,
+                    title: item.title,
+                    author: item.author,
+                    description: item.description,
+                    url: item.url,
+                    publishedAt : item.publishedAt,
+                    content : item.content
+
+                })
+            }} style={{ elevation: 5 }} >
+
             <View style={styles.NewsContainer}>
               <View style={styles.imgContainer}>
                 <Image
@@ -63,6 +79,8 @@ function NewsComponent({ coinName }) {
                 </SizableText>
               </View>
             </View>
+            </TouchableOpacity>
+
           )}
           estimatedItemSize={114}
         />
@@ -97,7 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 4,
     overflow: "hidden",
-    elevation: 5,
+    // elevation: 5,
   },
 });
 export default NewsComponent;
