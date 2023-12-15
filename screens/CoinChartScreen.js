@@ -44,6 +44,7 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import FilterComponent from "../components/CoinDetailedScreen/FilterComponent";
 import { CandlestickChart } from "@tamagui/lucide-icons";
+import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
 const { width } = Dimensions.get("window");
 
 function CoinDetailedScreen({ route }) {
@@ -240,7 +241,8 @@ const HorizontalTabs = ({ coinId, coinName }) => {
       </Tabs.Content>
 
       <Tabs.Content value="tab2">
-        <H5>Connections</H5>
+        {/* <H5>Connections</H5> */}
+        <NewsComponent/>
       </Tabs.Content>
 
       <Tabs.Content value="tab3">
