@@ -45,6 +45,7 @@ import { AntDesign } from "@expo/vector-icons";
 import FilterComponent from "../components/CoinDetailedScreen/FilterComponent";
 import { CandlestickChart } from "@tamagui/lucide-icons";
 import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
+import Converter from "../components/CoinDetailedScreen/Converter";
 const { width } = Dimensions.get("window");
 
 function CoinDetailedScreen({ route }) {
@@ -190,7 +191,7 @@ function CoinDetailedScreen({ route }) {
               </FilterComponent>
             ))}
             <TouchableOpacity
-              style={{ backgroundColor: COLORS.white, ...styles.filter }}
+              style={{ backgroundColor: COLORS.primaryFaint, ...styles.filter }}
             >
               <CandlestickChart />
             </TouchableOpacity>
@@ -198,6 +199,8 @@ function CoinDetailedScreen({ route }) {
           <HorizontalTabs
             coinId={route.params.coinId}
             coinName={route.params.coin}
+            currentPrice={currentPrice}
+            coinSymbol={ route.params.symbol }
           />
 
           {/* <CoinData coinId={route.params.coinId} coinName={route.params.coin} /> */}
@@ -206,7 +209,7 @@ function CoinDetailedScreen({ route }) {
     </View>
   );
 }
-const HorizontalTabs = ({ coinId, coinName }) => {
+const HorizontalTabs = ({ coinId, coinName, currentPrice, coinSymbol }) => {
   return (
     <Tabs
       defaultValue="tab1"
@@ -237,7 +240,16 @@ const HorizontalTabs = ({ coinId, coinName }) => {
       <Separator />
       <Tabs.Content flex={1} value="tab1">
         {/* <H5>Profile</H5> */}
-        <CoinData coinId={coinId} coinName={coinName} />
+        <View style={{ marginBottom: 20 }} >
+          {/* COIN INFORMATION */}
+          <View style={{ backgroundColor: COLORS.primaryFaint, marginTop: 10, marginHorizontal: 15, borderRadius: 10, paddingHorizontal: 10 }} >
+            <CoinData coinId={coinId} coinName={coinName} />
+          </View>
+          {/* COIN CONVERTER */}
+          <View style={{ backgroundColor: COLORS.primaryFaint, marginTop: 10, marginHorizontal: 15, borderRadius: 10, paddingHorizontal: 10 }} >
+            <Converter coinName={coinName} coinSymbol={coinSymbol} currentPrice={currentPrice} />
+          </View>
+        </View>
       </Tabs.Content>
 
       <Tabs.Content value="tab2">
@@ -257,7 +269,7 @@ const styles = StyleSheet.create({
     position: "relative",
     // marginBottom: 40,
     // padding: 5
-    // backgroundColor: COLORS.white,
+    backgroundColor: COLORS.white,
   },
   filterContainer: {
     flexDirection: "row",

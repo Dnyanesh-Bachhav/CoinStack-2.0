@@ -5,7 +5,7 @@ import { memo } from "react";
 function FilterComponent({ filterDay, filterText, selectedRange, setSelectedRange }){
     const isFilterSelected = (filter)=>filter===selectedRange;
     return(
-        <TouchableOpacity style={{backgroundColor: isFilterSelected(filterDay) ? COLORS.primary : COLORS.white, ...styles.filter}} onPress={()=>{
+        <TouchableOpacity style={{backgroundColor: isFilterSelected(filterDay) ? COLORS.primary : COLORS.primaryFaint, ...styles.filter}} onPress={()=>{
             setSelectedRange(filterDay);
         }} >
             <Text style={{ color: isFilterSelected(filterDay) ? COLORS.white : COLORS.black, fontWeight: 500 }}>{filterText}</Text>

@@ -70,14 +70,16 @@ function CoinData({ coinId, coinName }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
+    backgroundColor: 'transaparent',
   },
   textStyle: {
     fontSize: 24,
     fontWeight: "bold",
   },
   coinDataContainer: {
-    marginBottom: 55,
+    // marginBottom: 55,
+    paddingVertical: 10
   },
   btnGroup: {
     flexDirection: "row",

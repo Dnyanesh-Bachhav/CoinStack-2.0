@@ -46,7 +46,7 @@ function NewsComponent({ coinName }) {
                     content : item.content
 
                 })
-            }} style={{ elevation: 5 }} >
+            }} style={{  }} >
 
             <View style={styles.NewsContainer}>
               <View style={styles.imgContainer}>
@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
   NewsContainer: {
     flexDirection: "row",
     // borderWidth: 1,
+    width: '97%',
+    alignSelf: 'center',
     backgroundColor: COLORS.white,
     marginTop: 5,
     marginBottom: 10,
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 4,
     overflow: "hidden",
-    // elevation: 5,
+    elevation: 5,
   },
 });
 export default NewsComponent;
