@@ -3,6 +3,7 @@ import { View, Text, FlatList, RefreshControl, StyleSheet } from 'react-native';
 import { useWatchlist } from '../Contexts/WatchListContext';
 import CoinItem from '../components/marketScreen/CoinItem';
 import { getWatchlistedCoins } from '../Services/requests';
+import TableHeader from '../components/marketScreen/TableHeader';
 
 const WatchlistScreen = () => {
   const {watchlistCoinIds} = useWatchlist();
@@ -31,6 +32,7 @@ const WatchlistScreen = () => {
 
   return (
     <View style={ styles.container }>
+      <TableHeader/>
       <FlatList 
         data={coins}
         renderItem={({ item }) => 

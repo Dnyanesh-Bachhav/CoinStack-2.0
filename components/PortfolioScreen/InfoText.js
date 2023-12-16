@@ -1,11 +1,12 @@
 import {View,Text,StyleSheet} from 'react-native';
 import { COLORS } from "../constants";
+import { SizableText } from 'tamagui';
 function InfoText(){
     return(
         <View style={styles.container}>
-              <Text style={styles.textHeader}>Things to keep in mind!</Text>
-              <Text style={styles.textStyle}>All the values are indicative. All your invetments are virtual...Investments profit and losses teaches you about the market. Try to make more profits from your investments that will allow you to push your rank... </Text>
-              <Text style={styles.textBottom}>--CoinStack</Text>
+              <SizableText style={styles.textHeader}>Things to keep in mind!</SizableText>
+              <SizableText style={styles.textStyle}>All the values are indicative. All your invetments are virtual...Investments profit and losses teaches you about the market. Try to make more profits from your investments that will allow you to push your rank... </SizableText>
+              <SizableText style={styles.textBottom}>--CoinStack</SizableText>
         </View>
     );
 }

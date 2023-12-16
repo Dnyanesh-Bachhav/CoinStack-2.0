@@ -1,9 +1,10 @@
 import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { SizableText } from 'tamagui';
 function InfoModal({ setVisible }){
     return(
         <View style={styles.container}>
-            <Text style={{marginLeft: 10}} >Values in a portfolio are indicative...</Text>
+            <SizableText style={{marginLeft: 10}} >Values in a portfolio are indicative...</SizableText>
             <TouchableOpacity onPress={()=>{
                 setVisible(true);
             }} >

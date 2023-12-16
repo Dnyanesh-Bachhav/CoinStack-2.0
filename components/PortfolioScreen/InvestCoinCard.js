@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         borderColor: COLORS.gray,
         marginTop: 16,
         borderRadius: 10,
+        // elevation: 5,
     },
     imgStyle:{
         width: 45,
