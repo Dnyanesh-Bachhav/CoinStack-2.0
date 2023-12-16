@@ -46,6 +46,7 @@ import FilterComponent from "../components/CoinDetailedScreen/FilterComponent";
 import { CandlestickChart } from "@tamagui/lucide-icons";
 import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
 import Converter from "../components/CoinDetailedScreen/Converter";
+import Statistics from "../components/CoinDetailedScreen/Statistics";
 const { width } = Dimensions.get("window");
 
 function CoinDetailedScreen({ route }) {
@@ -248,6 +249,10 @@ const HorizontalTabs = ({ coinId, coinName, currentPrice, coinSymbol }) => {
           {/* COIN CONVERTER */}
           <View style={{ backgroundColor: COLORS.primaryFaint, marginTop: 10, marginHorizontal: 15, borderRadius: 10, paddingHorizontal: 10 }} >
             <Converter coinName={coinName} coinSymbol={coinSymbol} currentPrice={currentPrice} />
+          </View>
+          {/* COIN STATISTICS */}
+          <View style={{ backgroundColor: COLORS.primaryFaint, marginTop: 10, marginHorizontal: 15, borderRadius: 10, paddingHorizontal: 10 }} >
+            <Statistics coinId={coinId} coinName={coinName} coinSymbol={coinSymbol} />
           </View>
         </View>
       </Tabs.Content>
