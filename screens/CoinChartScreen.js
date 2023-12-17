@@ -99,8 +99,8 @@ function CoinDetailedScreen({ route }) {
     <View style={styles.container}>
       <Header coinName={route.params.coin} imgUrl={route.params.imgUrl} />
       <View style={styles.btnGroup}>
-        <Button button_text="Buy" backColor={COLORS.success} />
-        <Button button_text="Sell" backColor={COLORS.red} />
+        <Button button_text="Buy" backColor={COLORS.success} screenName={"BuyCoinScreen"} name={ route.params.coin } price={ currentPrice } symbol={ route.params.symbol } imgSrc={ route.params.imgUrl } />
+        <Button button_text="Sell" backColor={COLORS.red} screenName={"SellCoinScreen"} name={ route.params.coin } price={ currentPrice } symbol={ route.params.symbol } imgSrc={ route.params.imgUrl } />
       </View>
       <View style={{ marginVertical: 5, marginBottom: 100 }}>
         <ScrollView style={{}} showsVerticalScrollIndicator={false}>

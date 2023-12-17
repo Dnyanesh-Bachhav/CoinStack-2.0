@@ -1,13 +1,21 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants";
+import { useNavigation } from "@react-navigation/native";
 
-function Button({button_text,backColor})
+function Button({button_text,backColor, screenName, name, price, symbol, imgSrc })
 {
+    const navigation = useNavigation();
     return(
         <View style={styles.container}>
             <TouchableOpacity style={{...styles.buttonStyle,backgroundColor: backColor, shadowColor: backColor}} onPress={
                   ()=>{
                     console.log("Hello there...");
+                    navigation.navigate(screenName,{
+                        name: name,
+                        price: price,
+                        symbol: symbol,
+                        imgSrc: imgSrc
+                    })
                   }
                 } >
             <Text style={styles.buttonText}>{button_text}</Text>
