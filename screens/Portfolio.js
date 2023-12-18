@@ -124,7 +124,7 @@ function PortfolioScreen() {
           </ModalPopUp>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{  }}
+            contentContainerStyle={{ height: '100%' }}
             refreshControl={<RefreshControl onRefresh={checkConnection} />}
           >
             <View style={{ marginHorizontal: 10 }} >

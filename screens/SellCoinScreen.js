@@ -5,7 +5,24 @@ import Button from "../components/marketScreen/Button";
 import Header from "../components/marketScreen/Header";
 import { portfolioContext } from "../Contexts/PortfolioContext";
 import { transactionContext } from "../Contexts/TransactionContext";
+import { Separator, SizableText } from "tamagui";
+import { Info } from "@tamagui/lucide-icons";
 function SellCoinScreen({route}){
+    const [coinValue, setCoinValue] = useState("0");
+    const currentPrice = route.params.price;
+    const [coinLocalCurrencyValue, setCoinLocalCurrencyValue] = useState(
+      (route.params.price*parseFloat(coinValue)).toString()
+    );
+    const changeLocalValue = (value) => {
+      const floatValue = parseFloat(value) || 0;
+      setCoinLocalCurrencyValue(floatValue);
+      setCoinValue((floatValue / currentPrice).toString());
+    };
+    const changeCoinValue = (value) => {
+      const floatValue = parseFloat(value) || 0;
+      setCoinValue(floatValue);
+      setCoinLocalCurrencyValue((floatValue * currentPrice).toString());
+    };
     const[itemQuantity,setItemQuantity] = useState(0);
     const[inputVal,setInputVal] = useState(null);
     const[disabledBtn,setDisabledBtn] = useState(true);
@@ -65,12 +82,124 @@ function SellCoinScreen({route}){
         <View style={styles.container}>
             <Header coinName={route.params.name} imgSrc={route.params.imgSrc} />
             <View style={styles.dataContainer}>
-                <View style={{flexDirection: 'row',justifyContent: 'space-around',width: '100%',padding: 10,marginVertical: 20}} >
-                    <Text style={{ color: COLORS.red, ...styles.textStyle}}>{route.params.name}</Text>
-                    <Text style={{ color: COLORS.success,fontWeight: 'bold', ...styles.textStyle}}>₹{route.params.price}</Text>
-                </View>
-            <Text style={{fontSize: 24, ...styles.textStyle}}>Quantity</Text>
-            <TextInput style={styles.textInput} placeholder="Enter a quantity"
+            <SizableText color={"$color.gray10Light"} size={"$2"}>
+          ESTIMATED SELLING PRICE
+        </SizableText>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            width: "100%",
+            padding: 10,
+          }}
+        >
+          <SizableText style={{ color: COLORS.red, ...styles.textStyle }}>
+            {route.params.name}
+          </SizableText>
+          <SizableText
+            style={{
+              color: COLORS.success,
+              fontWeight: "bold",
+              ...styles.textStyle,
+            }}
+          >
+            ₹{route.params.price}
+          </SizableText>
+        </View>
+        <View style={{ borderBottomWidth: 1, width: '90%', alignSelf: 'center', borderBottomColor: COLORS.gray }} ></View>
+        <Separator style={{ backgroundColor: COLORS.grey }} />
+        <SizableText size={"$5"} style={{ marginTop: 21 }}>
+          How much do you want to sell?
+        </SizableText>
+
+        <View
+          style={{
+            // flex: 1,
+            width: '90%',
+            marginTop: 10,
+            marginBottom: 10,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              backgroundColor: COLORS.white,
+              borderRadius: 10,
+              marginTop: 10,
+              overflow: "hidden",
+            }}
+          >
+            <SizableText
+              style={{
+                width: "16%",
+                color: COLORS.grayDark,
+                backgroundColor: COLORS.white,
+                padding: 10,
+                borderRightWidth: 1,
+                borderColor: COLORS.primaryFaint,
+              }}
+            >
+              {route.params.symbol?.toUpperCase()}
+            </SizableText>
+            <TextInput
+              inputMode="numeric"
+              cursorColor={COLORS.grayDark}
+              value={coinValue}
+              style={{ color: COLORS.grayDark, marginLeft: 10 }}
+              onChangeText={(data)=>{
+                if(data>0 && parseFloat(data)<=itemQuantity) 
+                {
+                    setInputVal(data);
+                    changeCoinValue(data);
+                    setIsValidData(true);
+                }
+                else{
+                    setIsValidData(false);
+                }
+            }
+
+             }
+            />
+          </View>
+          <View style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }} >
+              <SizableText style={{  }} size="$9" >=</SizableText>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              backgroundColor: COLORS.white,
+              borderRadius: 10,
+              marginTop: 10,
+              overflow: "hidden",
+            }}
+          >
+            <SizableText
+              style={{
+                width: "16%",
+                color: COLORS.grayDark,
+                backgroundColor: COLORS.white,
+                padding: 10,
+                borderRightWidth: 1,
+                borderColor: COLORS.primaryFaint,
+              }}
+            >
+              {"INR"}
+            </SizableText>
+            <TextInput
+              inputMode="numeric"
+              cursorColor={COLORS.grayDark}
+              value={coinLocalCurrencyValue}
+              style={{ color: COLORS.grayDark, marginLeft: 10 }}
+              onChangeText={(value) => {
+                changeLocalValue(value);
+              }}
+            />
+          </View>
+        </View>
+
+            {/* <TextInput style={styles.textInput} placeholder="Enter a quantity"
              keyboardType="number-pad"
              onChangeText={(data)=>{
                 if(data>0 && parseFloat(data)<=itemQuantity) 
@@ -84,14 +213,22 @@ function SellCoinScreen({route}){
             }
 
              }
-             />
-            <Text style={{fontSize: 16,marginTop: 10, ...styles.textStyle}}>{route.params.symbol.toUpperCase()}</Text>
+             /> */}
             {
                 itemExists ?
-                <Text style={{fontSize: 14,color: COLORS.grayDark, ...styles.textStyle}}>Available: {itemQuantity}</Text>
-                : <Text style={{fontSize: 14,color: COLORS.grayDark, ...styles.textStyle}}>Available: {0}</Text>
+                <SizableText style={{fontSize: 14,color: COLORS.grayDark, ...styles.textStyle}}>Available: {itemQuantity}</SizableText>
+                : <SizableText style={{fontSize: 14,color: COLORS.grayDark, ...styles.textStyle}}>Available: {0}</SizableText>
                  
             }
+        <View style={{ width: '90%',  color: COLORS.primary,  paddingBottom: 10, marginTop: "25%", borderBottomWidth: 1, width: '90%', alignSelf: 'center', borderBottomColor: COLORS.gray }} >
+            <View style={{ flexDirection: 'row', backgroundColor: COLORS.lightRed, paddingHorizontal: 10, paddingVertical: 4, alignItems: 'center', borderRadius: 5, }} >
+                <Info color="$red10Dark" size={"$1"} style={{ marginRight: 5 }} />
+                <SizableText color={"$red10"} size="$3">Please enter all details to place an order</SizableText>
+            </View>
+            {/* <View style={{ height : 20 }} ></View> */}
+       
+        </View>
+  
             <TouchableOpacity style={styles.btn} disabled={!itemExists} activeOpacity={0.5} onPress={
                 ()=>{
                     if(itemExists)
@@ -157,15 +294,19 @@ function SellCoinScreen({route}){
     );
 }
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-    },
-    dataContainer:{
-        justifyContent: "center",
+        // padding: 10
+      },
+      dataContainer: {
+        flex: 1,
+        // borderWidth: 1,
+        // justifyContent: "center",
         alignItems: "center",
-        marginTop: 50
-    },
-    textInput:{
+        marginTop: "20%",
+        padding: 10
+      },
+      textInput: {
         padding: 5,
         paddingHorizontal: 10,
         marginHorizontal: 10,
@@ -174,13 +315,17 @@ const styles = StyleSheet.create({
         fontSize: 21,
         borderWidth: 1,
         borderColor: COLORS.gray,
-        borderRadius: 5
-    },
-    textStyle:{
-        fontSize: 20
-    },
-    btn:{
+        borderRadius: 5,
+      },
+      textStyle: {
+        fontSize: 20,
+        fontWeight: '600'
+      },
+      btn: {
         marginTop: 50,
-    }
+        position: 'absolute',
+        bottom: "5%",
+      },
+    
 });
 export default SellCoinScreen;
