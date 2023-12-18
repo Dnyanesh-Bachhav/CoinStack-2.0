@@ -3,6 +3,7 @@ import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native';
 import { COLORS } from '../constants';
 import { AntDesign } from '@expo/vector-icons';
 import { portfolioContext } from '../../Contexts/PortfolioContext';
+import { SizableText } from 'tamagui';
 
 
 function InvestCoinCard({coinId,price,imgSrc,quantity,setInvested,setCurrent}){
@@ -28,7 +29,7 @@ function InvestCoinCard({coinId,price,imgSrc,quantity,setInvested,setCurrent}){
                     }}
                     style={styles.imgStyle}
                     />
-                <Text style={styles.coinName}>{coinId}</Text>
+                <SizableText size="$7" style={styles.coinName}>{coinId}</SizableText>
                 <TouchableOpacity style={styles.iconStyle} onPress={()=>{
                     console.log("Hi there..."+coinId);
                     removeCoin();
@@ -39,20 +40,22 @@ function InvestCoinCard({coinId,price,imgSrc,quantity,setInvested,setCurrent}){
                 {/* <Feather name="arrow-right" size={24} color={COLORS.grayDark} style={styles.iconStyle}/> */}
             </View>
             <View style={styles.bottomSection}>
-                <Text style={{color: COLORS.success,fontWeight: 'bold'}}>{quantity}</Text>
-                <Text style={{color: COLORS.success,fontWeight: 'bold'}} >₹{price}</Text>
+                <SizableText style={{color: COLORS.success,fontWeight: 'bold'}}>{quantity}</SizableText>
+                <SizableText style={{color: COLORS.success,fontWeight: 'bold'}} >₹{price}</SizableText>
             </View>
+
         </View>
     );
 }
 const styles = StyleSheet.create({
     container:{
         width: '100%',
-        borderWidth: 1,
-        borderColor: COLORS.gray,
-        marginTop: 16,
+        padding: 10,
         borderRadius: 10,
-        // elevation: 5,
+        borderColor: COLORS.grayDark,
+        backgroundColor: COLORS.white,
+        marginTop:15,
+        elevation: 5,
     },
     imgStyle:{
         width: 45,
@@ -60,9 +63,10 @@ const styles = StyleSheet.create({
     },
     coinName:{
         color: COLORS.black,
-        fontSize: 21,
+        // fontSize: 21,
         marginLeft: 8,
-        fontWeight: '400'
+        fontWeight: '600',
+        // fontWeight: 'bold'
     },
     title:{
         flexDirection: 'row',

@@ -1,27 +1,28 @@
 import react from "react";
 import {View,Text,StyleSheet} from 'react-native';
 import { COLORS } from "../constants";
+import { SizableText } from "tamagui";
 function InvestmentInfo({invested,current}){
     return(
         <View style={styles.container}>
-            <View style={{  }}>
+            <View style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <Text style={{marginLeft: '5%', ...styles.textStyle}}>Current</Text>
-                    <Text style={{marginRight: '5%', ...styles.textStyle}}>Invested</Text>
+                    <SizableText style={{marginLeft: '5%', flex: 1, ...styles.textStyle}}>Current</SizableText>
+                    <SizableText style={{marginRight: '5%', flex: 1, ...styles.textStyle}}>Invested</SizableText>
                 </View>
                 <View style={styles.headerVal}>
-                    <Text style={{marginLeft: '5%', ...styles.headerTextStyle}}>₹{current}</Text>
-                    <Text style={{marginRight: '5%', ...styles.headerTextStyle}}>₹{invested}</Text>
+                    <SizableText style={{marginLeft: '5%', flex: 1, ...styles.headerTextStyle}}>₹{current}</SizableText>
+                    <SizableText style={{marginRight: '5%', flex: 1, ...styles.headerTextStyle}}>₹{invested}</SizableText>
                 </View>
             </View>
-            <View style={{  }}>
+            <View style={{ flex: 1 }}>
                 <View style={styles.header}>
-                    <Text style={{marginLeft: '5%', ...styles.textStyle}}>Returns</Text>
-                    <Text style={{marginRight: '5%', alignSelf: 'flex-start', ...styles.textStyle}}>Total Returns%</Text>
+                    <SizableText style={{marginLeft: '5%', flex: 1, ...styles.textStyle}}>Returns</SizableText>
+                    <SizableText style={{marginRight: '5%', flex: 1, alignSelf: 'flex-start', ...styles.textStyle}}>Total Returns%</SizableText>
                 </View>
                 <View style={styles.headerVal}>
-                    <Text style={{marginLeft: '5%', ...styles.headerTextStyle}}>₹0</Text>
-                    <Text style={{marginRight: '5%', ...styles.headerTextStyle}}>0%</Text>
+                    <SizableText style={{marginLeft: '5%', flex: 1, ...styles.headerTextStyle}}>₹0</SizableText>
+                    <SizableText style={{marginRight: '5%', flex: 1, ...styles.headerTextStyle}}>0%</SizableText>
                 </View>
             </View>
         </View>
@@ -49,11 +50,14 @@ const styles = StyleSheet.create({
         color: COLORS.black,
     },
     header:{
+        flex: 1,
+        // borderWidth: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     headerVal:{
-        
+        flex: 1,
+        // borderWidth: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
     }

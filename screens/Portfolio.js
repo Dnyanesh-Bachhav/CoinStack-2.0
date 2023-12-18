@@ -124,7 +124,7 @@ function PortfolioScreen() {
           </ModalPopUp>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ flex: 1 }}
+            contentContainerStyle={{  }}
             refreshControl={<RefreshControl onRefresh={checkConnection} />}
           >
             <View style={{ marginHorizontal: 10 }} >
@@ -145,7 +145,7 @@ function PortfolioScreen() {
                 // borderWidth: 1
               }}
             >
-              <SizableText>Invested Coins</SizableText>
+              <SizableText size={"$3"} style={{ color: COLORS.grey }} >Invested Coins</SizableText>
               {portfolioCoins.length > 0 ? (
                 portfolioCoins.map((item, index) => (
                   <InvestCoinCard

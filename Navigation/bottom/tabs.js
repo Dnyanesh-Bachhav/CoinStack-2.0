@@ -36,7 +36,7 @@ function Tabs(){
                 borderRadius: 16,
                 marginBottom: 10,
                 elevation: 4,
-                paddingVertical: 10,
+                // paddingVertical: 10,
                 paddingHorizontal: 25
             }
           }}

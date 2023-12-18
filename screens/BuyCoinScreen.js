@@ -5,6 +5,7 @@ import Button from "../components/marketScreen/Button";
 import Header from "../components/marketScreen/Header";
 import { portfolioContext } from "../Contexts/PortfolioContext";
 import { transactionContext } from "../Contexts/TransactionContext";
+import { Separator, SizableText } from "tamagui";
 function BuyCoinScreen({route}){
     const[itemQuantity,setItemQuantity] = useState();
     const[date,setDate] = useState(null);
@@ -46,10 +47,14 @@ function BuyCoinScreen({route}){
         <View style={styles.container}>
             <Header coinName={route.params.name} imgSrc={route.params.imgSrc} />
             <View style={styles.dataContainer}>
-                <View style={{flexDirection: 'row',justifyContent: 'space-around',width: '100%',padding: 10,marginVertical: 20}} >
-                    <Text style={{ color: COLORS.red, ...styles.textStyle}}>{route.params.name}</Text>
-                    <Text style={{ color: COLORS.success,fontWeight: 'bold', ...styles.textStyle}}>₹{route.params.price}</Text>
+                <SizableText color={"$color.gray10Light"} size={"$2"} >ESTIMATED BUYING PRICE</SizableText>
+                <View style={{flexDirection: 'row',justifyContent: 'space-around',width: '100%',padding: 10 }} >
+                    <SizableText style={{ color: COLORS.red, ...styles.textStyle}}>{route.params.name}</SizableText>
+                    <SizableText style={{ color: COLORS.success,fontWeight: 'bold', ...styles.textStyle}}>₹{route.params.price}</SizableText>
                 </View>
+                <Separator style={{ backgroundColor: COLORS.grey }} />
+                <SizableText size={"$5"} style={{ marginTop: 10 }} >How much do you want to buy?</SizableText>
+                
             <Text style={{fontSize: 24, ...styles.textStyle}}>Quantity</Text>
             <TextInput style={styles.textInput} placeholder="Enter a quantity"
              keyboardType="number-pad"

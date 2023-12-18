@@ -5,8 +5,9 @@ function InfoText(){
     return(
         <View style={styles.container}>
               <SizableText style={styles.textHeader}>Things to keep in mind!</SizableText>
-              <SizableText style={styles.textStyle}>All the values are indicative. All your invetments are virtual...Investments profit and losses teaches you about the market. Try to make more profits from your investments that will allow you to push your rank... </SizableText>
-              <SizableText style={styles.textBottom}>--CoinStack</SizableText>
+              <SizableText style={styles.textStyle}>- All the values are indicative. All your invetments are virtual.</SizableText>
+              <SizableText style={styles.textStyle}>- Investments profit and losses teaches you about the market. Try to make more profits from your investments that will allow you to push your rank... </SizableText>
+              {/* <SizableText style={styles.textBottom}>--CoinStack</SizableText> */}
         </View>
     );
 }
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     },
     textStyle:{
         fontSize: 15,
-        color: COLORS.black,
+        color: COLORS.grayDark,
     }
 });
 export default InfoText;
