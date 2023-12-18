@@ -8,6 +8,8 @@ import BasketsStack from "../../Stacks/BasketStack";
 import MarketStack from "../../Stacks/MarketStack";
 import NewsStack from "../../Stacks/NewsStack";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import LearningScreenStack from "../../Stacks/LearningStack";
+import LearningStack from "../../Stacks/LearningStack";
 
 
 
@@ -76,7 +78,7 @@ function Tabs(){
                     </View>
                 )
             }} />
-            <Tab.Screen name="News" component={NewsStack} options={{
+            <Tab.Screen name="News" component={LearningStack} options={{
                     headerShown: false,
                     unmountOnBlur: true,
                     tabBarIcon: ({focused})=>(
