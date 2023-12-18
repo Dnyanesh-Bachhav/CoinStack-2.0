@@ -17,7 +17,7 @@ const COLORS = {
     borderGreen: '#b4dfc4',
     lightGreen: '#E2F0E5',
     red: '#780606',
-    lightRed: '#ffe6e6',
+    lightRed: '#fae1e1',
     backgroundRed: '#ffe5e5',
     borderRed: '#f9c6c6',
     brown: '#d17338',
