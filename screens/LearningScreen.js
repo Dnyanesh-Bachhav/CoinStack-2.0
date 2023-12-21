@@ -1,4 +1,4 @@
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { COLORS } from "../components/constants";
 import { H3, Paragraph, SizableText, Square } from "tamagui";
 import { ResizeMode, Video } from "expo-av";

@@ -18,7 +18,7 @@ import {
 } from "../Services/requests";
 import Button from "../components/CoinDetailedScreen/Button";
 import candleStickChartLogo from "../assets/candlestick-chart.png";
-import { COLORS, bitcoin_data } from "../components/constants";
+import { COLORS } from "../components/constants";
 import CoinData from "../components/CoinDetailedScreen/coinData";
 import {
   VictoryAxis,

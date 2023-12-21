@@ -3,7 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 const CARD_HEIGHT = Dimensions.get('window').height / 5;
 const CARD_WIDTH = Dimensions.get('window').width / 3;
 import {COLORS} from '../components/constants.js';
-import Button from "../components/Button.js";
 function DetailNewsScreen({ route }) {
     // console.log(route.params.title);
     
