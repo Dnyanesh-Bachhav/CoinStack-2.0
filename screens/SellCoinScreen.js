@@ -13,11 +13,14 @@ function SellCoinScreen({route}){
     const [coinLocalCurrencyValue, setCoinLocalCurrencyValue] = useState(
       (route.params.price*parseFloat(coinValue)).toString()
     );
+    // Local to cryptocurrency value
     const changeLocalValue = (value) => {
       const floatValue = parseFloat(value) || 0;
       setCoinLocalCurrencyValue(floatValue);
       setCoinValue((floatValue / currentPrice).toString());
+      setInputVal((floatValue / currentPrice));
     };
+    // Cryptocurrency to local value
     const changeCoinValue = (value) => {
       const floatValue = parseFloat(value) || 0;
       setCoinValue(floatValue);
@@ -52,7 +55,7 @@ function SellCoinScreen({route}){
             time = "AM";
         }
         else{
-            if( hours>=12 && minutes>0)
+            if(hours>=12 && minutes>0)
             {
                 time = "PM";
             }
@@ -83,8 +86,8 @@ function SellCoinScreen({route}){
             <Header coinName={route.params.name} imgSrc={route.params.imgSrc} />
             <View style={styles.dataContainer}>
             <SizableText color={"$color.gray10Light"} size={"$2"}>
-          ESTIMATED SELLING PRICE
-        </SizableText>
+              ESTIMATED SELLING PRICE
+            </SizableText>
         <View
           style={{
             flexDirection: "row",
@@ -148,11 +151,11 @@ function SellCoinScreen({route}){
               value={coinValue}
               style={{ color: COLORS.grayDark, marginLeft: 10 }}
               onChangeText={(data)=>{
-                if(data>0 && parseFloat(data)<=itemQuantity) 
+                if(parseFloat(data)>0 && parseFloat(data)<=itemQuantity) 
                 {
-                    setInputVal(data);
-                    changeCoinValue(data);
                     setIsValidData(true);
+                    setInputVal(parseFloat(data));
+                    changeCoinValue(data);
                 }
                 else{
                     setIsValidData(false);
@@ -163,7 +166,7 @@ function SellCoinScreen({route}){
             />
           </View>
           <View style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }} >
-              <SizableText style={{  }} size="$9" >=</SizableText>
+              <SizableText size="$9" >=</SizableText>
           </View>
           <View
             style={{
@@ -238,14 +241,16 @@ function SellCoinScreen({route}){
                             {
                                 // console.log("coin found: "+coin.name+"item name: "+route.params.name+" isTrue: "+(coin.name === route.params.name));
                                 let val = parseFloat(coin.quantity);
-                                if(val <= parseFloat(coin.quantity) && val>=0)
+                                if(val>=0 && val >= parseFloat(inputVal))
                                 {
                                     setIsValidData(true);
                                     val -= parseFloat(inputVal);
                                     coin.quantity = val.toFixed(4);
+                                    ToastAndroid.show("Coin sold successfully...",1000);
                                 }
                                 else{
                                     setIsValidData(false);
+                                    ToastAndroid.show("Please input a valid value...",1000);                        
                                 }
                                 setItemQuantity(coin.quantity);
                                 console.log("Item quantity: "+coin.quantity);
@@ -280,10 +285,8 @@ function SellCoinScreen({route}){
                     }
                     if(isValidData)
                     {
-                        ToastAndroid.show("Coin sold successfully...",1000);
                     }
                     else{
-                        ToastAndroid.show("Please input a valid value...",1000);                        
                     }
                 }
             } >

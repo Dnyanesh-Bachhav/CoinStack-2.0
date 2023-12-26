@@ -31,7 +31,7 @@ function BuyCoinScreen({ route }) {
     setCoinLocalCurrencyValue((floatValue * currentPrice).toString());
   };
 
-  const [itemQuantity, setItemQuantity] = useState();
+  const [itemQuantity, setItemQuantity] = useState(1);
   const [date, setDate] = useState(null);
   const { portfolioCoins, storePortfolioCoin, updatePortfolioCoins } =
     useContext(portfolioContext);
@@ -214,8 +214,8 @@ function BuyCoinScreen({ route }) {
                   let val = parseFloat(coin.quantity);
                   val += parseFloat(itemQuantity);
                   coin.quantity = val;
-                  console.log("Item quantity: " + coin.quantity);
-                  console.log("Item quantity 1: " + typeof itemQuantity);
+                  // console.log("Item quantity: " + coin.quantity);
+                  // console.log("Item quantity 1: " + typeof itemQuantity);
                 }
               });
               updatePortfolioCoins(portfolioCoins);
