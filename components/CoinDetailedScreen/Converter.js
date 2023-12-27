@@ -23,13 +23,13 @@ function Converter({ coinName, coinSymbol, currentPrice }){
             <SizableText  size="$7" fontWeight="800" >{coinName} Converter</SizableText>
             <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.white, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
                 <SizableText  style={{ width: '16%', color: COLORS.grayDark, backgroundColor: COLORS.white, padding: 10, borderRightWidth: 1, borderColor: COLORS.primaryFaint }}>{coinSymbol?.toUpperCase()}</SizableText>
-                <TextInput inputMode="numeric" cursorColor={COLORS.grayDark} value={coinValue} style={{ color: COLORS.grayDark, marginLeft: 10 }} onChangeText={(value)=>{
+                <TextInput inputMode="numeric" cursorColor={COLORS.grayDark} value={coinValue} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={(value)=>{
                     changeCoinValue(value);
                 }} />
             </View>
             <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.white, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
                 <SizableText  style={{ width: '16%', color: COLORS.grayDark, backgroundColor: COLORS.white, padding: 10, borderRightWidth: 1, borderColor: COLORS.primaryFaint }}>{"INR"}</SizableText>
-                <TextInput inputMode="numeric" cursorColor={COLORS.grayDark} value={coinLocalCurrencyValue} style={{ color: COLORS.grayDark, marginLeft: 10 }} onChangeText={(value)=>{
+                <TextInput inputMode="numeric" cursorColor={COLORS.grayDark} value={coinLocalCurrencyValue} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={(value)=>{
                     changeLocalValue(value);
                 }}  />
             </View>

@@ -10,6 +10,7 @@ import NewsStack from "../../Stacks/NewsStack";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import LearningScreenStack from "../../Stacks/LearningStack";
 import LearningStack from "../../Stacks/LearningStack";
+import { SizableText } from "tamagui";
 
 
 
@@ -56,7 +57,7 @@ function Tabs(){
                             ...styles.imgStyle}}/>
                         {
                             focused &&
-                            <Text style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Home</Text>
+                            <Text numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Home</Text>
                         }
                     </Animated.View>
                     </View>
@@ -72,7 +73,7 @@ function Tabs(){
                             ...styles.imgStyle}}/>
                         {
                             focused &&
-                        <Text style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Market</Text>
+                        <Text numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Market</Text>
                         }
                     </View>
                     </View>
@@ -89,7 +90,7 @@ function Tabs(){
                                 ...styles.imgStyle }}/>
                             {
                                 focused &&
-                            <Text style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >News</Text>
+                            <Text numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >News</Text>
                             }
                             </View>
                         </View>
@@ -105,7 +106,7 @@ function Tabs(){
                             ...styles.imgStyle}}/>
                         {
                             focused &&
-                        <Text style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Baskets</Text>
+                        <Text numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Baskets</Text>
                         }
                         </View>
                     </View>
@@ -122,7 +123,7 @@ function Tabs(){
                             ...styles.imgStyle}}/>
                         {
                             focused &&
-                            <Text style={{color: focused ? COLORS.primary : COLORS.blueFaint, fontSize: 13 }} >Portfolio</Text>
+                            <SizableText numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint, fontSize: 13 }} >Portfolio</SizableText>
                         }
                         </View>
                     </View>

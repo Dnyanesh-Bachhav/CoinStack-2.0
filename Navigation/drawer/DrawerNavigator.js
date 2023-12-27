@@ -1,24 +1,15 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawer from './CustomDrawer';
-import HomeScreen from '../../screens/HomeScreen';
-import HomeStack from '../../Stacks/HomeStack';
 import { COLORS } from '../../components/constants';
-import MarketScreen from '../../screens/MarketScreen';
-import MarketStack from '../../Stacks/MarketStack';
 import Main1 from './Main1';
-import NewsScreen from '../../screens/NewsScreen';
-import BasketsScreen from '../../screens/BasketsScreen';
-import PortfolioScreen from '../../screens/Portfolio';
 import GreedAndFearIndexScreen from '../../screens/GreedAndFearIndexScreen';
 import TransactionHistoryScreen from '../../screens/TransactionHistoryScreen';
 import ChatbotScreen from '../../screens/ChatbotScreen';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { Fontisto } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Text, View } from 'react-native';
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
     return(
@@ -78,6 +69,12 @@ const DrawerNavigator = () => {
                 )
             }} />
             <Drawer.Screen name="Chatbot" component={ChatbotScreen} 
+            options={{
+                drawerIcon: ({color})=>(
+                    <FontAwesome5 name="robot" size={24} color={color} />
+                )
+            }} />
+            <Drawer.Screen name="Report" component={ChatbotScreen} 
             options={{
                 drawerIcon: ({color})=>(
                     <FontAwesome5 name="robot" size={24} color={color} />
