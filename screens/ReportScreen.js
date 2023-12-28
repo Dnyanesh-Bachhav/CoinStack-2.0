@@ -83,11 +83,65 @@ function ReportScreen(){
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
-            background-color: ${ COLORS.primary };
+            // background-color: ${ COLORS.primary };
+            // background-color: #002060;
+            font-weight: bold;
             color: white;
           }
+          #container{
+            background-color: #002060;
+            // background-color: ${ COLORS.primary };
+            margin-bottom: 16px;
+        }
+        .heading h2{
+            color: white;
+        }
+        .heading h1{
+            color: red;
+        }
+        .heading{
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+        }
+        .title{
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .content{
+            color: white;
+            margin-left: 5px;
+        }
+        .info{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         </style>
         <body>
+        <div id="container">
+        <div class="heading">
+            <h2>Coin</h2>
+            <h1>STACK</h1>
+        </div>
+        <div class="info">
+            <p class="title">Name:</p>
+            <div class="content">Dnyanesh Dipak Bachhav</div>
+        </div>
+        <div class="info">
+            <p class="title">Email ID:</p>
+            <div class="content">dnyaneshbachhav2002@gmail.com</div>
+        </div>
+        <div class="info">
+            <p class="title">Duration:</p>
+            <div class="content">1-Apr-2023 to 1-Dec-2023</div>
+        </div>
+        <div class="info">
+            <p class="title">Date:</p>
+            <div class="content">29/12/2023</div>
+        </div>
+    </div>
             <table id="transactions">
                 <thead>
                     <th>No.</th>
@@ -101,6 +155,7 @@ function ReportScreen(){
                 ${ tableData }
                 </tbody>
             </table>
+            
         </body>
         </html>
         `;
