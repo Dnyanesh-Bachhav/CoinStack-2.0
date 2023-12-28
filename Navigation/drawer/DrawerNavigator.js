@@ -10,6 +10,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Text, View } from 'react-native';
+import ReportScreen from '../../screens/ReportScreen';
+import { Feather } from '@expo/vector-icons';
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
     return(
@@ -74,10 +76,10 @@ const DrawerNavigator = () => {
                     <FontAwesome5 name="robot" size={24} color={color} />
                 )
             }} />
-            <Drawer.Screen name="Report" component={ChatbotScreen} 
+            <Drawer.Screen name="Download Report" component={ReportScreen} 
             options={{
                 drawerIcon: ({color})=>(
-                    <FontAwesome5 name="robot" size={24} color={color} />
+                    <Feather name="download" size={24} color={color} />
                 )
             }} />
         </Drawer.Navigator>
