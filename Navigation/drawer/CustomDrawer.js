@@ -67,14 +67,6 @@ function CustomDrawer(props) {
                 }} >
                     <View style={styles.bottomListItem}>
                         <Entypo name="share" size={24} color="black" />
-                        <Text style={{marginLeft: 5}} >Tell a friend1</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>{
-                    handleShare();
-                }} >
-                    <View style={styles.bottomListItem}>
-                        <Entypo name="share" size={24} color="black" />
                         <Text style={{marginLeft: 5}} >Tell a friend</Text>
                     </View>
                 </TouchableOpacity>
