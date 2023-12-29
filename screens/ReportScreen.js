@@ -16,7 +16,7 @@ function ReportScreen(){
     const animationRef = useRef(null);
     const ModalPopUp = ({ visible, children }) => {
         return (
-          <Modal transparent visible={visible} style={{ width: '100%', height: '100%', borderWidth: 2 }} animationType="fade">
+          <Modal transparent visible={visible} style={{ width: '100%', height: '100%' }} animationType="fade">
             <View style={styles.modalContainer}>
               <View style={styles.modalData}>{children}</View>
             </View>
@@ -202,20 +202,20 @@ function ReportScreen(){
             <Header />
 
             <ModalPopUp visible={visible}>
-            <View style={{ width: '100%', height: '100%' }} >
-                <LottieView
-                    ref={animationRef}
-                    style={{
-                            width: '100%',
-                            height: '100%',
-                            alignSelf: 'center',
-                            color: COLORS.primary,
-                    }}
-                    autoPlay
-                    loop
-                    source={require('../assets/Loading (1).json')}
-                />
-            </View>
+                <View style={{ width: '100%', height: '100%' }} >
+                    <LottieView
+                        ref={animationRef}
+                        style={{
+                                width: '100%',
+                                height: '100%',
+                                alignSelf: 'center',
+                                color: COLORS.primary,
+                        }}
+                        autoPlay
+                        loop
+                        source={require('../assets/Loading (1).json')}
+                    />
+                </View>
           </ModalPopUp>
 
             <View style={styles.contentContainer}>

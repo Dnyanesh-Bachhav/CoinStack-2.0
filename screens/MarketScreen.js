@@ -1,5 +1,5 @@
 import react,{useEffect,useState,useContext,useRef} from "react";
-import {View,Text,StyleSheet,FlatList,ActivityIndicator,RefreshControl,TouchableOpacity,Pressable } from 'react-native';
+import {View,Text,StyleSheet,FlatList,ActivityIndicator,RefreshControl,TouchableOpacity,Pressable,Modal } from 'react-native';
 import CoinItem from "../components/marketScreen/CoinItem";
 import SearchBar from "../components/marketScreen/SearchBar";
 import TableHeader from "../components/marketScreen/TableHeader";
@@ -16,6 +16,8 @@ import Button1 from "../components/marketScreen/Button1";
 import SheetComponent from "../components/marketScreen/BottomSheetItem";
 import { FlashList } from "@shopify/flash-list";
 import { Spinner, YStack } from "tamagui";
+import LottieView from 'lottie-react-native';
+
 function MarketScreen(){
     const refRBSheet = useRef();
     const navigation = useNavigation();
@@ -26,11 +28,26 @@ function MarketScreen(){
     const [loading,setLoading] = useState(false);
     const [connected,setConnected] = useState(true);
     const [componentHeight,setComponentHeight] = useState();
+    const [visible, setVisible] = useState(false);
+    const animationRef = useRef(null);
     const checkConnection = async ()=>{
         const data = await NetInfo.fetch();
         setConnected(data.isConnected);
     }
     
+    
+    const ModalPopUp = ({ visible, children }) => {
+        return (
+          <Modal transparent visible={visible} style={{ width: '100%', height: '100%' }} animationType="fade">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalData}>{children}</View>
+            </View>
+            
+          </Modal>
+        );
+      };
+
+
     let count = 0;
     const fetchData = async(pageNumber)=>{
         if(loading)
@@ -38,10 +55,12 @@ function MarketScreen(){
             return;
         }
         setLoading(true);
+        setVisible(true);
         console.log("PageNumber: "+pageNumber);
         const data = await getCoins(pageNumber);
         setCoinsData((existingData)=> ([...existingData,...data]));
         setLoading(false);
+        setVisible(false);
     }
     const refetchData = async()=>{
         if(loading)
@@ -63,7 +82,25 @@ function MarketScreen(){
             connected ? (
             <View style={styles.container}>
                 <SearchBar refRBSheet={refRBSheet} setCurrentCoin={setCurrentCoin} />
+                
                 <TableHeader/>
+                <ModalPopUp visible={visible}>
+                    <View style={{ width: '100%', height: '100%' }} >
+                        <LottieView
+                            ref={animationRef}
+                            style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    alignSelf: 'center',
+                                    color: COLORS.primary,
+                            }}
+                            autoPlay
+                            loop
+                            source={require('../assets/Loading (1).json')}
+                        />
+                    </View>
+          </ModalPopUp>
+
                 {
                     !loading && coinsData ? (
                     <FlatList
@@ -117,9 +154,20 @@ function MarketScreen(){
                     // : <ActivityIndicator/>
                     : 
                     
-                    <YStack padding="$3" space="$4" alignItems="center">
-                        <Spinner size="large" color="$green10" />
-                    </YStack>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                        <LottieView
+                            ref={animationRef}
+                            style={{
+                                    width: '40%',
+                                    height: '40%',
+                                    alignSelf: 'center',
+                                    color: COLORS.primary,
+                            }}
+                            autoPlay
+                            loop
+                            source={require('../assets/Loading (1).json')}
+                        />
+                    </View>
                 }
                 
             </View>)
@@ -134,5 +182,34 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10
     },
+    
+    reportItem:{
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.gray,
+        marginBottom: 16,
+        paddingBottom: 4
+    },
+    modalContainer: {
+        // flex: 1,
+        width: '100%',
+        height: '100%',
+        // borderWidth: 2,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      modalData: {
+        width: "65%",
+        height: "16%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.white,
+        borderRadius: 10,
+        elevation: 10,
+      },
+      modalHeader: {
+        width: "100%",
+        alignItems: "flex-end",
+      },
 });
 export default MarketScreen;
