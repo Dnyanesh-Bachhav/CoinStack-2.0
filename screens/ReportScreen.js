@@ -1,16 +1,31 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Modal } from "react-native";
 import { COLORS } from "../components/constants";
 import { Paragraph, SizableText } from "tamagui";
 import Header from "../components/ReportScreen/Header";
 import { transactionContext } from "../Contexts/TransactionContext";
+import { Entypo } from "@expo/vector-icons";
+import LottieView from 'lottie-react-native';
 
 function ReportScreen(){
     const [ loading, setLoading ] = useState(false);
     const { transactions, storeTransaction } = useContext(transactionContext);
+    const [visible, setVisible] = useState(false);
+    const animationRef = useRef(null);
+    const ModalPopUp = ({ visible, children }) => {
+        return (
+          <Modal transparent visible={visible} style={{ width: '100%', height: '100%', borderWidth: 2 }} animationType="fade">
+            <View style={styles.modalContainer}>
+              <View style={styles.modalData}>{children}</View>
+            </View>
+            
+          </Modal>
+        );
+      };
     const generateReportPDF = async ()=>{
+        setVisible(true);
         const html = `
         <!DOCTYPE html>
         <html lang="en">
@@ -29,8 +44,19 @@ function ReportScreen(){
         const { uri } = await Print.printToFileAsync({ html });
         console.log('File has been saved to:', uri);
         await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+        setVisible(false);
+    }
+    const timeoutPromise = async ()=>{
+        return new Promise((resolve, reject)=>{
+            setTimeout(() => {
+                // just a timer
+                setVisible(false);
+                resolve();
+            }, 1600);
+        });
     }
     async function generateTradeReport(){
+        setVisible(true);
         setLoading(true);
         console.log(transactions[0]);
         let tableData = "";
@@ -45,7 +71,7 @@ function ReportScreen(){
                 <td>${ item.date }</td>
             </tr>
             `;
-        } )
+        })
         const html = `
         <!DOCTYPE html>
         <html lang="en">
@@ -159,10 +185,14 @@ function ReportScreen(){
         </body>
         </html>
         `;
-        const { uri } = await Print.printToFileAsync({ html });
-        console.log('File has been saved to:', uri);
-        await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
-        setLoading(false);
+        const print = await Print.printToFileAsync({ html });
+        console.log('File has been saved to:', print.uri);
+        const timeout = timeoutPromise();
+        Promise.all([print, timeout]).then(async ()=>{
+            await shareAsync(print.uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+            setLoading(false);
+        });
+        
     }
     useEffect(()=>{
         // generateReportPDF();
@@ -170,6 +200,24 @@ function ReportScreen(){
     return(
         <View style={styles.container}>
             <Header />
+
+            <ModalPopUp visible={visible}>
+            <View style={{ width: '100%', height: '100%' }} >
+                <LottieView
+                    ref={animationRef}
+                    style={{
+                            width: '100%',
+                            height: '100%',
+                            alignSelf: 'center',
+                            color: COLORS.primary,
+                    }}
+                    autoPlay
+                    loop
+                    source={require('../assets/Loading (1).json')}
+                />
+            </View>
+          </ModalPopUp>
+
             <View style={styles.contentContainer}>
                 <TouchableOpacity style={styles.reportItem} onPress={()=>{
                     generateTradeReport();
@@ -207,6 +255,28 @@ const styles = StyleSheet.create({
         borderBottomColor: COLORS.gray,
         marginBottom: 16,
         paddingBottom: 4
-    }
+    },
+    modalContainer: {
+        // flex: 1,
+        width: '100%',
+        height: '100%',
+        // borderWidth: 2,
+        backgroundColor: "rgba(0,0,0,0.5)",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      modalData: {
+        width: "65%",
+        height: "16%",
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: COLORS.white,
+        borderRadius: 10,
+        elevation: 10,
+      },
+      modalHeader: {
+        width: "100%",
+        alignItems: "flex-end",
+      },
 })
 export default ReportScreen;

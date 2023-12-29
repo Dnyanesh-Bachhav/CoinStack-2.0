@@ -90,7 +90,7 @@ function Tabs(){
                                 ...styles.imgStyle }}/>
                             {
                                 focused &&
-                            <Text numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >News</Text>
+                            <Text numberOfLines={1} style={{color: focused ? COLORS.primary : COLORS.blueFaint,}} >Learn</Text>
                             }
                             </View>
                         </View>
