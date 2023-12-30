@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { Accordion } from "tamagui";
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { Progress } from "tamagui";
+import Header from "../components/LearningScreen/Header";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = WIDTH/1.9;
@@ -14,7 +15,9 @@ function LearningScreen() {
   const video = useRef();
   return (
     <View style={styles.container}>
-      <H3>Learn Crypto Trading</H3>
+      {/* <H3>Learn Crypto Trading</H3> */}
+      <Header />
+      <View style={styles.contentContainer}>
       <ScrollView style={{ marginBottom: 10 }} showsVerticalScrollIndicator={ false }>
       {/* Video Section */}
       <Video
@@ -49,7 +52,7 @@ function LearningScreen() {
                 <View style={{ width: "100%", elevation: 10 }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%" }} >
                       <Paragraph size="$5" >1. Introduction</Paragraph>
-                      <View style={{ backgroundColor: COLORS.lightGreen, borderRadius: 50, justifyContent: 'center', alignItems: 'center', padding: 4, borderWidth: 1, borderColor: COLORS.gray }} >
+                      <View style={{ backgroundColor: COLORS.primaryFaint, borderRadius: 50, justifyContent: 'center', alignItems: 'center', padding: 4, borderWidth: 1, borderColor: COLORS.gray }} >
                           <Square animation="quick" rotate={open ? "180deg" : "0deg"}>
                               <ChevronDown size="$1" />
                           </Square>
@@ -93,7 +96,7 @@ function LearningScreen() {
                 <View style={{ width: "100%", elevation: 10 }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%" }} >
                       <Paragraph size="$5" >2. Introduction</Paragraph>
-                      <View style={{ backgroundColor: COLORS.lightGreen, borderRadius: 50, justifyContent: 'center', alignItems: 'center', padding: 4, borderWidth: 1, borderColor: COLORS.gray }} >
+                      <View style={{ backgroundColor: COLORS.primaryFaint, borderRadius: 50, justifyContent: 'center', alignItems: 'center', padding: 4, borderWidth: 1, borderColor: COLORS.gray }} >
                           <Square animation="quick" rotate={open ? "180deg" : "0deg"}>
                               <ChevronDown size="$1" />
                           </Square>
@@ -114,15 +117,13 @@ function LearningScreen() {
           </Accordion.Item>
         </Accordion>
       </ScrollView>
-
+    </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
     // paddingBottom: 40
     // backgroundColor: COLORS.white,
   },
@@ -135,5 +136,9 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     borderRadius: 16,
   },
+  contentContainer:{
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  }
 });
 export default LearningScreen;

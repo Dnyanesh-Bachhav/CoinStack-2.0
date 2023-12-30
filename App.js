@@ -1,6 +1,6 @@
 import HomeScreen from './screens/HomeScreen';
 import react,{useEffect,useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, StatusBar } from 'react-native';
 import { COLORS } from './components/constants';
 import { NavigationContainer } from '@react-navigation/native';
 import Tabs from './Navigation/bottom/tabs';
@@ -59,7 +59,7 @@ export default function App() {
     
     
   }
-    <StatusBar style="auto" backgroundColor={COLORS.primary} styles={styles.statusBarStyle} />
+    <StatusBar style="auto" backgroundColor={"#632791"} styles={styles.statusBarStyle} />
     </SafeAreaView>
     
   );
@@ -71,5 +71,6 @@ const styles = StyleSheet.create({
   },
   statusBarStyle:{
     backgroundColor: COLORS.primary,
+
   }
 });

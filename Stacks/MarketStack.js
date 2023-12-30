@@ -7,12 +7,20 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import WatchListScreen from '../screens/WatchListScreen';
 import CoinDetailedScreen from '../screens/CoinChartScreen';
 import DetailNewsScreen from '../screens/DetailNewsScreen';
+import { COLORS } from '../components/constants';
 const MarketScreenStack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 function TopBar(){
     return(
 
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={{
+            tabBarStyle:{
+                // backgroundColor: COLORS.primary,
+            },
+            tabBarIndicatorStyle:{
+                backgroundColor: COLORS.primary,
+            }
+        }} >
             <Tab.Screen name='Market' component={MarketScreen} options={{
                 headerShown: false
             }} />

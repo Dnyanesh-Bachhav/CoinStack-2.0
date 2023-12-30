@@ -1,4 +1,3 @@
-import react from "react";
 import {View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import { COLORS } from "../constants";
 import Button from './Button';
@@ -7,7 +6,6 @@ function Basket({name,description,imgSrc}){
     const navigation = useNavigation();
     return (
       <View style={styles.container}>
-        
           <View style={styles.basket}>
             <Image
               source={imgSrc}
@@ -22,7 +20,6 @@ function Basket({name,description,imgSrc}){
              Hello there it is just a basket of High Traded Volume Crypto...
           </Text>
           <View style={styles.btnContainer}>
-          
             <Button button_text={"Check out"} navigation={navigation} screenName={name} imgSrc={imgSrc} />
           </View>
       </View>
