@@ -131,14 +131,17 @@ function SellCoinScreen({route}){
               borderRadius: 10,
               marginTop: 10,
               overflow: "hidden",
+              elevation: 2,
             }}
           >
             <SizableText
               style={{
-                width: "16%",
+                width: "18%",
                 color: COLORS.grayDark,
                 backgroundColor: COLORS.white,
-                padding: 10,
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+                textAlign: 'center',
                 borderRightWidth: 1,
                 borderColor: COLORS.primaryFaint,
               }}
@@ -149,7 +152,7 @@ function SellCoinScreen({route}){
               inputMode="numeric"
               cursorColor={COLORS.grayDark}
               value={coinValue}
-              style={{ color: COLORS.grayDark, marginLeft: 10 }}
+              style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }}
               onChangeText={(data)=>{
                 if(parseFloat(data)>0 && parseFloat(data)<=itemQuantity) 
                 {
@@ -176,14 +179,16 @@ function SellCoinScreen({route}){
               borderRadius: 10,
               marginTop: 10,
               overflow: "hidden",
+              elevation: 2,
             }}
           >
             <SizableText
               style={{
-                width: "16%",
+                width: "18%",
                 color: COLORS.grayDark,
                 backgroundColor: COLORS.white,
                 padding: 10,
+                textAlign: 'center',
                 borderRightWidth: 1,
                 borderColor: COLORS.primaryFaint,
               }}
@@ -194,7 +199,7 @@ function SellCoinScreen({route}){
               inputMode="numeric"
               cursorColor={COLORS.grayDark}
               value={coinLocalCurrencyValue}
-              style={{ color: COLORS.grayDark, marginLeft: 10 }}
+              style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }}
               onChangeText={(value) => {
                 changeLocalValue(value);
               }}

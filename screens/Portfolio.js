@@ -53,6 +53,8 @@ function PortfolioScreen() {
 
   useEffect(() => {
     checkConnection();
+    console.log("Invested: "+invested);
+    console.log("Current: "+current);
     calculatePortfolio(portfolioCoins);
   }, []);
   return (
@@ -128,6 +130,7 @@ function PortfolioScreen() {
             refreshControl={<RefreshControl onRefresh={checkConnection} />}
           >
             <View style={{ marginHorizontal: 10 }} >
+              {/* <Text>Hello</Text> */}
               <InvestmentInfo invested={invested} current={current} />
               <InfoModal setVisible={setVisible} />
             </View>

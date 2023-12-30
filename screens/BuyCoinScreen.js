@@ -133,15 +133,17 @@ function BuyCoinScreen({ route }) {
               borderRadius: 10,
               marginTop: 10,
               overflow: "hidden",
+              elevation: 2,
             }}
           >
             <SizableText
               style={{
-                width: "16%",
+                width: "18%",
                 color: COLORS.grayDark,
                 backgroundColor: COLORS.white,
                 padding: 10,
                 borderRightWidth: 1,
+                textAlign: 'center',
                 borderColor: COLORS.primaryFaint,
               }}
             >
@@ -151,7 +153,7 @@ function BuyCoinScreen({ route }) {
               inputMode="numeric"
               cursorColor={COLORS.grayDark}
               value={coinValue}
-              style={{ color: COLORS.grayDark, marginLeft: 10 }}
+              style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }}
               onChangeText={(value) => {
                   if (value > 0) setItemQuantity(value);
                 changeCoinValue(value);
@@ -169,15 +171,17 @@ function BuyCoinScreen({ route }) {
               borderRadius: 10,
               marginTop: 10,
               overflow: "hidden",
+              elevation: 2,
             }}
           >
             <SizableText
               style={{
-                width: "16%",
+                width: "18%",
                 color: COLORS.grayDark,
                 backgroundColor: COLORS.white,
                 padding: 10,
                 borderRightWidth: 1,
+                textAlign: 'center',
                 borderColor: COLORS.primaryFaint,
               }}
             >
@@ -187,7 +191,7 @@ function BuyCoinScreen({ route }) {
               inputMode="numeric"
               cursorColor={COLORS.grayDark}
               value={coinLocalCurrencyValue}
-              style={{ color: COLORS.grayDark, marginLeft: 10 }}
+              style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }}
               onChangeText={(value) => {
                 changeLocalValue(value);
               }}
