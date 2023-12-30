@@ -226,8 +226,11 @@ function BuyCoinScreen({ route }) {
               storeTransaction({
                 name: route.params.name,
                 type: "Buy",
+                currentPrice: currentPrice,
+                total: parseFloat(itemQuantity) * currentPrice,
                 date: configureDate(),
                 coin: route.params.symbol.toUpperCase(),
+                imgSrc: route.params.imgSrc,
                 quantity: itemQuantity,
               });
             } else {
@@ -240,8 +243,11 @@ function BuyCoinScreen({ route }) {
               storeTransaction({
                 name: route.params.name,
                 type: "Buy",
+                total: parseFloat(itemQuantity) * currentPrice,
                 date: configureDate(),
+                currentPrice: currentPrice,
                 coin: route.params.symbol.toUpperCase(),
+                imgSrc: route.params.imgSrc,
                 quantity: itemQuantity,
               });
             }

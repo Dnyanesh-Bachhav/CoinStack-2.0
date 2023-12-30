@@ -268,7 +268,10 @@ function SellCoinScreen({route}){
                             type: "Sell",
                             date: configureDate(),
                             coin: route.params.symbol.toUpperCase(),
-                            quantity: inputVal
+                            quantity: inputVal,
+                            imgSrc: route.params.imgSrc,
+                            currentPrice: currentPrice,
+                            total: parseFloat(itemQuantity) * currentPrice,
                         });
                     }
                     else{
@@ -285,7 +288,10 @@ function SellCoinScreen({route}){
                             type: "Sell",
                             date: configureDate(),
                             coin: route.params.symbol.toUpperCase(),
-                            quantity: inputVal
+                            quantity: inputVal,
+                            imgSrc: route.params.imgSrc,
+                            currentPrice: currentPrice,
+                            total: parseFloat(itemQuantity) * currentPrice,
                         });
                     }
                     if(isValidData)

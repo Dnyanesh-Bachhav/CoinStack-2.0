@@ -37,6 +37,9 @@ function PortfolioScreen() {
     setInvested(Math.round(invested1));
     setCurrent(Math.round(current1));
   };
+  const calculateCurrentPortfolio = ()=>{
+
+  }
   const checkConnection = async () => {
     const data = await NetInfo.fetch();
     setConnected(data.isConnected);
@@ -126,7 +129,7 @@ function PortfolioScreen() {
           </ModalPopUp>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ height: '100%' }}
+            // contentContainerStyle={{ height: '100%' }}
             refreshControl={<RefreshControl onRefresh={checkConnection} />}
           >
             <View style={{ marginHorizontal: 10 }} >
@@ -139,6 +142,7 @@ function PortfolioScreen() {
                 flex: 1,
                 height: "100%",
                 backgroundColor: COLORS.white,
+                // alignSelf: 'center',
                 marginTop: 10,
                 borderTopRightRadius: 20,
                 borderTopLeftRadius: 20,

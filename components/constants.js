@@ -10,6 +10,7 @@ const COLORS = {
     white: '#ffffff',
     black: '#000000',
     gray: '#C4C4C4',
+    grayLight: "#d2d2d2",
     grayDark: '#A39F9F',
     success: '#067A0A',
     activeGreen: '#5bb98c',
