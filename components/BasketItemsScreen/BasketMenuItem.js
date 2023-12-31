@@ -2,28 +2,27 @@ import react from 'react';
 import {View,Text,StyleSheet,Image} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS } from '../constants';
-function BasketMenuItem({name, percentage, imgSrc, price }){
-    const per_color = percentage > 0 ? COLORS.success : COLORS.red;
+function BasketMenuItem({ item }){
+    const per_color = item.price_change_percentage_24h > 0 ? COLORS.success : COLORS.red;
 
     return(
         <View style={styles.container}>
             <View style={{justifyContent: 'center', alignItems: 'center'}} >
                 <Image 
                     source={{
-                        uri: imgSrc
+                        uri: item.image
                     }}
                     style={styles.imgStyle}
                 />
             </View>
             <View style={styles.coinName}>
-                <Text>{name}</Text>
-                <Text>{"btc".toUpperCase()}</Text>
+                <Text>{item.name}</Text>
+                <Text>{item.symbol.toUpperCase()}</Text>
             </View>
-            <Text style={styles.coinPrice}>₹{ price || 3200000}</Text>
-            <View style={{backgroundColor: percentage > 0 ? COLORS.lightGreen : COLORS.lightRed, ...styles.coinPercentage}}>
-                {console.log("Percentage of coin: "+percentage)}
-                <Text style={{color: per_color,fontWeight: 'bold' }}>{percentage}%</Text>
-                <AntDesign name={percentage > 0 ? "caretup" : "caretdown"} size={16} color={per_color} />
+            <Text style={styles.coinPrice}>₹{item.current_price}</Text>
+            <View style={{backgroundColor: item.price_change_percentage_24h > 0 ? COLORS.lightGreen : COLORS.lightRed, ...styles.coinPercentage}}>
+                <Text style={{color: per_color,fontWeight: 'bold' }}>{item.price_change_percentage_24h.toFixed(2)}%</Text>
+                <AntDesign name={item.price_change_percentage_24h > 0 ? "caretup" : "caretdown"} size={16} color={per_color} />
             </View>
         </View>
     );

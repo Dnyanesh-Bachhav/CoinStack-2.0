@@ -98,6 +98,16 @@ export const getWatchlistedCoins = async (pageNumber = 1, coinIds) => {
       console.log(e);
     }
   }
+const getSpecificCoins = async (pageNumber = 1, coinIds) => {
+    try {
+      const response = await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=INR&ids=${coinIds}&order=market_cap_desc&per_page=50&page=${pageNumber}&sparkline=false&price_change_percentage=24h`);
+    // console.log(response?.data);
+      return response?.data;
+    } catch (e) {
+      console.log(e);
+      return { "error": e.message };
+    }
+  }
   const getCoinMarketChart = async (coinId, selectedRange) => {
     try {
       const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=inr&days=${selectedRange}`)
@@ -110,7 +120,7 @@ export const getWatchlistedCoins = async (pageNumber = 1, coinIds) => {
   }
   
   
-export {getCoins,getTopCoins,getMarketHighChangedData,getCoinHistory,getCoinDataById,getAllCoins,getGreedAndFearIndex, getChatbotReply1, getCoinMarketChart };
+export {getCoins,getTopCoins,getMarketHighChangedData,getCoinHistory,getCoinDataById,getAllCoins,getGreedAndFearIndex, getChatbotReply1, getCoinMarketChart, getSpecificCoins };
 
 
 

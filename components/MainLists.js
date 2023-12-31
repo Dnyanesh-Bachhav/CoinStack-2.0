@@ -53,17 +53,17 @@ function MainLists(){
             <SizableText theme="alt2" size={"$3"}>People usually buy these coins</SizableText>
             {/* Newly Launched */}
             {/* <TitleText title="Newly Launched..." descriptionText="Explore more assets for your portfolio"/> */}
-            <ListCoins coinData={MostGainedCoins} type={"NewlyLaunched"} />
+            <ListCoins coinData={MostGainedCoins} loading={loading} type={"NewlyLaunched"} />
             {/* Most Gained Coins */}
             {/* <TitleText title="Top Gainers..." descriptionText="Coins that have gain the most in 24 hours"/> */}
             <Paragraph size="$7" fontWeight="800">Top Gainers</Paragraph>
             <SizableText theme="alt2" size={"$3"}>Coins that have gain the most in 24 hours</SizableText>
-            <ListCoins coinData={arrayData} type={"MostGained"} />
+            <ListCoins coinData={arrayData} loading={loading} type={"MostGained"} />
             {/* Most Lossed Coins */}
             {/* <TitleText title="Popular coins..." descriptionText="People usually buy these coins..."/> */}
             <Paragraph size="$7" fontWeight="800">Popular coins</Paragraph>
             <SizableText theme="alt2" size={"$3"}>People usually buy these coins</SizableText>
-            <ListCoins coinData={topCoins} type={"Popular"} />
+            <ListCoins coinData={topCoins} loading={loading}  type={"Popular"} />
             {/* <TitleText title="Crypto News" descriptionText="News in the market..."/> */}
 
         </View>

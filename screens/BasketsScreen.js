@@ -37,11 +37,11 @@ function BasketsScreen(){
                 <ScrollView style={{width: '100%'}}
                 contentContainerStyle={{alignItems: 'center',paddingBottom: 20}}
                 showsVerticalScrollIndicator={false} >
-                    <Basket name="High Volume" description="Highly traded coins in last 24h" data={MostGainedCoins2} imgSrc={Volume} />
-                    <Basket name="High Profit coins" description="Highly profitable coins in last 24h" data={MostGainedCoins2} imgSrc={Profit} />
-                    <Basket name="High Loss coins" description="Coins which are corrected more in last 24h" data={MostGainedCoins2} imgSrc={loss1} />
-                    <Basket name="Trusted Coins" description="Trustworthy coins" data={MostGainedCoins2} imgSrc={trust} />
-                    <Basket name="Meme Coins" description="Meme coins highly volatile" data={MostGainedCoins2} imgSrc={meme}/>
+                    <Basket name="High Volume" oneline_description="Highly traded coins in last 24h" basket_description="The given basket list out all the cryptos which has high trade volume" data={MostGainedCoins2} imgSrc={Volume} />
+                    <Basket name="High Profit coins" oneline_description="Highly profitable coins in last 24h" basket_description="The given basket list out all the cryptos which has high trade volume" data={MostGainedCoins2} imgSrc={Profit} />
+                    <Basket name="High Loss coins" oneline_description="Coins which are corrected more in last 24h" basket_description="The given basket list out all the cryptos which has high trade volume" data={MostGainedCoins2} imgSrc={loss1} />
+                    <Basket name="Trusted Coins" oneline_description="Trustworthy coins" basket_description="The given basket list out all the cryptos which has high trade volume" data={MostGainedCoins2} imgSrc={trust} />
+                    <Basket name="Meme Coins" oneline_description="Meme coins highly volatile" basket_description="The given basket list out all the cryptos which has high trade volume" data={MostGainedCoins2} imgSrc={meme}/>
                 </ScrollView>
             </View>
             : <NoInternetScreen/>

@@ -1,20 +1,99 @@
-import react,{useState,useEffect} from "react";
-import {View,Text,StyleSheet,FlatList} from 'react-native';
+import react,{useState,useEffect, useRef} from "react";
+import {View,Text,StyleSheet,FlatList, Alert} from 'react-native';
 import BasketMenuItem from "../components/BasketItemsScreen/BasketMenuItem";
 import Header from "../components/BasketItemsScreen/Header";
-import { MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins } from '../components/constants';
+import { MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins, COLORS, MEME_COINS_IDS, TRUSTED_COINS_IDS } from '../components/constants';
+import { getSpecificCoins, getTopCoins } from "../Services/requests";
+import LottieView from 'lottie-react-native';
+import { AlertDialog, Button, XStack, YStack } from 'tamagui'
 function BasketItems({route}){
     const screenName = route.params.screenName;
     const [arrayData,setArrayData ] = useState([]);
-    useEffect(()=>{
+    const animationRef = useRef(null);
+    const [topCoins,setTopCoins] = useState([]);
+    const [loading,setLoading] = useState(false);
 
+    
+    
+    async function getTopMarketCoins(){
+        setLoading(true);
+        const data = await getTopCoins();
+        setArrayData(data);
+        setLoading(false);
+    }
+    
+
+  const transformMemeCoinIds = () => MEME_COINS_IDS.join('%2C');
+  const transformTrustedCoinIds = () => TRUSTED_COINS_IDS.join('%2C');
+
+  const fetchTrustedCoins = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    const trustedCoinData = await getSpecificCoins(1,  transformTrustedCoinIds());
+    console.log("get specific coins response: ");
+    console.log(trustedCoinData);
+    if(trustedCoinData.error!=null)
+    {
+        return (
+            Alert.alert('Network Error', 'There is something wrong with network or API response...', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () =>
+                    {
+                        setLoading(false);
+                        console.log('OK Pressed')
+                    },
+                }
+              ])
+        );
+    }
+    setArrayData(trustedCoinData);
+    setLoading(false);
+  };
+
+  const fetchMemeCoins = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    const memeCoinData = await getSpecificCoins(1, transformMemeCoinIds());
+    console.log("get specific coins response: ");
+    console.log(memeCoinData);
+    if(memeCoinData.error!=null)
+    {
+        return (
+            Alert.alert('Network Error', 'There is something wrong with network or API response...', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () =>
+                    {
+                        setLoading(false);
+                        console.log('OK Pressed')
+                    },
+                }
+              ])
+        );
+    }
+    setArrayData(memeCoinData);
+    setLoading(false);
+  };
+
+    useEffect(()=>{
         if( screenName === "High Volume")
         {
-            setArrayData(MostGainedCoins2);
+            getTopMarketCoins();
         }
         if( screenName === "High Profit coins")
         {
-            setArrayData(profitCoins);
+
         }
         if( screenName === "High Loss coins")
         {
@@ -22,24 +101,49 @@ function BasketItems({route}){
         }
         if( screenName === "Trusted Coins")
         {
-            setArrayData(trustedCoins);
+            fetchTrustedCoins();
         }
         if( screenName === "Meme Coins")
         {
-            setArrayData(memeCoins);
+            fetchMemeCoins();
         }
-    });
+    },[]);
     return(
         <View style={styles.container}>
             <Header name={ route.params.screenName } imgSrc={route.params.imgSrc} />
-            <FlatList
-                data={arrayData}
-                renderItem={({item})=>(
-                    <BasketMenuItem name={item.name} percentage={item.percentage} imgSrc={item.imgSrc ||"https://assets.coingecko.com/coins/images/1372/large/WAX_Coin_Tickers_P_512px.png" } price={item.price} />
-                )}
-                style={ styles.listStyle }
-                keyExtractor={(item,index)=>index}
-            />
+            
+            {
+                !loading ? (
+                <FlatList
+                    data={arrayData}
+                    renderItem={({item})=>(
+                        <BasketMenuItem item={item} />
+                    )}
+                    style={ styles.listStyle }
+                    keyExtractor={(item,index)=>index}
+                />)
+                :
+                (
+                    <View
+                      style={{ justifyContent: "center", alignItems: "center", width: '100%', height: '100%' }}
+                    >
+                      <LottieView
+                        ref={animationRef}
+                        style={{
+                          width: "40%",
+                          height: "40%",
+                          alignSelf: "center",
+                          color: COLORS.primary,
+                        }}
+                        autoPlay
+                        loop
+                        source={require("../assets/Loading (1).json")}
+                      />
+                    </View>
+                  )
+
+
+            }
             
         </View>
     );
@@ -47,7 +151,8 @@ function BasketItems({route}){
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1
+        flex: 1,
+        backgroundColor: COLORS.white,
     },
     listStyle:{
         padding: 10

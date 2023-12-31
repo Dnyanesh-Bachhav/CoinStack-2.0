@@ -27,6 +27,9 @@ const COLORS = {
     primaryFaint: "#f2edf5",
     blueFaint: "#9DB2CE",
 }
+const MEME_COINS_IDS = ["dogecoin","shiba-inu","bonk","corgiai","pepe","floki","memecoin-2"];
+const TRUSTED_COINS_IDS = ["bitcoin","ethereum","binancecoin","solana","ripple","cardano","tron","uniswap","decentraland"];
+
 const MostGainedCoins = [
     {
       id: 1,
@@ -649,4 +652,4 @@ const bitcoin_data = [
     },
   ];
   
-export {COLORS,MostGainedCoins,MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins,banners, bitcoin_data  };
+export {COLORS,MostGainedCoins,MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins,banners, bitcoin_data, MEME_COINS_IDS, TRUSTED_COINS_IDS  };

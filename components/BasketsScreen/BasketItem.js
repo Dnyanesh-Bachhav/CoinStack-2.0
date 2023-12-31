@@ -2,7 +2,7 @@ import {View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 import { COLORS } from "../constants";
 import Button from './Button';
 import {useNavigation} from '@react-navigation/native';
-function Basket({name,description,imgSrc}){
+function Basket({name, oneline_description, basket_description,imgSrc}){
     const navigation = useNavigation();
     return (
       <View style={styles.container}>
@@ -13,11 +13,11 @@ function Basket({name,description,imgSrc}){
             />
             <View>
               <Text style={styles.basketName}>{name}</Text>
-              <Text>{description}</Text>
+              <Text>{oneline_description}</Text>
             </View>
           </View>
           <Text style={styles.description}>
-             Hello there it is just a basket of High Traded Volume Crypto...
+             { basket_description }
           </Text>
           <View style={styles.btnContainer}>
             <Button button_text={"Check out"} navigation={navigation} screenName={name} imgSrc={imgSrc} />
