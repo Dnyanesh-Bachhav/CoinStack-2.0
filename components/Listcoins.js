@@ -48,6 +48,7 @@ function ListCoins({coinData,loading,type}){
                 coinName={item.name}
                 coinId={item.id}
                 imgUrl={`${getImageUrl(item)}`}
+                symbol={ item.symbol  }
                 percentage={
                   item.market_cap_change_percentage_24h ||
                   item.market_cap_change_24h

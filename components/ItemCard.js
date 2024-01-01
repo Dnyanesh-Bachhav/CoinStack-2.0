@@ -9,7 +9,7 @@ import { SizableText } from 'tamagui';
 
 import { AntDesign } from '@expo/vector-icons';
 import { ChevronDown } from "@tamagui/lucide-icons";
-function ItemCard({coinName,percentage,price,coinId,imgUrl }){
+function ItemCard({coinName, symbol, percentage,price,coinId,imgUrl }){
   const navigation = useNavigation();
   return(
     <View style={styles.container}>
@@ -20,6 +20,8 @@ function ItemCard({coinName,percentage,price,coinId,imgUrl }){
         navigation.navigate("coinDetails",{
           coin: coinName,
           coinId: coinId,
+          symbol: symbol,
+          currentPrice: price,
           imgUrl: imgUrl || "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
         });
       }} style={styles.card} >
