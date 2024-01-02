@@ -47,6 +47,7 @@ import { CandlestickChart } from "@tamagui/lucide-icons";
 import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
 import Converter from "../components/CoinDetailedScreen/Converter";
 import Statistics from "../components/CoinDetailedScreen/Statistics";
+import { useWatchlist } from "../Contexts/WatchListContext";
 const { width } = Dimensions.get("window");
 
 function CoinDetailedScreen({ route }) {
@@ -63,6 +64,18 @@ function CoinDetailedScreen({ route }) {
   const [loading, setLoading] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(route.params.currentPrice);
 
+  const { watchlistCoinIds, removeWatchlistCoinId, storeWatchlistCoinId } = useWatchlist();
+    function checkIfCoinIsWatchListed(coinId){
+        return watchlistCoinIds.some((coinIdValue)=> coinIdValue===coinId);
+    }
+    function handleWatchListCoin(){
+        if(checkIfCoinIsWatchListed(route.params.coinId))
+        {
+            return removeWatchlistCoinId(route.params.coinId);
+        }
+        return storeWatchlistCoinId(route.params.coinId);
+    }
+    
   const fetchMarketCoinData = async (selectedRangeValue) => {
     setLoading(true);
 
@@ -127,7 +140,10 @@ function CoinDetailedScreen({ route }) {
             </View>
             {/* LOGOS */}
             <View style={{ alignItems: 'flex-end' }} >
-              <AntDesign name="staro" size={21} color={ COLORS.primary } />
+              <FontAwesome name={ checkIfCoinIsWatchListed(route.params.coinId) ? "star" : "star-o" }  size={24} color={ checkIfCoinIsWatchListed(route.params.coinId) ? "#FFBF00" : "black" }  onPress={()=>
+                {
+                  handleWatchListCoin();
+                }} />
               <FontAwesome name="magic" size={21} color={ COLORS.primary } style={{ marginTop: 5 }} />
             </View>
           </View>
