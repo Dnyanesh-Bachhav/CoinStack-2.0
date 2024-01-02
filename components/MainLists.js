@@ -3,7 +3,7 @@ import {View,Text,StyleSheet,ActivityIndicator } from 'react-native';
 import { MostGainedCoins } from "./constants";
 import ListCoins from "./Listcoins";
 import TitleText from "./TitleText";
-import {getMarketHighChangedData, getTopCoins } from '../Services/requests';
+import {getMarketHighChangedData, getTopCoins, getTrendingCoins } from '../Services/requests';
 import { getExchanges,getTopCoinsCoinMarketCap } from "../Services/requestsCoinMarketCap";
 import { AlertDialog, Button, SizableText, XStack, YStack } from "tamagui";
 import { Activity, Airplay } from '@tamagui/lucide-icons'
@@ -11,6 +11,7 @@ import { Paragraph } from "tamagui";
 function MainLists(){
     const [arrayData,setArrayData] = useState([]);
     const [topCoins,setTopCoins] = useState([]);
+    const [trendingCoins, setTrendingCoins] = useState([]);
     const [loading,setLoading] = useState(false);
     async function getData(){
         setLoading(true);
@@ -28,6 +29,9 @@ function MainLists(){
     async function getTopMarketCoins(){
         setLoading(true);
         const data = await getTopCoins();
+        console.log("Top Coins:");
+        console.log(data[0]);
+        
         setTopCoins(data);
         setLoading(false);
     }
@@ -38,29 +42,45 @@ function MainLists(){
         console.log(exchanges);
         // for( let i=0;i<25;i++)
         // {
-        //     console.log(exchanges.data[i].name);
-        // }
-    }
-    useEffect(()=>{
-        getData1();
-        getData();
-        getTopMarketCoins();
-    },[]);
-    return(
-        <View style={styles.container}>
-            {/* <Button>Hello World...!!!</Button> */}
-            <Paragraph size="$7" fontWeight="800">Popular coins</Paragraph>
-            <SizableText theme="alt2" size={"$3"}>People usually buy these coins</SizableText>
-            {/* Newly Launched */}
-            {/* <TitleText title="Newly Launched..." descriptionText="Explore more assets for your portfolio"/> */}
-            <ListCoins coinData={MostGainedCoins} loading={loading} type={"NewlyLaunched"} />
-            {/* Most Gained Coins */}
-            {/* <TitleText title="Top Gainers..." descriptionText="Coins that have gain the most in 24 hours"/> */}
-            <Paragraph size="$7" fontWeight="800">Top Gainers</Paragraph>
-            <SizableText theme="alt2" size={"$3"}>Coins that have gain the most in 24 hours</SizableText>
-            <ListCoins coinData={arrayData} loading={loading} type={"MostGained"} />
-            {/* Most Lossed Coins */}
-            {/* <TitleText title="Popular coins..." descriptionText="People usually buy these coins..."/> */}
+            //     console.log(exchanges.data[i].name);
+            // }
+        }
+        async function getTrendingMarketCoins(){
+            setLoading(true);
+            const data = await getTrendingCoins();
+            let array = [];
+            data.coins.forEach((val,index)=>{
+                array.push({
+                    id: val.item.id,
+                    name: val.item.name,
+                    symbol: val.item.symbol,
+                    image: val.item.small,
+                    price: (parseFloat(val.item.data.price.replace(/,/g,'').substring(1)) * 80).toFixed(4),
+                    market_cap_change_percentage_24h: val.item.data.price_change_percentage_24h.inr,
+                    
+                })
+            })
+            setTrendingCoins(array);
+            console.log("Trending Coins:");
+            console.log(data.coins[0].item);
+            setLoading(false);
+            
+        }
+        useEffect(()=>{
+            // getData1();
+            // getData();
+            getTopMarketCoins();
+            getTrendingMarketCoins();
+        },[]);
+        return(
+            <View style={styles.container}>
+            {/* Trending Coins */}
+            <Paragraph size="$7" fontWeight="800">Trending Coins</Paragraph>
+            <SizableText theme="alt2" size={"$3"}>Explore trending coins with live updates.</SizableText>
+            <ListCoins coinData={trendingCoins} loading={loading} type={"Trending"} />
+            
+            {/* Popular Coins */}
+
             <Paragraph size="$7" fontWeight="800">Popular coins</Paragraph>
             <SizableText theme="alt2" size={"$3"}>People usually buy these coins</SizableText>
             <ListCoins coinData={topCoins} loading={loading}  type={"Popular"} />
@@ -71,7 +91,7 @@ function MainLists(){
 }
 const styles = StyleSheet.create({
     container:{
-        marginEnd: 10,
+        marginEnd: 4,
         padding: 10
     }
 });

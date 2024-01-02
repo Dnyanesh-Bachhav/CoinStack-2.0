@@ -6,34 +6,16 @@ import LottieView from 'lottie-react-native';
 import { COLORS } from './constants';
 function ListCoins({coinData,loading,type}){
   const animationRef = useRef(null);
-  function getImageUrl(item){
-     let imgUrl = "";
-    //  console.log(item);
-      // Coin Image fetching according to type of coin...
-      if(type=="MostGained")
-      {
-        imgUrl = item.top_3_coins[0];
-      }
-      else{
-        imgUrl = item.image || item.imgSrc;
-      }
-      // console.log("ImageUrl: "+imgUrl);
-
-      return imgUrl;
-    
+  function getImageUrl(item) {
+    let imgUrl = "";
+    imgUrl = item?.image || item?.imgSrc;
+    return imgUrl;
   }
 
   function getPrice(item){
     let price = 0;
-     // Coin Image fetching according to type of coin...
-     if(type=="MostGained")
-     {
-       price = 500;
-     }
-     else{
-       price = (item.current_price || item.price);
-     }
-     return price;
+    price = item?.current_price || item?.price;
+    return price;
  }
   return (
     <View style={styles.coinListView}>
