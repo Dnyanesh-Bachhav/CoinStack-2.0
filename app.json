@@ -22,6 +22,7 @@
     "android": {
       "versionCode": 1,
       "package": "com.dnyaneshbachhav.coinStack",
+      "googleServicesFile": "google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"

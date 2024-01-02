@@ -2,17 +2,33 @@ import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { COLORS } from "../components/constants";
 import { H3, Paragraph, SizableText, Square } from "tamagui";
 import { ResizeMode, Video } from "expo-av";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Accordion } from "tamagui";
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { Progress } from "tamagui";
 import Header from "../components/LearningScreen/Header";
+import app from "../firebaseConfig";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = WIDTH/1.9;
 
 function LearningScreen() {
   const video = useRef();
+  const [ loading, setLoading ] = useState(false);
+  async function getFirestoreData(){
+    setLoading(true);
+    const db = getFirestore(app);
+    const querySnapshot = await getDocs(collection(db, "testing"));
+querySnapshot.forEach((doc) => {
+  console.log(`${doc.id} => ${JSON.stringify(doc.data()) }`);
+  setLoading(false);
+});
+  }
+  useEffect(()=>{
+    console.log("In a Learning Screen...");
+    getFirestoreData();
+  },[]);
   return (
     <View style={styles.container}>
       {/* <H3>Learn Crypto Trading</H3> */}

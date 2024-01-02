@@ -4,9 +4,9 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
+    "android": "expo run:android",
     "ts:check": "tsc",
-    "ios": "expo start --ios",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject"
   },
@@ -35,6 +35,7 @@
     "expo-sharing": "~11.5.0",
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.18.17",
+    "firebase": "^10.7.1",
     "lottie-react-native": "5.1.6",
     "openai": "^3.1.0",
     "react": "18.2.0",
@@ -62,7 +63,8 @@
     "tamagui": "^1.76.0",
     "typescript": "^5.1.3",
     "uuid": "^9.0.0",
-    "victory-native": "^36.7.0"
+    "victory-native": "^36.7.0",
+    "expo-splash-screen": "~0.20.5"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
