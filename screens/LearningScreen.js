@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../components/constants";
 import { H3, Paragraph, SizableText, Square } from "tamagui";
 import { ResizeMode, Video } from "expo-av";
@@ -9,6 +9,7 @@ import { Progress } from "tamagui";
 import Header from "../components/LearningScreen/Header";
 import app from "../firebaseConfig";
 import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = WIDTH/1.9;
@@ -16,6 +17,7 @@ const HEIGHT = WIDTH/1.9;
 function LearningScreen() {
   const video = useRef();
   const [ loading, setLoading ] = useState(false);
+  const navigation = useNavigation();
   var currentKey = [];
   var currentSubHeadings = [];
   const [ courseDescription, setCourseDescription ] = useState(null);
@@ -35,10 +37,10 @@ function LearningScreen() {
     const curriculum = await getDoc(doc(collection_ref,"curriculum"));
     console.log(JSON.stringify(curriculum.data()));
     setCurriculum(curriculum.data().data);
-    
-
-  setLoading(false);
+    setLoading(false);
   }
+
+
   useEffect(()=>{
     console.log("In a Learning Screen...");
     getFirestoreData();
@@ -151,17 +153,25 @@ function LearningScreen() {
                     )}
                   </Accordion.Trigger>
                   {Object.entries(item)[0][1].map((subHeading, index1) => (
-                    <Accordion.Content
-                      style={{
-                        marginTop: 10,
-                        width: "90%",
-                        alignSelf: "flex-end",
-                        elevation: 2,
-                        borderRadius: 5
-                      }}
-                    >
-                      <Paragraph>{ subHeading }</Paragraph>
-                    </Accordion.Content>
+                    <TouchableOpacity onPress={()=>{
+                      console.log("Move to Detail Learning...");
+                      navigation.navigate("DetailLearningScreen",{
+                        mainHeading: Object.entries(item)[0][0],
+                        subHeading: subHeading,
+                      });
+                    }} >
+                      <Accordion.Content
+                        style={{
+                          marginTop: 10,
+                          width: "90%",
+                          alignSelf: "flex-end",
+                          elevation: 2,
+                          borderRadius: 5
+                        }}
+                        >
+                        <Paragraph>{ subHeading }</Paragraph>
+                      </Accordion.Content>
+                    </TouchableOpacity>
                   ))}
                 </Accordion.Item>
               ))}

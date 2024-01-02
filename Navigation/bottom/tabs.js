@@ -79,7 +79,7 @@ function Tabs(){
                     </View>
                 )
             }} />
-            <Tab.Screen name="News" component={LearningStack} options={{
+            <Tab.Screen name="Learn" component={LearningStack} options={{
                     headerShown: false,
                     unmountOnBlur: true,
                     tabBarIcon: ({focused})=>(
