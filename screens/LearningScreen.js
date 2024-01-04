@@ -102,6 +102,9 @@ function LearningScreen() {
                   <Accordion.Trigger
                     flexDirection="row"
                     justifyContent="space-between"
+                    style={{
+                      elevation: 5
+                    }}
                   >
                     {({ open }) => (
                       <View style={{ width: "100%", elevation: 5 }}>

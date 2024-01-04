@@ -18,6 +18,7 @@ import { useFonts } from 'expo-font'
 import { TamaguiProvider } from 'tamagui'
 
 import config from './tamagui.config'
+import { AuthProvider } from './Contexts/AuthProviderContext';
 
 export default function App() {
   const [loaded] = useFonts({
@@ -40,19 +41,19 @@ export default function App() {
     {
       connected ?
       <>
+            <AuthProvider>
       <PortfolioContextProvider>
         <WatchlistProvider>
           <TransactionContextProvider>
-          <TamaguiProvider config={config}>
-            <NavigationContainer>
-                {/* <Tabs/> */}
-                {/* <DrawerNavigator/> */}
-                <AppNavigator/>
-            </NavigationContainer>
-          </TamaguiProvider>
+              <TamaguiProvider config={config}>
+                <NavigationContainer>
+                    <AppNavigator/>
+                </NavigationContainer>
+              </TamaguiProvider>
           </TransactionContextProvider>
         </WatchlistProvider>
       </PortfolioContextProvider>
+            </AuthProvider>
       
       </>
     : <NoInternetScreen/>
