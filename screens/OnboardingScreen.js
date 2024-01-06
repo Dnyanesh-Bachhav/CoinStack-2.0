@@ -10,7 +10,7 @@ function OnboardingScreen({ navigation }) {
   const { user, setUser } = useContext(AuthContext);
   function handleDone(){
     setUser(null);
-    // navigation.navigate("")
+    navigation.navigate("LoginScreen");
 
   }
   return (

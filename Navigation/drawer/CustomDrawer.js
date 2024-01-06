@@ -8,10 +8,12 @@ import user from "../../assets/user.png";
 import * as Sharing from "expo-sharing";
 import { Asset, useAssets } from "expo-asset";
 import * as FileSystem from 'expo-file-system';
+import { AuthContext } from "../../Contexts/AuthProviderContext";
+import { useContext, useEffect } from "react";
 const Drawer = createDrawerNavigator();
 
 function CustomDrawer(props) {
-
+    const { user, setUser, signOut } = useContext(AuthContext);
     const handleShare = async ()=> {
         const isAvailable = await Sharing.isAvailableAsync();
  
@@ -43,6 +45,9 @@ function CustomDrawer(props) {
          Alert.alert("Sharing is not available...");
      }
  }
+ useEffect(()=>{
+    // console.log(user);
+ },[]);
     return (
         <View style={styles.container}>
             <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: COLORS.secondary }}>
@@ -72,7 +77,9 @@ function CustomDrawer(props) {
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <View style={styles.bottomListItem}>
-                    <MaterialIcons name="logout" size={24} color="black" />
+                    <MaterialIcons name="logout" size={24} color="black" onPress={()=>{
+                        signOut();
+                    }} />
                         <Text style={{marginLeft: 5}} >Sign Out</Text>
                     </View>
                 </TouchableOpacity>
