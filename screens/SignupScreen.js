@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../components/constants";
 import { SizableText } from "tamagui";
 import { Lock, Mail, Smartphone, User } from "@tamagui/lucide-icons";
@@ -17,32 +17,41 @@ function SignupScreen({ navigation }){
     }
     return(
         <View style={styles.container}>
+            <Image
+            source={require('../assets/logo.png')}
+            style={{
+                width: 160,
+                height: 200,
+                tintColor: COLORS.primary,
+                alignSelf: 'center'
+            }}
+            />
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <SizableText size={"$7"} fontWeight={"bold"}>Create Account</SizableText>
-            <SizableText>Create a new Account</SizableText>
+            <SizableText size={"$9"} color={COLORS.primary} fontWeight={"800"}>Create Account</SizableText>
+            <SizableText size={"$4"} color={COLORS.primary}>Create a new Account</SizableText>
         </View>
         <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
             <User size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
-            <TextInput cursorColor={COLORS.grayDark} value={username} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setUsername} />
+            <TextInput cursorColor={COLORS.grayDark} placeholder="Name" value={username} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setUsername} />
         </View>
         <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
             <Mail size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
-            <TextInput cursorColor={COLORS.grayDark} value={email} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setEmail} />
+            <TextInput cursorColor={COLORS.grayDark} placeholder="Email" value={email} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setEmail} />
         </View>
         <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
             <Smartphone size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
-            <TextInput keyboardType="numeric" cursorColor={COLORS.grayDark} value={phone} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPhone} />
+            <TextInput keyboardType="numeric" placeholder="Phone" cursorColor={COLORS.grayDark} value={phone} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPhone} />
         </View>
         <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
             <Lock size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
-            <TextInput cursorColor={COLORS.grayDark} value={password} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPassword} />
+            <TextInput cursorColor={COLORS.grayDark} placeholder="Password" value={password} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPassword} />
         </View>
         <TouchableOpacity onPress={()=>{
-            signUp(email,password)
+            signUp(email, password, phone, username);
         }} style={styles.btnStyle}>
             <SizableText size={"$5"} fontWeight={"600"} style={{ color: COLORS.white, textAlign: 'center' }} >Submit</SizableText>
         </TouchableOpacity>
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
             <SizableText>Already have an account?</SizableText>
             <TouchableOpacity onPress={()=>{
                 navigation.navigate("LoginScreen");
@@ -57,7 +66,9 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         padding: 20,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     btnStyle:{
         width: '100%',
@@ -65,6 +76,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 10,
         paddingHorizontal: 5,
-        marginTop: 10
+        marginTop: 15
     }});
 export default SignupScreen;

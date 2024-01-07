@@ -15,7 +15,7 @@ import { Feather } from '@expo/vector-icons';
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
     return(
-        <Drawer.Navigator initialRouteName="Home1" drawerContent={(props)=> <CustomDrawer {...props} />} screenOptions={{
+        <Drawer.Navigator drawerContent={(props)=> <CustomDrawer {...props} />} screenOptions={{
             headerShown: false,
             drawerActiveBackgroundColor: COLORS.primary,
             drawerActiveTintColor: COLORS.white,

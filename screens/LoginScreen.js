@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { AuthContext } from "../Contexts/AuthProviderContext";
 import { SizableText } from "tamagui";
 import { COLORS } from "../components/constants";
@@ -52,18 +52,29 @@ function LoginScreen({ navigation }){
                     />
                 </View>
             </ModalPopUp> */}
-
+            <Image
+            source={require('../assets/logo.png')}
+            style={{
+                width: 160,
+                height: 200,
+                tintColor: COLORS.primary,
+                alignSelf: 'center'
+            }}
+            />
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <SizableText size={"$7"} fontWeight={"bold"}>Welcome Back</SizableText>
-                <SizableText>Sign in to continue</SizableText>
+                <SizableText size={"$9"} color={COLORS.primary} fontWeight={"800"}>Welcome Back</SizableText>
+                <SizableText size={"$4"} color={COLORS.primary} >Sign in to continue</SizableText>
             </View>
             <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
                 <Mail size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
-                <TextInput cursorColor={COLORS.grayDark} value={email} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setEmail} />
+                <TextInput cursorColor={COLORS.grayDark} placeholder="Email" value={email} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setEmail} />
             </View>
             <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
                 <Lock size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
-                <TextInput cursorColor={COLORS.grayDark} value={password} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPassword} />
+                <TextInput cursorColor={COLORS.grayDark} placeholder="Password" value={password} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPassword} />
+            </View>
+            <View style={{ alignItems: 'flex-end', marginRight: 4 }} >
+                <SizableText size={"$3"} color={COLORS.primary}>Forgot Password?</SizableText>
             </View>
             <TouchableOpacity onPress={()=>{
             handleLogin();
@@ -88,7 +99,7 @@ function LoginScreen({ navigation }){
             }} style={styles.btnStyle}>
                 <SizableText size={"$5"} fontWeight={"600"} style={{ color: COLORS.white, textAlign: 'center' }} >Submit</SizableText>
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                 <SizableText>Don't have an account?</SizableText>
                 <TouchableOpacity onPress={()=>{
                     navigation.navigate("SignupScreen");
@@ -103,7 +114,8 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         padding: 20,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
+        justifyContent: 'center'
     },
     btnStyle:{
         width: '100%',
@@ -111,7 +123,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 10,
         paddingHorizontal: 5,
-        marginTop: 10,
+        marginTop: 15,
+        elevation: 5
     },
     modalContainer: {
         // flex: 1,
