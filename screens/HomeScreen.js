@@ -14,6 +14,7 @@ import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import LottieView from 'lottie-react-native';
 import { COLORS } from "../components/constants";
+import { SizableText } from "tamagui";
 function HomeScreen({navigation}){
     const [connected,setConnected] = useState(true);
     const { user, firestoreUser, setFirestoreUser } = useContext(AuthContext);
@@ -64,15 +65,16 @@ function HomeScreen({navigation}){
                         <LottieView
                             ref={animationRef}
                             style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    alignSelf: 'center',
-                                    color: COLORS.primary,
+                                width: '100%',
+                                height: '100%',
+                                alignSelf: 'center',
+                                color: COLORS.primary,
                             }}
                             autoPlay
                             loop
                             source={require('../assets/Loading (1).json')}
                         />
+                        <SizableText size={"$4"} style={{ textAlign: 'center'}}>Fetching user data...</SizableText>
                     </View>
           </ModalPopUp>
                         <ScrollView showsVerticalScrollIndicator={false}>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
       },
       modalData: {
         width: "65%",
-        height: "16%",
+        height: "30%",
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLORS.white,

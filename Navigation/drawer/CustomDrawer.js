@@ -23,15 +23,22 @@ import * as Sharing from "expo-sharing";
 import { Asset, useAssets } from "expo-asset";
 import * as FileSystem from "expo-file-system";
 import { AuthContext } from "../../Contexts/AuthProviderContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Paragraph, SizableText } from "tamagui";
 import { Accordion } from "tamagui";
 import { Square } from "tamagui";
 import { ChevronDown } from "@tamagui/lucide-icons";
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+} from "accordion-collapse-react-native";
+
 const Drawer = createDrawerNavigator();
 
 function CustomDrawer(props) {
   const { user, setUser, firestoreUser, signOut } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
   const handleShare = async () => {
     const isAvailable = await Sharing.isAvailableAsync();
 
@@ -89,51 +96,37 @@ function CustomDrawer(props) {
           <SizableText
             size={"$7"}
             fontWeight={"bold"}
-            style={{ marginLeft: 10 }}
+            style={{ marginLeft: 0 }}
           >
-            { firestoreUser?.name }
+            {firestoreUser?.name}
           </SizableText>
-          <View>
-            <Accordion
-              overflow="hidden"
-            //   type="multiple"
+          <Collapse onToggle={(val)=>{
+            setOpen(val);
+          }} >
+            <CollapseHeader
               style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
                 width: "100%",
-                backgroundColor: COLORS.white,
               }}
+              onPress={() => {
+                console.log("Cliked");
+                setOpen(!open);
+              }} 
             >
-              <Accordion.Item value={"a1"} style={{ backgroundColor: "transparent"  }}>
-                <Accordion.Trigger style={{ backgroundColor: COLORS.white, borderColor: COLORS.white  }} >
-                  {({ open }) => (
-                    <View style={{ width: "100%" }}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          width: "100%",
-                        }}
-                      >
-                        <Paragraph size={"$5"} fontWeight={"600"}>
-                            { firestoreUser?.email }
-                        </Paragraph>
-                        <View>
-                          <Square
-                            animation="quick"
-                            rotate={open ? "180deg" : "0deg"}
-                          >
-                            <ChevronDown size="$1" />
-                          </Square>
-                        </View>
-                      </View>
-                    </View>
-                  )}
-                </Accordion.Trigger>
-                  <Accordion.Content style={{ backgroundColor: COLORS.white }} >
-                    <Paragraph>{firestoreUser.phone || "9090909090" }</Paragraph>
-                  </Accordion.Content>
-              </Accordion.Item>
-            </Accordion>
-          </View>
+              <Paragraph size={"$5"} fontWeight={"600"}>
+                {firestoreUser?.email}
+              </Paragraph>
+              <View>
+                <Square animation="quick" rotate={open ? "180deg" : "0deg"}>
+                  <ChevronDown size="$1" />
+                </Square>
+              </View>
+            </CollapseHeader>
+            <CollapseBody>
+              <Paragraph>{firestoreUser?.phone || "9090909090"}</Paragraph>
+            </CollapseBody>
+          </Collapse>
         </View>
 
         <View style={styles.listContainer}>

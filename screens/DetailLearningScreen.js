@@ -167,6 +167,8 @@ function DetailLearningScreen({ route }) {
                       color: COLORS.white,
                       fontSize: 24,
                       paddingHorizontal: 10,
+                      paddingVertical: 7,
+                      elevation: 5,
                       textAlign: "center",
                     }}
                   >

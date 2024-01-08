@@ -24,6 +24,7 @@
     "@tamagui/babel-plugin": "^1.76.0",
     "@tamagui/config": "^1.76.0",
     "@tamagui/lucide-icons": "^1.76.0",
+    "accordion-collapse-react-native": "^1.1.1",
     "axios": "^0.26.1",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "deprecated-react-native-prop-types": "^2.3.0",
