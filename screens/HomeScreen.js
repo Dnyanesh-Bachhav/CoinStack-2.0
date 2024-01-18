@@ -61,7 +61,7 @@ function HomeScreen({navigation}){
                         <Header navigation={navigation} />
                         
                 <ModalPopUp visible={loading}>
-                    <View style={{ width: '100%', height: '100%' }} >
+                    <View style={{ width: '100%', height: '80%' }}>
                         <LottieView
                             ref={animationRef}
                             style={{
@@ -105,9 +105,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
       },
       modalData: {
-        width: "65%",
-        height: "30%",
-        justifyContent: 'center',
+        width: "60%",
+        height: "20%",
+        // borderWidth: 2,
+        // justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLORS.white,
         borderRadius: 10,

@@ -3559,27 +3559,33 @@
     color "^3.1.3"
     warn-once "^0.1.0"
 
-"@react-navigation/core@^6.2.1":
-  version "6.2.1"
-  resolved "https://registry.npmjs.org/@react-navigation/core/-/core-6.2.1.tgz"
-  integrity sha512-3mjS6ujwGnPA/BC11DN9c2c42gFld6B6dQBgDedxP2djceXESpY2kVTTwISDHuqFnF7WjvRjsrDu3cKBX+JosA==
+"@react-navigation/core@^6.4.10":
+  version "6.4.10"
+  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-6.4.10.tgz#0c52621968b35e3a75e189e823d3b9e3bad77aff"
+  integrity sha512-oYhqxETRHNHKsipm/BtGL0LI43Hs2VSFoWMbBdHK9OqgQPjTVUitslgLcPpo4zApCcmBWoOLX2qPxhsBda644A==
   dependencies:
-    "@react-navigation/routers" "^6.1.0"
+    "@react-navigation/routers" "^6.1.9"
     escape-string-regexp "^4.0.0"
     nanoid "^3.1.23"
-    query-string "^7.0.0"
+    query-string "^7.1.3"
     react-is "^16.13.0"
+    use-latest-callback "^0.1.7"
 
-"@react-navigation/drawer@^6.5.0":
-  version "6.5.0"
-  resolved "https://registry.npmjs.org/@react-navigation/drawer/-/drawer-6.5.0.tgz"
-  integrity sha512-ma3qPjAfbwF07xd1w1gaWdcvYWmT4F+Z098q2J7XGbHw8yTGQYiNTnD1NMKerXwxM24vui2tMuFHA54F1rIvHQ==
+"@react-navigation/drawer@^6.6.6":
+  version "6.6.6"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-6.6.6.tgz#6a48e5ea2bf70dc6dfbe17e7e48b5a532d8886dc"
+  integrity sha512-DW/oNRisSOGOqvZfCzfhKBxnzT97Teqtg1Gal85g+K3gnVbM1jOBE2PdnYsKU0fULfFtDwvp/QZSbcgjDpr12A==
   dependencies:
-    "@react-navigation/elements" "^1.3.6"
+    "@react-navigation/elements" "^1.3.21"
     color "^4.2.3"
     warn-once "^0.1.0"
 
-"@react-navigation/elements@^1.3.3", "@react-navigation/elements@^1.3.6":
+"@react-navigation/elements@^1.3.21":
+  version "1.3.21"
+  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-1.3.21.tgz#debac6becc6b6692da09ec30e705e476a780dfe1"
+  integrity sha512-eyS2C6McNR8ihUoYfc166O1D8VYVh9KIl0UQPI8/ZJVsStlfSTgeEEh+WXge6+7SFPnZ4ewzEJdSAHH+jzcEfg==
+
+"@react-navigation/elements@^1.3.3":
   version "1.3.6"
   resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.6.tgz"
   integrity sha512-pNJ8R9JMga6SXOw6wGVN0tjmE6vegwPmJBL45SEMX2fqTfAk2ykDnlJHodRpHpAgsv0DaI8qX76z3A+aqKSU0w==
@@ -3600,20 +3606,20 @@
     "@react-navigation/elements" "^1.3.3"
     warn-once "^0.1.0"
 
-"@react-navigation/native@^6.0.10":
-  version "6.0.10"
-  resolved "https://registry.npmjs.org/@react-navigation/native/-/native-6.0.10.tgz"
-  integrity sha512-H6QhLeiieGxNcAJismIDXIPZgf1myr7Og8v116tezIGmincJTOcWavTd7lPHGnMMXaZg94LlVtbaBRIx9cexqw==
+"@react-navigation/native@^6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-6.1.9.tgz#8ef87095cd9c2ed094308c726157c7f6fc28796e"
+  integrity sha512-AMuJDpwXE7UlfyhIXaUCCynXmv69Kb8NzKgKJO7v0k0L+u6xUTbt6xvshmJ79vsvaFyaEH9Jg5FMzek5/S5qNw==
   dependencies:
-    "@react-navigation/core" "^6.2.1"
+    "@react-navigation/core" "^6.4.10"
     escape-string-regexp "^4.0.0"
     fast-deep-equal "^3.1.3"
     nanoid "^3.1.23"
 
-"@react-navigation/routers@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/@react-navigation/routers/-/routers-6.1.0.tgz"
-  integrity sha512-8xJL+djIzpFdRW/sGlKojQ06fWgFk1c5jER9501HYJ12LF5DIJFr/tqBI2TJ6bk+y+QFu0nbNyeRC80OjRlmkA==
+"@react-navigation/routers@^6.1.9":
+  version "6.1.9"
+  resolved "https://registry.yarnpkg.com/@react-navigation/routers/-/routers-6.1.9.tgz#73f5481a15a38e36592a0afa13c3c064b9f90bed"
+  integrity sha512-lTM8gSFHSfkJvQkxacGM6VJtBt61ip2XO54aNfswD+KMw6eeZ4oehl7m0me3CR9hnDE4+60iAZR8sAhvCiI3NA==
   dependencies:
     nanoid "^3.1.23"
 
@@ -6575,10 +6581,10 @@ decamelize@^1.2.0:
   resolved "https://registry.npmjs.org/decamelize/-/decamelize-1.2.0.tgz"
   integrity sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==
 
-decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.2.0.tgz"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+decode-uri-component@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 dedent@^0.6.0:
   version "0.6.0"
@@ -10359,12 +10365,12 @@ qs@6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
-query-string@^7.0.0:
-  version "7.1.1"
-  resolved "https://registry.npmjs.org/query-string/-/query-string-7.1.1.tgz"
-  integrity sha512-MplouLRDHBZSG9z7fpuAAcI7aAYjDLhtsiVZsevsfaHWDS2IDdORKbSd1kWUA+V4zyva/HZoSfpwnYMMQDhb0w==
+query-string@^7.1.3:
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-7.1.3.tgz#a1cf90e994abb113a325804a972d98276fe02328"
+  integrity sha512-hh2WYhq4fi8+b+/2Kg9CEge4fDPvHS534aOOvOZeQ3+Vf2mCFsaFBYj0i+iXcAq6I9Vzp5fjMFBlONvayDC1qg==
   dependencies:
-    decode-uri-component "^0.2.0"
+    decode-uri-component "^0.2.2"
     filter-obj "^1.1.0"
     split-on-first "^1.0.0"
     strict-uri-encode "^2.0.0"
@@ -12217,6 +12223,11 @@ use-latest-callback@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/use-latest-callback/-/use-latest-callback-0.1.5.tgz#a4a836c08fa72f6608730b5b8f4bbd9c57c04f51"
   integrity sha512-HtHatS2U4/h32NlkhupDsPlrbiD27gSH5swBdtXbCAlc6pfOFzaj0FehW/FO12rx8j2Vy4/lJScCiJyM01E+bQ==
+
+use-latest-callback@^0.1.7:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/use-latest-callback/-/use-latest-callback-0.1.9.tgz#10191dc54257e65a8e52322127643a8940271e2a"
+  integrity sha512-CL/29uS74AwreI/f2oz2hLTW7ZqVeV5+gxFeGudzQrgkCytrHw33G4KbnQOrRlAEzzAFXi7dDLMC9zhWcVpzmw==
 
 use-memo-one@1.1.2:
   version "1.1.2"
