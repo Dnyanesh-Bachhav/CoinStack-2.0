@@ -128,6 +128,7 @@ function PortfolioScreen() {
             </View>
           </ModalPopUp>
           <ScrollView
+          style={{ flex: 1, height: '100%'}}
             showsVerticalScrollIndicator={false}
             // contentContainerStyle={{ height: '100%' }}
             refreshControl={<RefreshControl onRefresh={checkConnection} />}
@@ -149,7 +150,7 @@ function PortfolioScreen() {
                 paddingVertical: 10,
                 paddingHorizontal: 10,
                 elevation: 10,
-                // borderWidth: 1
+                // borderWidth: 2
               }}
             >
               <SizableText size={"$3"} style={{ color: COLORS.grey }} >Invested Coins</SizableText>
@@ -180,7 +181,8 @@ function PortfolioScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.secondary,
+    height: '100%',
+    backgroundColor: COLORS.white,
   },
   modalContainer: {
     flex: 1,
