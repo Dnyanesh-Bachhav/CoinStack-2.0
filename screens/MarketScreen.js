@@ -17,6 +17,7 @@ import SheetComponent from "../components/marketScreen/BottomSheetItem";
 import { FlashList } from "@shopify/flash-list";
 import { Spinner, YStack } from "tamagui";
 import LottieView from 'lottie-react-native';
+import NoCoin from "../components/PortfolioScreen/NoCoin";
 
 function MarketScreen(){
     const refRBSheet = useRef();
@@ -51,7 +52,7 @@ function MarketScreen(){
 
 
     let count = 0;
-    const fetchData = useCallback(async(pageNumber)=>{
+    const fetchData = async(pageNumber)=>{
         if(loading)
         {
             return;
@@ -70,7 +71,8 @@ function MarketScreen(){
                         {
                             setLoading(false);
                             setVisible(false);
-                            console.log('OK Pressed')
+                            console.log('OK Pressed');
+                            return <NoCoin/>;
                         },
                     }
                   ])
@@ -80,17 +82,33 @@ function MarketScreen(){
         setCoinsData((existingData)=> [...existingData,...data]);
         setLoading(false);
         setVisible(false);
-    },[]);
-    const refetchData = useCallback(async()=>{
+    }
+    const refetchData = async()=>{
         if(loading)
         {
             return;
         }
         setLoading(true);
         const data = await getCoins(1);
+        if(data.error!=null)
+        {
+            return (
+                Alert.alert('Network Error', 'There is something wrong with network or API response...', [
+                    
+                    {text: 'OK', onPress: () =>
+                        {
+                            setLoading(false);
+                            setVisible(false);
+                            console.log('OK Pressed');
+                            return <NoCoin/>;
+                        },
+                    }
+                  ])
+            );
+        }
         setCoinsData(data);
         setLoading(false);
-    },[page.current]);
+    }
     useEffect(()=>{
         checkConnection();
         fetchData(1);
@@ -121,8 +139,8 @@ function MarketScreen(){
                 </ModalPopUp>
 
                 {
-                    !loading && (coinsData!=null) ? (
-                    <FlatList
+                    coinsData!=null ? (
+                    <FlashList
                     data={coinsData}
                     showsVerticalScrollIndicator={false}
                     renderItem={({item})=>(
@@ -135,9 +153,10 @@ function MarketScreen(){
                     //     }} >Load more</Text>
                     // )}
                     onEndReached={()=> {
-                        if(!loading)
+                        console.log("End of a list...");
+                        if(!loading && coinsData!=null)
                         {
-                            console.log("End of a list...");
+                            console.log("Data fetch request called...");
                             page.current = (coinsData.length/50)+1;
                             fetchData((coinsData.length/50)+1);
                         }
@@ -145,10 +164,11 @@ function MarketScreen(){
                             return <ActivityIndicator size={"large"} color={COLORS.black} />
                         }
                     }}
-                    onEndReachedThreshold={16}
-                    maxToRenderPerBatch={16}
+                    estimatedItemSize={60}
+                    // onEndReachedThreshold={16}
+                    // maxToRenderPerBatch={16}
                     refreshControl={<RefreshControl refreshing={loading} onRefresh={()=>{
-                        setPage(1);    
+                        // setPage(1);    
                         refetchData();
                     }} />}
                     keyExtractor={(item, index)=>`${item.id}-${index}`}

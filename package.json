@@ -20,6 +20,7 @@
     "@react-navigation/material-top-tabs": "^6.6.2",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.6.1",
+    "@shopify/flash-list": "1.4.3",
     "@tamagui/babel-plugin": "^1.76.0",
     "@tamagui/config": "^1.76.0",
     "@tamagui/lucide-icons": "^1.76.0",

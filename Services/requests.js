@@ -9,7 +9,7 @@ const getCoins = async (pageNumber=1)=>{
         return response.data;
     }
     catch(e){
-        console.log("Error"+e);
+        console.log("Error: " + e.message);
         return { "error": e.message };
     }
 }
