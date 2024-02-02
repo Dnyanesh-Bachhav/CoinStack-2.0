@@ -10,6 +10,7 @@ const getCoins = async (pageNumber=1)=>{
     }
     catch(e){
         console.log("Error"+e);
+        return { "error": e.message };
     }
 }
 const getTopCoins = async (pageNumber=1)=>{

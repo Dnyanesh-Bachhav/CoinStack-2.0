@@ -1,5 +1,5 @@
-import react,{useEffect,useState,useContext,useRef} from "react";
-import {View,Text,StyleSheet,FlatList,ActivityIndicator,RefreshControl,TouchableOpacity,Pressable,Modal } from 'react-native';
+import react,{useEffect,useState,useContext,useRef, useCallback} from "react";
+import {View,Text,StyleSheet,FlatList,ActivityIndicator,RefreshControl,TouchableOpacity,Pressable,Modal, Alert } from 'react-native';
 import CoinItem from "../components/marketScreen/CoinItem";
 import SearchBar from "../components/marketScreen/SearchBar";
 import TableHeader from "../components/marketScreen/TableHeader";
@@ -30,6 +30,8 @@ function MarketScreen(){
     const [componentHeight,setComponentHeight] = useState();
     const [visible, setVisible] = useState(false);
     const animationRef = useRef(null);
+    const page = useRef(1);
+    console.log("Data length: "+coinsData.length);
     const checkConnection = async ()=>{
         const data = await NetInfo.fetch();
         setConnected(data.isConnected);
@@ -49,7 +51,7 @@ function MarketScreen(){
 
 
     let count = 0;
-    const fetchData = async(pageNumber)=>{
+    const fetchData = useCallback(async(pageNumber)=>{
         if(loading)
         {
             return;
@@ -58,11 +60,28 @@ function MarketScreen(){
         setVisible(true);
         console.log("PageNumber: "+pageNumber);
         const data = await getCoins(pageNumber);
-        setCoinsData((existingData)=> ([...existingData,...data]));
+        console.log("Data it is: "+data);
+        if(data.error!=null)
+        {
+            return (
+                Alert.alert('Network Error', 'There is something wrong with network or API response...', [
+                    
+                    {text: 'OK', onPress: () =>
+                        {
+                            setLoading(false);
+                            setVisible(false);
+                            console.log('OK Pressed')
+                        },
+                    }
+                  ])
+            );
+        }
+        console.log("Ok...");
+        setCoinsData((existingData)=> [...existingData,...data]);
         setLoading(false);
         setVisible(false);
-    }
-    const refetchData = async()=>{
+    },[]);
+    const refetchData = useCallback(async()=>{
         if(loading)
         {
             return;
@@ -71,10 +90,10 @@ function MarketScreen(){
         const data = await getCoins(1);
         setCoinsData(data);
         setLoading(false);
-    }
+    },[page.current]);
     useEffect(()=>{
         checkConnection();
-        fetchData();
+        fetchData(1);
     },[]);
     return(
         <>
@@ -99,39 +118,41 @@ function MarketScreen(){
                             source={require('../assets/Loading (1).json')}
                         />
                     </View>
-          </ModalPopUp>
+                </ModalPopUp>
 
                 {
-                    !loading && coinsData ? (
+                    !loading && (coinsData!=null) ? (
                     <FlatList
                     data={coinsData}
                     showsVerticalScrollIndicator={false}
                     renderItem={({item})=>(
-                        <TouchableOpacity onPress={()=>{
-                                setCurrentCoin(item);
-                                console.log("Item clicked: ",item.name);
-                                navigation.navigate("coinDetails",{
-                                    coin: item.name,
-                                    coinId: item.id,
-                                    imgUrl: item.image,
-                                    symbol: item.symbol,
-                                    currentPrice: item.current_price,
-                                  });
-                                // refRBSheet.current.open();
-                                
-                            }} >
-                                <CoinItem coinName={item.name} coinId={item.id} symbol={item.symbol} current_price={item.current_price} uri={item.image} price_change_percentage_24h={item.price_change_percentage_24h} />
-                        </TouchableOpacity>
+                        <CoinItem coinName={item.name} coinId={item.id} symbol={item.symbol} current_price={item.current_price} uri={item.image} price_change_percentage_24h={item.price_change_percentage_24h} />
                     )}
-                    
-                    onEndReached={()=>
+                    // ListFooterComponent={()=>(
+                    //     <Text onPress={()=>{
+                            
+                    //     fetchData((coinsData.length/50)+1);
+                    //     }} >Load more</Text>
+                    // )}
+                    onEndReached={()=> {
+                        if(!loading)
                         {
-                            console.log("End: ");
+                            console.log("End of a list...");
+                            page.current = (coinsData.length/50)+1;
                             fetchData((coinsData.length/50)+1);
-                        }}
+                        }
+                        else{
+                            return <ActivityIndicator size={"large"} color={COLORS.black} />
+                        }
+                    }}
+                    onEndReachedThreshold={16}
                     maxToRenderPerBatch={16}
-                    refreshControl={<RefreshControl refreshing={loading} onRefresh={refetchData} />}
-                    keyExtractor={()=>count++}
+                    refreshControl={<RefreshControl refreshing={loading} onRefresh={()=>{
+                        setPage(1);    
+                        refetchData();
+                    }} />}
+                    keyExtractor={(item, index)=>`${item.id}-${index}`}
+                    // debug={true}
                     />
                     // <FlashList
                     // data={coinsData}
