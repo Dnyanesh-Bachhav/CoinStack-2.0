@@ -1,8 +1,8 @@
-import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../components/constants";
 import { H3, Paragraph, SizableText, Square } from "tamagui";
 import { ResizeMode, Video } from "expo-av";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Accordion } from "tamagui";
 import { ChevronDown } from "@tamagui/lucide-icons";
 import { Progress } from "tamagui";
@@ -10,12 +10,17 @@ import Header from "../components/LearningScreen/Header";
 import app from "../firebaseConfig";
 import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import YoutubePlayer from "react-native-youtube-iframe";
+import LottieView from 'lottie-react-native';
+import { Modal } from "react-native";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = WIDTH/1.9;
 
 function LearningScreen() {
   const video = useRef();
+  const animationRef = useRef(null);
+  const [visible, setVisible] = useState(false);
   const [ loading, setLoading ] = useState(false);
   const navigation = useNavigation();
   var currentKey = [];
@@ -39,7 +44,30 @@ function LearningScreen() {
     setCurriculum(curriculum.data().data);
     setLoading(false);
   }
+  const [playing, setPlaying] = useState(false);
 
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
+
+  const ModalPopUp = ({ visible, children }) => {
+    return (
+      <Modal transparent visible={visible} style={{ width: '100%', height: '100%' }} animationType="fade">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalData}>{children}</View>
+        </View>
+        
+      </Modal>
+    );
+  };
+
+
+  const togglePlaying = useCallback(() => {
+    setPlaying((prev) => !prev);
+  }, []);
 
   useEffect(()=>{
     console.log("In a Learning Screen...");
@@ -49,6 +77,23 @@ function LearningScreen() {
     <View style={styles.container}>
       {/* <H3>Learn Crypto Trading</H3> */}
       <Header />
+      {/* <ModalPopUp visible={loading}>
+                    <View style={{ width: '100%', height: '100%' }} >
+                        <LottieView
+                            ref={animationRef}
+                            style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    alignSelf: 'center',
+                                    color: COLORS.primary,
+                            }}
+                            autoPlay
+                            loop
+                            source={require('../assets/Loading (1).json')}
+                        />
+                    </View>
+                </ModalPopUp> */}
+
       {!loading ? (
         <View style={styles.contentContainer}>
           <ScrollView
@@ -56,7 +101,7 @@ function LearningScreen() {
             showsVerticalScrollIndicator={false}
           >
             {/* Video Section */}
-            <Video
+            {/* <Video
               ref={video}
               style={styles.videoStyle}
               source={{
@@ -65,13 +110,20 @@ function LearningScreen() {
               isLooping={true}
               useNativeControls
               resizeMode={ResizeMode.CONTAIN}
-            />
+            /> */}
+            <YoutubePlayer
+        height={ 210 }
+        style={{ borderWidth: 1 }}
+        play={playing}
+        videoId={"iee2TATGMyI"}
+        onChangeState={onStateChange}
+      />
             {/* ABOUT SECTION */}
             <SizableText
               fontFamily={"$body"}
               size={"$6"}
               fontWeight={800}
-              style={{ marginTop: 10 }}
+              // style={{ marginTop: 10 }}
             >
               About
             </SizableText>
@@ -208,7 +260,23 @@ function LearningScreen() {
           </ScrollView>
         </View>
       ) : (
-        <ActivityIndicator size={"small"} />
+        <ModalPopUp visible={ loading }>
+        <View style={{ width: '100%', height: '100%' }} >
+            <LottieView
+                ref={animationRef}
+                style={{
+                        width: '100%',
+                        height: '100%',
+                        alignSelf: 'center',
+                        color: COLORS.primary,
+                }}
+                autoPlay
+                loop
+                source={require('../assets/Loading (1).json')}
+            />
+        </View>
+    </ModalPopUp>
+
       )}
     </View>
   );
@@ -231,6 +299,25 @@ const styles = StyleSheet.create({
   contentContainer:{
     paddingVertical: 10,
     paddingHorizontal: 10,
-  }
+  },
+  modalContainer: {
+    // flex: 1,
+    width: '100%',
+    height: '100%',
+    // borderWidth: 2,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalData: {
+    width: "65%",
+    height: "16%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
+    elevation: 10,
+  },
+
 });
 export default LearningScreen;
