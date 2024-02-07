@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import InvestCoinCard from "../components/PortfolioScreen/InvestCoinCard";
 import InvestmentInfo from "../components/PortfolioScreen/InvestmentInfo";
+import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign } from "@expo/vector-icons";
 import InfoModal from "../components/PortfolioScreen/InfoModal";
 import { COLORS } from "../components/constants";
@@ -64,113 +65,124 @@ function PortfolioScreen() {
     <>
       {connected ? (
         <View style={styles.container}>
-          <View
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", width: '100%', justifyContent: "space-between", marginTop: 10, marginVertical: 10, }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  color: COLORS.primary,
-                  marginLeft: 10,
-                  fontSize: 20,
-                }}
-              >
-                Portfolio
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  removeAllCoins();
-                  setInvested(0);
-                  setCurrent(0);
-                }}
-              >
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignSelf: "flex-end",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: COLORS.primary,
-                    padding: 5,
-                    paddingHorizontal: 10,
-                    borderRadius: 10,
-                    marginRight: 10,
-                  }}
-                >
-                  <Text style={{ color: COLORS.white }}>Clear</Text>
-                  <MaterialIcons
-                    name="delete-sweep"
-                    size={20}
-                    color="white"
-                    style={{ marginLeft: 5 }}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <ModalPopUp visible={visible}>
-            <View>
-              <View style={styles.modalHeader}>
-                <TouchableOpacity onPress={() => setVisible(false)}>
-                  <Entypo name="cross" size={32} color="black" />
-                </TouchableOpacity>
-              </View>
-              <InfoText />
-            </View>
-          </ModalPopUp>
-          <ScrollView
-          style={{ flex: 1, height: '100%'}}
-            showsVerticalScrollIndicator={false}
-            // contentContainerStyle={{ height: '100%' }}
-            refreshControl={<RefreshControl onRefresh={checkConnection} />}
-          >
-            <View style={{ marginHorizontal: 10 }} >
-              {/* <Text>Hello</Text> */}
-              <InvestmentInfo invested={invested} current={current} />
-              <InfoModal setVisible={setVisible} />
-            </View>
+          <LinearGradient 
+        colors={["#A154D9", COLORS.white ]}
+        end={{
+          x: 0.5,
+          y: 0.7
+        }} 
+        style={{ flex: 1 }}
+        >
             <View
               style={{
-                flex: 1,
-                height: "100%",
-                backgroundColor: COLORS.white,
-                // alignSelf: 'center',
-                marginTop: 10,
-                borderTopRightRadius: 20,
-                borderTopLeftRadius: 20,
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                elevation: 10,
-                // borderWidth: 2
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              <SizableText size={"$3"} style={{ color: COLORS.grey }} >Invested Coins</SizableText>
-              {portfolioCoins.length > 0 ? (
-                portfolioCoins.map((item, index) => (
-                  <InvestCoinCard
-                    coinId={item.name}
-                    quantity={item.quantity}
-                    price={`${Math.round(item.price * item.quantity)}`}
-                    imgSrc={item.imgSrc}
-                    key={index}
-                    setInvested={setInvested}
-                    setCurrent={setCurrent}
-                  />
-                ))
-              ) : (
-                <NoCoin />
-              )}
+              <View
+                style={{ flexDirection: "row", width: '100%', justifyContent: "space-between", marginTop: 10, marginVertical: 10, }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: COLORS.white,
+                    marginLeft: 10,
+                    fontSize: 20,
+                  }}
+                >
+                  Portfolio
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    removeAllCoins();
+                    setInvested(0);
+                    setCurrent(0);
+                  }}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignSelf: "flex-end",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      backgroundColor: COLORS.primary,
+                      padding: 5,
+                      paddingHorizontal: 10,
+                      borderRadius: 10,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Text style={{ color: COLORS.white }}>Clear</Text>
+                    <MaterialIcons
+                      name="delete-sweep"
+                      size={20}
+                      color="white"
+                      style={{ marginLeft: 5 }}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </ScrollView>
+            <ModalPopUp visible={visible}>
+              <View>
+                <View style={styles.modalHeader}>
+                  <TouchableOpacity onPress={() => setVisible(false)}>
+                    <Entypo name="cross" size={32} color="black" />
+                  </TouchableOpacity>
+                </View>
+                <InfoText />
+              </View>
+            </ModalPopUp>
+            <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            style={{ flex: 1, height: '100%', }}
+              showsVerticalScrollIndicator={false}
+              // contentContainerStyle={{ height: '100%' }}
+              refreshControl={<RefreshControl onRefresh={checkConnection} />}
+            >
+              <View style={{ marginHorizontal: 10 }} >
+                {/* <Text>Hello</Text> */}
+                <InvestmentInfo invested={invested} current={current} />
+                <InfoModal setVisible={setVisible} />
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  height: "100%",
+                  backgroundColor: COLORS.white,
+                  // alignSelf: 'center',
+                  marginTop: 10,
+                  borderTopRightRadius: 20,
+                  borderTopLeftRadius: 20,
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  elevation: 10,
+                  // borderWidth: 2
+                }}
+              >
+                <SizableText size={"$3"} style={{ color: COLORS.grey }} >Invested Coins</SizableText>
+                {portfolioCoins.length > 0 ? (
+                  portfolioCoins.map((item, index) => (
+                    <InvestCoinCard
+                      coinId={item.name}
+                      quantity={item.quantity}
+                      price={`${Math.round(item.price * item.quantity)}`}
+                      imgSrc={item.imgSrc}
+                      key={index}
+                      setInvested={setInvested}
+                      setCurrent={setCurrent}
+                    />
+                  ))
+                ) : (
+                  <NoCoin />
+                )}
+              </View>
+            </ScrollView>
+          </LinearGradient>
+
         </View>
       ) : (
         <NoInternetScreen />
@@ -182,7 +194,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
-    backgroundColor: COLORS.white,
+    // backgroundColor: COLORS.primaryFaint,
+    // borderWidth: 2,
+    // borderColor: COLORS.white
   },
   modalContainer: {
     flex: 1,
