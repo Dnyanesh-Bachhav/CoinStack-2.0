@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, Pressable, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { COLORS } from '../constants';
 // import { COLORS } from './constants';
-function Header(){
+function Header({ title }){
   return(
     <View style={styles.container}>
       <View style={{justifyContent: 'center'}}>
@@ -16,7 +16,7 @@ function Header(){
           <Entypo name="open-book" size={22} color={COLORS.white} />
           </Pressable>
       </View>
-      <Text style={styles.textStyle}>Learn Crypto Trading</Text>
+      <Text style={styles.textStyle}>{ title || "Learn Crypto Trading" }</Text>
     </View>
   );
 }
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   textStyle:{
     color: "#fff",
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: '500',
     marginLeft: 10,
     paddingVertical: 5
   },

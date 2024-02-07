@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import YoutubePlayer from "react-native-youtube-iframe";
 import LottieView from 'lottie-react-native';
 import { Modal } from "react-native";
+import { Circle } from "tamagui";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = WIDTH/1.9;
@@ -76,7 +77,7 @@ function LearningScreen() {
   return (
     <View style={styles.container}>
       {/* <H3>Learn Crypto Trading</H3> */}
-      <Header />
+      <Header title={courseDescription?.title} />
       {/* <ModalPopUp visible={loading}>
                     <View style={{ width: '100%', height: '100%' }} >
                         <LottieView
@@ -112,12 +113,12 @@ function LearningScreen() {
               resizeMode={ResizeMode.CONTAIN}
             /> */}
             <YoutubePlayer
-        height={ 210 }
-        style={{ borderWidth: 1 }}
-        play={playing}
-        videoId={"iee2TATGMyI"}
-        onChangeState={onStateChange}
-      />
+              height={210}
+              style={{ borderWidth: 1 }}
+              play={playing}
+              videoId={courseDescription?.video_id}
+              onChangeState={onStateChange}
+            />
             {/* ABOUT SECTION */}
             <SizableText
               fontFamily={"$body"}
@@ -127,13 +128,7 @@ function LearningScreen() {
             >
               About
             </SizableText>
-            <Paragraph>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hello ad
-              nam qui, alias iste, cum expedita cupiditate quibusdam et
-              perspiciatis placeat.orem ipsum dolor sit amet consectetur
-              adipisicing elit. Impedit quae omnis quibusdam voluptatibus
-              veritatis iusto nobis sint dolores culpa laboriosam{" "}
-            </Paragraph>
+            <Paragraph>{courseDescription?.about}</Paragraph>
             {/* COURSE CONTENT */}
             <SizableText
               fontFamily={"$body"}
@@ -149,13 +144,16 @@ function LearningScreen() {
               style={{ width: "100%", borderRadius: 10, paddingBottom: 40 }}
             >
               {curriculum?.map((item, index) => (
-                <Accordion.Item value={`"a"${index + 1}`} style={{ marginTop: 5, elevation: 5 }} >
+                <Accordion.Item
+                  value={`"a"${index + 1}`}
+                  style={{ marginTop: 5, elevation: 5 }}
+                >
                   {console.log(Object.entries(item))}
                   <Accordion.Trigger
                     flexDirection="row"
                     justifyContent="space-between"
                     style={{
-                      elevation: 5
+                      elevation: 5,
                     }}
                   >
                     {({ open }) => (
@@ -167,7 +165,20 @@ function LearningScreen() {
                             width: "100%",
                           }}
                         >
-                          <Paragraph size={"$5"} fontWeight={"bold"} >{Object.entries(item)[0][0]}</Paragraph>
+                          <View style={{ flexDirection: "row" }}>
+                            <Circle
+                              size={25}
+                              style={{ backgroundColor: COLORS.lightGreen, alignSelf: 'center', marginRight: 5  }}
+                              // elevation="$1"
+                            >
+                              <Paragraph size={"$4"} fontWeight={"bold"}>
+                                {index + 1}
+                              </Paragraph>
+                            </Circle>
+                            <Paragraph size={"$5"} fontWeight={"bold"}>
+                              {Object.entries(item)[0][0]}1
+                            </Paragraph>
+                          </View>
                           <View
                             style={{
                               backgroundColor: COLORS.primaryFaint,
@@ -208,23 +219,25 @@ function LearningScreen() {
                     )}
                   </Accordion.Trigger>
                   {Object.entries(item)[0][1].map((subHeading, index1) => (
-                    <TouchableOpacity onPress={()=>{
-                      console.log("Move to Detail Learning...");
-                      navigation.navigate("DetailLearningScreen",{
-                        mainHeading: Object.entries(item)[0][0],
-                        subHeading: subHeading,
-                      });
-                    }} >
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log("Move to Detail Learning...");
+                        navigation.navigate("DetailLearningScreen", {
+                          mainHeading: Object.entries(item)[0][0],
+                          subHeading: subHeading,
+                        });
+                      }}
+                    >
                       <Accordion.Content
                         style={{
                           marginTop: 10,
                           width: "90%",
                           alignSelf: "flex-end",
                           elevation: 2,
-                          borderRadius: 5
+                          borderRadius: 5,
                         }}
-                        >
-                        <Paragraph>{ subHeading }</Paragraph>
+                      >
+                        <Paragraph>{subHeading}</Paragraph>
                       </Accordion.Content>
                     </TouchableOpacity>
                   ))}
@@ -260,23 +273,22 @@ function LearningScreen() {
           </ScrollView>
         </View>
       ) : (
-        <ModalPopUp visible={ loading }>
-        <View style={{ width: '100%', height: '100%' }} >
+        <ModalPopUp visible={loading}>
+          <View style={{ width: "100%", height: "100%" }}>
             <LottieView
-                ref={animationRef}
-                style={{
-                        width: '100%',
-                        height: '100%',
-                        alignSelf: 'center',
-                        color: COLORS.primary,
-                }}
-                autoPlay
-                loop
-                source={require('../assets/Loading (1).json')}
+              ref={animationRef}
+              style={{
+                width: "100%",
+                height: "100%",
+                alignSelf: "center",
+                color: COLORS.primary,
+              }}
+              autoPlay
+              loop
+              source={require("../assets/Loading (1).json")}
             />
-        </View>
-    </ModalPopUp>
-
+          </View>
+        </ModalPopUp>
       )}
     </View>
   );
