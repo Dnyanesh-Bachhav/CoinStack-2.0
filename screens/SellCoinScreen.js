@@ -9,6 +9,7 @@ import { Separator, SizableText } from "tamagui";
 import { Info } from "@tamagui/lucide-icons";
 function SellCoinScreen({route}){
     const [coinValue, setCoinValue] = useState("0");
+    const buyExecuted =  useRef(0);
     const currentPrice = route.params.price;
     const [coinLocalCurrencyValue, setCoinLocalCurrencyValue] = useState(
       (route.params.price*parseFloat(coinValue)).toString()
@@ -31,7 +32,7 @@ function SellCoinScreen({route}){
     const[disabledBtn,setDisabledBtn] = useState(true);
 
     const[isValidData,setIsValidData] = useState(false);
-    const {portfolioCoins,storePortfolioCoin,updatePortfolioCoins } = useContext(portfolioContext);
+    const {portfolioCoins,storePortfolioCoin,updatePortfolioCoins, updateFirebasePortfolio } = useContext(portfolioContext);
     const { transactions, storeTransaction } = useContext(transactionContext);
     const itemExists = portfolioCoins.some(coin=> coin.name === route.params.name);
     function addZero(item){
@@ -81,6 +82,11 @@ function SellCoinScreen({route}){
     useEffect(()=>{
         getData();
     },[]);
+    useEffect(()=>{
+      console.log("UseEffect of portfolio coins...");
+      // console.log(portfolioCoins);
+      updateFirebasePortfolio();
+    },[buyExecuted.current]);
     return(
         <View style={styles.container}>
             <Header coinName={route.params.name} imgSrc={route.params.imgSrc} />
@@ -293,12 +299,8 @@ function SellCoinScreen({route}){
                             currentPrice: currentPrice,
                             total: parseFloat(itemQuantity) * currentPrice,
                         });
-                    }
-                    if(isValidData)
-                    {
-                    }
-                    else{
-                    }
+                    }            
+                    buyExecuted.current += 1;
                 }
             } >
                 <Button button_text={"Sell"} backColor={itemExists ? COLORS.red : COLORS.gray} />
