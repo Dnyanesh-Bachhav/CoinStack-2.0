@@ -1,8 +1,14 @@
 import react,{ useState,useEffect, useContext,createContext} from "react";
 export const portfolioContext = createContext();
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import app from "../firebaseConfig";
+import { AuthContext } from "./AuthProviderContext";
 function PortfolioContextProvider({children}){
     const[portfolioCoins,setPortfolioCoins] = useState([]);
+    const { firestoreUser } = useContext(AuthContext);
+    
+    const db = getFirestore(app);
     const getPortfolioCoins = async ()=>{
         try{
             const jsonValue = await AsyncStorage.getItem("@portfolio_coins");
@@ -10,6 +16,11 @@ function PortfolioContextProvider({children}){
         }catch(err){
             console.log("Context: "+err);
         }
+    }
+    const updateFirebasePortfolio = async()=>{
+        const doc1 = doc(db,"users", firestoreUser?.email);
+        const collectionRef = doc(collection(doc1, "portfolio"),"data");
+        await setDoc(collectionRef, {coins: portfolioCoins}, { merge: true})
     }
     const updatePortfolioCoins = async(newList)=>{
         try{
@@ -48,7 +59,7 @@ function PortfolioContextProvider({children}){
         getPortfolioCoins();
     },[]);
     return(
-        <portfolioContext.Provider value={{portfolioCoins,storePortfolioCoin,removeAllCoins,mergeCoin,updatePortfolioCoins }} >
+        <portfolioContext.Provider value={{portfolioCoins, setPortfolioCoins, storePortfolioCoin,removeAllCoins,mergeCoin,updatePortfolioCoins, updateFirebasePortfolio }} >
             {children}
         </portfolioContext.Provider>
     );

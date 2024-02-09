@@ -1,4 +1,4 @@
-import { ActivityIndicator, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../components/constants";
 import { SizableText } from "tamagui";
 import { Lock, Mail, Smartphone, User } from "@tamagui/lucide-icons";
@@ -46,8 +46,22 @@ function SignupScreen({ navigation }){
             <Lock size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
             <TextInput cursorColor={COLORS.grayDark} placeholder="Password" value={password} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setPassword} />
         </View>
-        <TouchableOpacity onPress={()=>{
-            signUp(email, password, phone, username);
+        <TouchableOpacity onPress={async ()=>{
+             const data = await signUp(email, password, phone, username);
+             if(data?.errroCode!=null && data?.errorMessage!=null)
+                {
+                    return Alert.alert('Error', data?.errorMessage, [
+                        {text: 'OK', onPress: () =>
+                            {
+                                setLoading(false);
+                                console.log('OK Pressed')
+                            },
+                        }
+                      ])
+                }
+                else{
+                    console.log("User created..."+data);
+                }
         }} style={styles.btnStyle}>
             <SizableText size={"$5"} fontWeight={"600"} style={{ color: COLORS.white, textAlign: 'center' }} >Submit</SizableText>
         </TouchableOpacity>

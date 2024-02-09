@@ -176,7 +176,7 @@ function LearningScreen() {
                               </Paragraph>
                             </Circle>
                             <Paragraph size={"$5"} fontWeight={"bold"}>
-                              {Object.entries(item)[0][0]}1
+                              {Object.entries(item)[0][0]}
                             </Paragraph>
                           </View>
                           <View

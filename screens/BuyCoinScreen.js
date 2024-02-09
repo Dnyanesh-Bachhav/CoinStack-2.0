@@ -1,4 +1,4 @@
-import react, { useState, useRef, useContext } from "react";
+import react, { useState, useRef, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ import { Info } from '@tamagui/lucide-icons';
 function BuyCoinScreen({ route }) {
   const [coinValue, setCoinValue] = useState("1");
   const currentPrice = route.params.price;
+  const [loading, setLoading] = useState(false);
+  const buyExecuted =  useRef(0);
   const [coinLocalCurrencyValue, setCoinLocalCurrencyValue] = useState(
     route.params.price.toString()
   );
@@ -33,14 +35,14 @@ function BuyCoinScreen({ route }) {
 
   const [itemQuantity, setItemQuantity] = useState(1);
   const [date, setDate] = useState(null);
-  const { portfolioCoins, storePortfolioCoin, updatePortfolioCoins } =
+  const { portfolioCoins, storePortfolioCoin, updatePortfolioCoins, updateFirebasePortfolio } =
     useContext(portfolioContext);
   const { transactions, storeTransaction } = useContext(transactionContext);
   const itemExists = portfolioCoins.some(
     (coin) => coin.name === route.params.name
   );
 
-  console.log(transactions);
+  // console.log(transactions);
   function addZero(item) {
     if (item < 10) {
       return "0" + item;
@@ -67,7 +69,11 @@ function BuyCoinScreen({ route }) {
       day + "/" + month + "/" + year + " " + hours + ":" + minutes + " " + time
     );
   }
-
+  useEffect(()=>{
+    console.log("UseEffect of portfolio coins...");
+    // console.log(portfolioCoins);
+    updateFirebasePortfolio();
+  },[buyExecuted.current]);
   return (
     <View style={styles.container}>
       <Header coinName={route.params.name} imgSrc={route.params.imgSrc} />
@@ -233,6 +239,8 @@ function BuyCoinScreen({ route }) {
                 imgSrc: route.params.imgSrc,
                 quantity: itemQuantity,
               });
+              console.log("If");
+              // setBuyExecuted((prev)=> prev+1);
             } else {
               storePortfolioCoin({
                 name: route.params.name,
@@ -250,7 +258,11 @@ function BuyCoinScreen({ route }) {
                 imgSrc: route.params.imgSrc,
                 quantity: itemQuantity,
               });
+              console.log("Else");
+              // setBuyExecuted((prev)=> prev+1);
             }
+            buyExecuted.current += 1;
+            // To trigger useEffect we are updating buyExecuted state
             ToastAndroid.show("Coin bought successfully...", 1000);
           }}
         >

@@ -7,17 +7,19 @@ import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import NoInternetScreen from "./NoInternetScreen";
 import Carousel from 'react-native-snap-carousel';
-import PortfolioContextProvider from "../Contexts/PortfolioContext";
+import PortfolioContextProvider, { portfolioContext } from "../Contexts/PortfolioContext";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AuthContext } from "../Contexts/AuthProviderContext";
-import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
 import app from "../firebaseConfig";
 import LottieView from 'lottie-react-native';
 import { COLORS } from "../components/constants";
 import { SizableText } from "tamagui";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 function HomeScreen({navigation}){
     const [connected,setConnected] = useState(true);
     const { user, firestoreUser, setFirestoreUser } = useContext(AuthContext);
+    const { portfolioCoins, setPortfolioCoins } = useContext(portfolioContext);
     const [ loading, setLoading ] = useState(false);
     const animationRef = useRef(null);
 
@@ -42,14 +44,38 @@ function HomeScreen({navigation}){
         setLoading(true);
         const db = getFirestore(app);
         const collection_ref = collection(db, "users");
-        const userdata = await getDoc(doc(collection_ref, user.uid));
+        const userdata = await getDoc(doc(collection_ref, user.email));
         console.log(JSON.stringify(userdata.data()));
         setFirestoreUser(userdata.data());
+        await getFirebaseUserPortfolio();
+        
+    }
+    async function getFirebaseUserPortfolio(){
+        // Get user's portfolio from firebase
+        const db = getFirestore(app);
+        const ref = doc(db, "users", user?.email || firestoreUser?.email);
+        const collection_ref = doc(collection(ref, "portfolio"),"data");
+        const portfolioData = await getDoc(collection_ref);
+        console.log("portfolio data: ");
+        console.log(portfolioData);
+        console.log("data of portfolio: "+portfolioData?.data()?.coins || []);
+        setPortfolioCoins(portfolioData?.data()?.coins || []);
+        // console.log(JSON.stringify(data));
+        
+        // Set firebase user's portfolio to Asyncstorage
+        // try{
+        //     const jsonValue = JSON.stringify(portfolioData.data());
+        //     await AsyncStorage.setItem("@portfolio_coins",jsonValue);
+        // }catch(err)
+        // {
+        //     console.log("Error: "+err);
+        // }
         setLoading(false);
     }
     useEffect(()=>{
         checkConnection();
         getUserdataFirestore();
+        
     },[]);
     const Drawer = createDrawerNavigator();
     return(

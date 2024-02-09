@@ -41,7 +41,8 @@ export const AuthProvider = ({ children })=>{
                     // Signed up
                     const db = getFirestore(app);
                     // const collection_ref = collection(db, "users");
-                    setDoc(doc(db, "users", auth.currentUser.uid),{
+                    console.log("CurrentUser: "+auth.currentUser);
+                    setDoc(doc(db, "users", auth.currentUser.email),{
                         name: displayName,
                         email,
                         // password,
@@ -57,7 +58,12 @@ export const AuthProvider = ({ children })=>{
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log("Login error: "+ errorMessage);
+                    console.log("SignUp error: "+ errorMessage);
+                    return{
+                        errorCode,
+                        errorMessage
+                    };
+                    // throw new Error(errorMessage);
                 });
             },
             signOut: async ()=>{

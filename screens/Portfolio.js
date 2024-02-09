@@ -164,8 +164,8 @@ function PortfolioScreen() {
                 }}
               >
                 <SizableText size={"$3"} style={{ color: COLORS.grey }} >Invested Coins</SizableText>
-                {portfolioCoins.length > 0 ? (
-                  portfolioCoins.map((item, index) => (
+                {portfolioCoins?.length > 0 ? (
+                  portfolioCoins?.map((item, index) => (
                     <InvestCoinCard
                       coinId={item.name}
                       quantity={item.quantity}
