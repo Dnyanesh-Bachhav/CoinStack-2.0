@@ -6,6 +6,7 @@ import { COLORS } from "../components/constants";
 import { Lock, Mail } from "@tamagui/lucide-icons";
 import LottieView from 'lottie-react-native';
 import { Modal } from "react-native";
+import { StatusBar } from "react-native";
 
 function LoginScreen({ navigation }){
     const[ email, setEmail ] = useState();
@@ -107,6 +108,8 @@ function LoginScreen({ navigation }){
                     <SizableText style={{color: COLORS.primary, fontWeight: 'bold' }}> Create a new account</SizableText>
                 </TouchableOpacity>
             </View>
+        <StatusBar animated={true} backgroundColor={COLORS.primary} />
+        
         </View>
     );
 }

@@ -84,7 +84,13 @@ function CoinDetailedScreen({ route }) {
       "theme": "light",
       "style": "1",
       "locale": "en",
+      "hide_side_toolbar": false,
       "enable_publishing": false,
+      "withdateranges": true,
+      "details": true,
+      "hotlist": true,
+      "calendar": true,
+      "save_image": false,
       "allow_symbol_change": true,
       "support_host": "https://www.tradingview.com"
     }
