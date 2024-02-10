@@ -20,6 +20,7 @@ import Button from "../components/CoinDetailedScreen/Button";
 import candleStickChartLogo from "../assets/candlestick-chart.png";
 import { COLORS } from "../components/constants";
 import CoinData from "../components/CoinDetailedScreen/coinData";
+import { WebView } from 'react-native-webview';
 import {
   VictoryAxis,
   VictoryChart,
@@ -48,7 +49,12 @@ import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
 import Converter from "../components/CoinDetailedScreen/Converter";
 import Statistics from "../components/CoinDetailedScreen/Statistics";
 import { useWatchlist } from "../Contexts/WatchListContext";
+import { ToggleGroup } from "tamagui";
+import { Paragraph } from "tamagui";
 const { width } = Dimensions.get("window");
+const CHART_HEIGHT = Dimensions.get("window").height/2;
+
+const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 
 function CoinDetailedScreen({ route }) {
   const filterDaysArray = [
@@ -60,11 +66,35 @@ function CoinDetailedScreen({ route }) {
   ];
 
   const [selectedRange, setSelectedRange] = useState("1");
+  const [chartType, setChartType] = useState("tab1");
   const [coinMarketData, setCoinMarketData] = useState();
   const [loading, setLoading] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(route.params.currentPrice);
-
   const { watchlistCoinIds, removeWatchlistCoinId, storeWatchlistCoinId } = useWatchlist();
+  const source = {
+    html : `<!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container" style="height:100%;width:100%">
+      <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+      {
+      "autosize": true,
+      "symbol": "BITSTAMP:${route?.params?.symbol || "BTC"}USD",
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "light",
+      "style": "1",
+      "locale": "en",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "support_host": "https://www.tradingview.com"
+    }
+      </script>
+    </div>
+    <!-- TradingView Widget END -->`
+}
+
+  
+  
     function checkIfCoinIsWatchListed(coinId){
         return watchlistCoinIds.some((coinIdValue)=> coinIdValue===coinId);
     }
@@ -106,7 +136,6 @@ function CoinDetailedScreen({ route }) {
     fetchMarketCoinData(selectedRangeValue);
   };
   const navigation = useNavigation();
-  const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 
   return (
     <View style={styles.container}>
@@ -148,7 +177,79 @@ function CoinDetailedScreen({ route }) {
             </View>
           </View>
           <View style={{ alignSelf: "center" }}>
-            <VictoryChart
+          <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} />
+            
+        
+        
+          </View>
+            {
+
+            chartType == "tab1" ?
+          <View style={styles.filterContainer}>
+              {filterDaysArray.map((day) => (
+                <FilterComponent
+                filterDay={day.filterDay}
+                filterText={day.filterText}
+                selectedRange={selectedRange}
+                setSelectedRange={onSelectedRangeChange}
+                key={day.filterDay}
+                >
+                <Text>Day</Text>
+                </FilterComponent>
+                ))}
+            <TouchableOpacity
+              style={{ backgroundColor: COLORS.primaryFaint, ...styles.filter }}
+              >
+              <CandlestickChart />
+            </TouchableOpacity>
+          </View>
+              : null
+            }
+          <HorizontalTabs
+            coinId={route.params.coinId}
+            coinName={route.params.coin}
+            currentPrice={currentPrice}
+            coinSymbol={ route.params.symbol }
+          />
+
+          {/* <CoinData coinId={route.params.coinId} coinName={route.params.coin} /> */}
+        </ScrollView>
+      </View>
+    </View>
+  );
+}
+const ChartTabs = ({ coinMarketData, source, setChartType }) => {
+  return (
+    <Tabs
+      defaultValue="tab1"
+      orientation="horizontal"
+      flexDirection="column"
+      width={width}
+      height={"auto"}
+      borderRadius="$4"
+      borderWidth="$0.25"
+      overflow="hidden"
+      borderColor="$borderColor"
+      onValueChange={(val)=>{
+        setChartType(val);
+      }}
+    >
+      <Tabs.List
+        separator={<Separator vertical />}
+        disablePassBorderRadius="bottom"
+        aria-label="Manage your account"
+      >
+        <Tabs.Tab value="tab1">
+          <SizableText fontFamily="$body">Prices</SizableText>
+        </Tabs.Tab>
+        <Tabs.Tab value="tab2">
+          <SizableText fontFamily="$body">Trading View</SizableText>
+        </Tabs.Tab>
+      </Tabs.List>
+      <Separator />
+      <Tabs.Content flex={1} value="tab1">
+        <View style={{ marginBottom: 20 }} >
+        <VictoryChart
               containerComponent={
                 <VictoryZoomVoronoiContainer
                   voronoiDimension="x"
@@ -194,38 +295,25 @@ function CoinDetailedScreen({ route }) {
         data={data}
       /> */}
             </VictoryChart>
-          </View>
-          <View style={styles.filterContainer}>
-            {filterDaysArray.map((day) => (
-              <FilterComponent
-                filterDay={day.filterDay}
-                filterText={day.filterText}
-                selectedRange={selectedRange}
-                setSelectedRange={onSelectedRangeChange}
-                key={day.filterDay}
-              >
-                <Text>Day</Text>
-              </FilterComponent>
-            ))}
-            <TouchableOpacity
-              style={{ backgroundColor: COLORS.primaryFaint, ...styles.filter }}
-            >
-              <CandlestickChart />
-            </TouchableOpacity>
-          </View>
-          <HorizontalTabs
-            coinId={route.params.coinId}
-            coinName={route.params.coin}
-            currentPrice={currentPrice}
-            coinSymbol={ route.params.symbol }
-          />
+        </View>
+      </Tabs.Content>
 
-          {/* <CoinData coinId={route.params.coinId} coinName={route.params.coin} /> */}
-        </ScrollView>
+      <Tabs.Content value="tab2">
+        <View style={{ height: CHART_HEIGHT }}>
+          <WebView
+          style={{
+            borderWidth: 2,
+            height: "100%",
+          }
+        }
+        originWhitelist={['*']}
+        source={{ html: source.html }}
+        />  
       </View>
-    </View>
+      </Tabs.Content>
+    </Tabs>
   );
-}
+};
 const HorizontalTabs = ({ coinId, coinName, currentPrice, coinSymbol }) => {
   return (
     <Tabs
