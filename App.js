@@ -19,6 +19,7 @@ import { TamaguiProvider } from 'tamagui'
 
 import config from './tamagui.config'
 import { AuthProvider } from './Contexts/AuthProviderContext';
+import { PaperProvider } from 'react-native-paper';
 
 export default function App() {
   const [loaded] = useFonts({
@@ -45,11 +46,13 @@ export default function App() {
       <PortfolioContextProvider>
         <WatchlistProvider>
           <TransactionContextProvider>
+          <PaperProvider>
               <TamaguiProvider config={config}>
                 <NavigationContainer>
                     <AppNavigator/>
                 </NavigationContainer>
               </TamaguiProvider>
+          </PaperProvider>
           </TransactionContextProvider>
         </WatchlistProvider>
       </PortfolioContextProvider>
