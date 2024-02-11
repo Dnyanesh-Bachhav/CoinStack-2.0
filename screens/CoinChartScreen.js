@@ -228,6 +228,7 @@ function CoinDetailedScreen({ route }) {
               </View>
       : null
       }
+      {/* Modal */}
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalStyle}>
             <XSquare style={{ alignSelf: "flex-end" }} onPress={hideModal} />
