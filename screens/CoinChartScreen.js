@@ -217,14 +217,15 @@ function CoinDetailedScreen({ route }) {
           </View>
               : null
             }
+            {/* Full Screen Trading View Chart */}
             {
               chartType=="tab2" ?
               <View style={{ width: "98%", justifyContent: 'flex-end', alignItems:"flex-start", marginLeft: 5, marginVertical: 5  }}>
-          <ExternalLink style={{paddingVertical: 10, paddingHorizontal: 10, backgroundColor: COLORS.primaryFaint, borderRadius: 5 }} onPress={()=>{
-            console.log("Clicked...")
-            showModal();
-          }} />
-        </View>
+                <ExternalLink style={{paddingVertical: 10, paddingHorizontal: 10, backgroundColor: COLORS.primaryFaint, borderRadius: 5 }} onPress={()=>{
+                  console.log("Clicked...")
+                  showModal();
+                }} />
+              </View>
       : null
       }
         <Portal>
