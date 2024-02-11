@@ -44,15 +44,16 @@ import {
 } from "tamagui";
 import { AntDesign } from "@expo/vector-icons";
 import FilterComponent from "../components/CoinDetailedScreen/FilterComponent";
-import { CandlestickChart } from "@tamagui/lucide-icons";
+import { CandlestickChart, ExternalLink, XSquare } from "@tamagui/lucide-icons";
 import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
 import Converter from "../components/CoinDetailedScreen/Converter";
 import Statistics from "../components/CoinDetailedScreen/Statistics";
 import { useWatchlist } from "../Contexts/WatchListContext";
 import { ToggleGroup } from "tamagui";
 import { Paragraph } from "tamagui";
+import { Modal, Portal } from 'react-native-paper';
 const { width } = Dimensions.get("window");
-const CHART_HEIGHT = Dimensions.get("window").height/2;
+const CHART_HEIGHT = Dimensions.get("window").height/1.6;
 
 const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 
@@ -64,7 +65,12 @@ function CoinDetailedScreen({ route }) {
     { filterDay: "365", filterText: "1y" },
     { filterDay: "max", filterText: "All" },
   ];
+  const [visible, setVisible] = useState(false);
 
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  
+  const containerStyle = {backgroundColor: 'white', padding: 20};
   const [selectedRange, setSelectedRange] = useState("1");
   const [chartType, setChartType] = useState("tab1");
   const [coinMarketData, setCoinMarketData] = useState();
@@ -211,6 +217,30 @@ function CoinDetailedScreen({ route }) {
           </View>
               : null
             }
+            {
+              chartType=="tab2" ?
+              <View style={{ width: "98%", justifyContent: 'flex-end', alignItems:"flex-start", marginLeft: 5, marginVertical: 5  }}>
+          <ExternalLink style={{paddingVertical: 10, paddingHorizontal: 10, backgroundColor: COLORS.primaryFaint, borderRadius: 5 }} onPress={()=>{
+            console.log("Clicked...")
+            showModal();
+          }} />
+        </View>
+      : null
+      }
+        <Portal>
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalStyle}>
+            <XSquare style={{ alignSelf: "flex-end" }} onPress={hideModal} />
+            <WebView
+            style={{
+              borderWidth: 2,
+              height: "100%",
+            }
+          }
+          originWhitelist={['*']}
+          source={{ html: source.html }}
+          /> 
+        </Modal>
+        </Portal>
           <HorizontalTabs
             coinId={route.params.coinId}
             coinName={route.params.coin}
@@ -424,5 +454,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     justifyContent: 'space-between'
   },
+  modalStyle:{
+    width: "94%",
+    height: "90%",
+    alignSelf: 'center',
+    backgroundColor: COLORS.white,
+    borderRadius: 5
+    // padding: 20,
+  }
 });
 export default CoinDetailedScreen;
