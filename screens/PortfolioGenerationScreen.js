@@ -3,11 +3,13 @@ import { Icon, RadioButton } from "react-native-paper";
 import { COLORS } from "../components/constants";
 import DrawerScreenHeader from "../components/HomeScreen/DrawerScreenHeader";
 import { SizableText } from "tamagui";
-import { Mail } from "@tamagui/lucide-icons";
+import { IndianRupee, Mail } from "@tamagui/lucide-icons";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 function PortfolioGenerationScreen(){
     const [ investment, setInvestment ] = useState(0);
     const [ risk, setRisk ] = useState(null);
+    const navigation = useNavigation();
     return(
         <View style={styles.container}>
             <DrawerScreenHeader headerText={"Generate Portfolio"} />
@@ -16,9 +18,10 @@ function PortfolioGenerationScreen(){
                     <SizableText size={"$9"} fontWeight={"700"}>Set up your Portfolio</SizableText>
                     <SizableText>How much would you like to invest?</SizableText>
                 </View>
-                <SizableText style={{ marginLeft: 5, marginTop: 40 }} size={"$5"} fontWeight={"600"}>INR</SizableText>
+                <SizableText style={{ marginLeft: 5, marginTop: 40 }} size={"$5"} fontWeight={"600"}>Amount</SizableText>
                 <View style={{ flexDirection: 'row', width: '100%', backgroundColor: COLORS.primaryFaint, paddingHorizontal: 5, paddingVertical: 10, borderRadius: 10, marginTop: 10, overflow: 'hidden' }} >
-                    <TextInput cursorColor={COLORS.grayDark} keyboardType="numeric" placeholder="₹0" value={investment} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setInvestment} />
+                    <IndianRupee size={"$1"} style={{ alignSelf: 'center', marginLeft: 5, color: COLORS.primary, fontWeight: '700' }} />
+                    <TextInput cursorColor={COLORS.grayDark} keyboardType="numeric" placeholder="0" value={investment} style={{ color: COLORS.grayDark, marginLeft: 10, width: '100%' }} onChangeText={setInvestment} />
                 </View>
                 <SizableText style={{ marginLeft: 5, marginTop: 40 }} size={"$5"} fontWeight={"600"}>Risk Level</SizableText>
                 <RadioButton.Group onValueChange={(val)=>{
@@ -37,8 +40,10 @@ function PortfolioGenerationScreen(){
                         <Text>High</Text> 
                     </View>
                 </RadioButton.Group>
-                <TouchableOpacity style={styles.btnStyle}>
-                    <SizableText size={"$5"} fontWeight={"600"} style={{ color: COLORS.white, textAlign: 'center' }} >Submit</SizableText>
+                <TouchableOpacity style={styles.btnStyle} onPress={()=>{
+                    navigation.navigate("GeneratedPortfolioScreen");
+                }} >
+                    <SizableText size={"$5"} fontWeight={"600"} style={{ color: COLORS.white, textAlign: 'center' }} >Generate Portfolio</SizableText>
                 </TouchableOpacity>
             </View>
         </View>

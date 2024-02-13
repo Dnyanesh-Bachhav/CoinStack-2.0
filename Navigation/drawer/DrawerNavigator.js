@@ -14,6 +14,7 @@ import ReportScreen from '../../screens/ReportScreen';
 import { Feather } from '@expo/vector-icons';
 import PortfolioGenerationScreen from '../../screens/PortfolioGenerationScreen';
 import { Icon } from 'react-native-paper';
+import PortfolioGenerateStack from '../../Stacks/PortfolioGenerateStack';
 const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
     return(
@@ -84,7 +85,7 @@ const DrawerNavigator = () => {
                     <Feather name="download" size={24} color={color} />
                 )
             }} />
-            <Drawer.Screen name="Generate Portfolio" component={PortfolioGenerationScreen} 
+            <Drawer.Screen name="Generate Portfolio" component={PortfolioGenerateStack} 
             options={{
                 drawerIcon: ({color})=>(
                     <Icon
