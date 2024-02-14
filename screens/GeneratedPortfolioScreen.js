@@ -10,6 +10,7 @@ import { SizableText } from "tamagui";
 
 function GeneratedPortfolioScreen(){
     const navigation = useNavigation();
+    // Modal Hooks
     const [visible, setVisible] = useState(false);
   
     const showModal = () => setVisible(true);
