@@ -1,6 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLORS } from "../components/constants";
-import DrawerScreenHeader from "../components/HomeScreen/DrawerScreenHeader";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { Info, XSquare } from "@tamagui/lucide-icons";
