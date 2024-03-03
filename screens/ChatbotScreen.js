@@ -147,16 +147,6 @@ function ChatbotScreen(){
     }
             
     useEffect( ()=>{
-        // openai.createCompletion({
-        //     model: 'text-davinci-002',
-        //     prompt: "Hi",
-        //     temperature: 0.7,
-        //     max_tokens: 256,
-        // }).then((response)=>{
-        //     console.log("HI there:"+ response.data.choices[0].text);
-        //     setText(response.data.choices[0].text);
-            
-        // });
         setMessages([
             {
               _id: 1,
