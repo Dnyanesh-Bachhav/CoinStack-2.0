@@ -34,6 +34,7 @@ function DetailLearningScreen({ route }) {
     // console.log(detail_page_description_data);
     // console.log(typeof detail_page_description_data);
     
+    let array = [];
     detail_page_description_data.forEach((doc1) => {
       // doc.data() is never undefined for query doc snapshots
       // let array = [];
@@ -41,9 +42,15 @@ function DetailLearningScreen({ route }) {
         subHeading: doc1.id,
         content: doc1.data(),
       };
-      setListData(old=> [...old, dataItem]);
+      array.push(dataItem);
+      // setListData(old=> [...old, dataItem]);
       console.log(doc1.id, " => ", doc1.data());
     });
+    // for(let i=listData.length-1;i>=0;i--)
+    // {
+    //   array.push(listData[i]);
+    // }
+    setListData(array?.reverse());
     setLoading(false);
   }
   function handleNextOnClick(index){
@@ -91,6 +98,7 @@ function DetailLearningScreen({ route }) {
           ref={(ref) => {
             chapterRef = ref;
           }}
+          // inverted={true}
           // getItemLayout={(data, index) => ({
           //   length: WIDTH*0.94,
           //   offset: WIDTH * index,
@@ -107,7 +115,7 @@ function DetailLearningScreen({ route }) {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }} >
 
                   <SizableText style={{ color: COLORS.grey }}>
-                    {item.content.time_to_read} min
+                    {item?.content?.time_to_read} min
                   </SizableText>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.success, color: COLORS.white }} >
                   <Check size="$1" color={COLORS.white} />
@@ -142,7 +150,7 @@ function DetailLearningScreen({ route }) {
                 <SizableText size={"$5"} fontWeight={"bold"}>Links:</SizableText>
                 {
                   Object.entries(item.content.links).map(([key, val])=>(
-                    <ListItem hoverTheme icon={Link} style={{ marginTop: 10, elevation: 2, width: '98%', alignSelf:'flex-end', marginRight: 4 }}  onPress={async ()=>{
+                    <ListItem hoverTheme icon={Link} style={{ marginTop: 10, elevation: 2, borderRadius: 5, width: '98%', alignSelf:'flex-end', marginRight: 4 }}  onPress={async ()=>{
                       const supported = await Linking.canOpenURL(val);
                       if (supported) {
                         // Opening the link with some app, if the URL scheme is "http" the web link should be opened

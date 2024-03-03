@@ -405,7 +405,9 @@ const HorizontalTabs = ({ coinId, coinName, currentPrice, coinSymbol }) => {
       </Tabs.Content>
 
       <Tabs.Content value="tab3">
-        <H5>Notifications</H5>
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <H5>Notifications</H5>
+        </View>
       </Tabs.Content>
     </Tabs>
   );
