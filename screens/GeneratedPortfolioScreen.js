@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
 
     contentContainer:{
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
+        // paddingVertical: 40
     },
     modalStyle:{
         width: "92%",

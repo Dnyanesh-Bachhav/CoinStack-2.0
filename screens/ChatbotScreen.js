@@ -39,7 +39,7 @@ function ChatbotScreen(){
         }
         setLoading(true);
         let reply = "";
-            axios.post("https://coinstack-backend.vercel.app/api/hello",
+            axios.post("https://coinstack-backend.vercel.app/api/bard",
                 {message},
                 // { headers: {"Content-Type": "application/json"}}
             ).then((response)=>{
@@ -50,7 +50,7 @@ function ChatbotScreen(){
                 setData(d1.data.result.trim());
                 console.log("Actual data: "+data);
                 reply = d1.data.result.trim();
-                return d1.data.result;
+                // return d1.data.result;
             }).catch((e)=>{
                     console.log("Error: "+e);
                     Alert.alert("Something went wrong!");
@@ -160,7 +160,7 @@ function ChatbotScreen(){
         setMessages([
             {
               _id: 1,
-              text: 'Hello developer',
+              text: 'How can I help you today?',
               createdAt: new Date(),
               user: {
                 _id: 2,
@@ -170,7 +170,7 @@ function ChatbotScreen(){
             },
             {
                 _id: 2,
-                text: 'Hello World...!!!',
+                text: 'Hi',
                 createdAt: new Date(),
                 user: {
                   _id: 1,
@@ -202,6 +202,8 @@ function ChatbotScreen(){
                 onQuickReply={(msg)=>{
                     // console.log("reply from bot..."+msg);
                 }}
+                // renderLoading={}
+                isTyping={loading}
                 scrollToBottom
                 scrollToBottomComponent={scrollToBottomComponent}
                 // textInputStyle={{
@@ -277,6 +279,7 @@ function InputMessage({text,setText,messages,setMessages}){
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+        backgroundColor: COLORS.white,
     },
     sentMsgStyle:{
         backgroundColor: "#4f4cd9",
