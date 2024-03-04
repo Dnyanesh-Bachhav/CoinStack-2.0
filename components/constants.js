@@ -651,5 +651,5 @@ const bitcoin_data = [
       y: 3433830.1297089434,
     },
   ];
-  
+
 export {COLORS,MostGainedCoins,MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins,banners, bitcoin_data, MEME_COINS_IDS, TRUSTED_COINS_IDS  };

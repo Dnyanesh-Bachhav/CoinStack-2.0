@@ -6,6 +6,7 @@ import { Info, XSquare } from "@tamagui/lucide-icons";
 import { Modal, Portal } from "react-native-paper";
 import { useState } from "react";
 import { SizableText } from "tamagui";
+import { generatePortfolio } from "../components/portfolio_generation.mjs";
 
 function GeneratedPortfolioScreen(){
     const navigation = useNavigation();
@@ -14,6 +15,7 @@ function GeneratedPortfolioScreen(){
   
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
+    generatePortfolio(10000,"LOW");
     return(
         <View style={styles.container}>
             <View style={styles.headerContainer}>
