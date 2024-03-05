@@ -2,7 +2,7 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react
 import { COLORS } from "../components/constants";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-import { Info, XSquare } from "@tamagui/lucide-icons";
+import { Download, Info, XSquare } from "@tamagui/lucide-icons";
 import { Modal, Portal } from "react-native-paper";
 import { useEffect, useRef, useState } from "react";
 import { SizableText } from "tamagui";
@@ -10,6 +10,8 @@ import { generatePortfolio } from "../components/portfolio_generation.js";
 import { FontAwesome } from '@expo/vector-icons';
 import { getWatchlistedCoins } from "../Services/requests";
 import LottieView from 'lottie-react-native';
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 
 function GeneratedPortfolioScreen({ route }){
     const navigation = useNavigation();
@@ -31,6 +33,149 @@ function GeneratedPortfolioScreen({ route }){
           const portfolioCoinsAPIData = await getWatchlistedCoins(1, keys);
           APIData.current = portfolioCoinsAPIData;
           setLoading(false);
+    }
+    const timeoutPromise = async ()=>{
+        return new Promise((resolve, reject)=>{
+            setTimeout(() => {
+                // just a timer
+                setVisible(false);
+                resolve();
+            }, 1600);
+        });
+    }
+    async function generateTradeReport(){
+        setVisible(true);
+        setLoading(true);
+        // console.log(transactions[0]);
+        let tableData = "";
+        portfolio.forEach((item, index) => {
+            tableData += `
+            <tr>
+                <td style="display: flex;justify-content: center;align-items:center;"><image src=${ item[1].imgSrc } style="width: 50px;height: 50px;"/></td>
+                <td>${ item[1].name }</td>
+                <td>${ item[1].percentage+"%" }</td>
+                <td>${ "₹"+item[1].amount }</td>
+            </tr>
+            `;
+        })
+        const html = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Document</title>
+        </head>
+        <style>
+        body{
+            // border: 1px solid black;
+        }
+        @page{
+            margin: 10px;
+        }
+        #transactions {
+            padding: 20px 12px 20px 12px;
+            // padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            padding
+          }
+          
+          #transactions td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+          }
+          
+          #transactions tr:nth-child(even){background-color: #f2f2f2;}
+          
+          #transactions tr:hover {background-color: #ddd;}
+          
+          #transactions th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            // background-color: ${ COLORS.primary };
+            // background-color: #002060;
+            font-weight: bold;
+            color: white;
+          }
+          #container{
+            background-color: #002060;
+            // background-color: ${ COLORS.primary };
+            margin-bottom: 16px;
+        }
+        .heading h2{
+            color: white;
+        }
+        .heading h1{
+            color: red;
+        }
+        .heading{
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+        }
+        .title{
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .content{
+            color: white;
+            margin-left: 5px;
+        }
+        .info{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        </style>
+        <body>
+        <div id="container">
+        <div class="heading">
+            <h2>Coin</h2>
+            <h1>STACK</h1>
+        </div>
+        <div class="info">
+            <p class="title">Name:</p>
+            <div class="content">Dnyanesh Dipak Bachhav</div>
+        </div>
+        <div class="info">
+            <p class="title">Email ID:</p>
+            <div class="content">dnyaneshbachhav2002@gmail.com</div>
+        </div>
+        <div class="info">
+            <p class="title">Date:</p>
+            <div class="content">05/03/2024</div>
+        </div>
+    </div>
+    <h1 style="text-align: center;">Generated Portfolio</h1>
+            <table id="transactions">
+                <tr>
+                    <td style="font-weight: bold;font-size: 20px;">Logo</td>
+                    <td style="font-weight: bold;font-size: 20px;">Coin Name</td>
+                    <td style="font-weight: bold;font-size: 20px;">Percentage</td>
+                    <td style="font-weight: bold;font-size: 20px;">Quantity</td>
+                </tr>
+                <tbody>
+                ${ tableData }
+                </tbody>
+            </table>
+            <div style="margin-top: 34px;">
+            <h3>Total: ${ route.params.amount }</h3>
+            </div>
+        </body>
+        </html>
+        `;
+        const print = await Print.printToFileAsync({ html });
+        console.log('File has been saved to:', print.uri);
+        const timeout = timeoutPromise();
+        Promise.all([print, timeout]).then(async ()=>{
+            await shareAsync(print.uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+            setLoading(false);
+        });
+        
     }
     useEffect(()=>{
         const data = generatePortfolio( route.params.amount, route.params.risk.toUpperCase());
@@ -74,13 +219,22 @@ function GeneratedPortfolioScreen({ route }){
                     </TouchableOpacity>
                     <Text style={{color: COLORS.white,fontSize: 21,marginLeft: 10}}>Generated Portfolio</Text>
                 </View>
-                <Info
-                // size={"$1"}
-                onPress={()=>{
-                    showModal();
-                }}
-                style={{ color: COLORS.white, marginRight: 10, fontSize: 12, alignItems: 'flex-end' }}
-                />
+                <View style={{ flexDirection: 'row'}}>
+                    <Download
+                    onPress={()=>{
+                        console.log("Download");
+                        generateTradeReport();
+                    }}
+                    style={{ color: COLORS.white, marginRight: 10, fontSize: 12, alignItems: 'flex-end' }}
+                    />
+                    <Info
+                    // size={"$1"}
+                    onPress={()=>{
+                        showModal();
+                    }}
+                    style={{ color: COLORS.white, marginRight: 10, fontSize: 12, alignItems: 'flex-end' }}
+                    />
+                </View>
             </View>
             <View style={styles.contentContainer}>
             <Portal>
