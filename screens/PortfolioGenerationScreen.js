@@ -41,7 +41,10 @@ function PortfolioGenerationScreen(){
                     </View>
                 </RadioButton.Group>
                 <TouchableOpacity style={styles.btnStyle} onPress={()=>{
-                    navigation.navigate("GeneratedPortfolioScreen");
+                    navigation.navigate("GeneratedPortfolioScreen",{
+                        amount: investment,
+                        risk: risk
+                    });
                 }} >
                     <SizableText size={"$5"} fontWeight={"600"} style={{ color: COLORS.white, textAlign: 'center' }} >Generate Portfolio</SizableText>
                 </TouchableOpacity>

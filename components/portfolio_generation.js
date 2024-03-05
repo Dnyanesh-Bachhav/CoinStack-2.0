@@ -38,7 +38,7 @@ function getAmount(TOTAL, percentage)
     const val = (percentage/100*TOTAL).toFixed(2);
     return val;
 }
-export function generatePortfolio(TOTAL, risk_level)
+function generatePortfolio(TOTAL, risk_level)
 {
     var shuffled_low_risk_coins_array = shuffle(LOW_RISK_COINS);
     var shuffled_medium_risk_coins_array = shuffle(MEDIUM_RISK_COINS);
@@ -121,8 +121,10 @@ export function generatePortfolio(TOTAL, risk_level)
             break;
     }
     console.log(portfolio);
+    return portfolio;
 }
 // let amount = 10000;
 // let risk_level = "LOW";
 
 // generatePortfolio(amount, risk_level);
+export { generatePortfolio };
