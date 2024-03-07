@@ -18,7 +18,7 @@ import { COLORS } from "../../components/constants";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import user1 from "../../assets/user.png";
+import user1 from "../../assets/user.jpg";
 import * as Sharing from "expo-sharing";
 import { Asset, useAssets } from "expo-asset";
 import * as FileSystem from "expo-file-system";
