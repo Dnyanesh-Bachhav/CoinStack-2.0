@@ -97,6 +97,7 @@ function ChatbotScreen(){
         console.log("Data12:"+ JSON.stringify(messages));
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
         await getChatbotReply(messages[0].text);
+        return 0;
         
         // setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
       }, []);
@@ -128,7 +129,7 @@ function ChatbotScreen(){
                     color: COLORS.gray,
                 },
                 left:{
-                    color: COLORS.gray,
+                    color: COLORS.black,
                 }
             }}
             
@@ -138,7 +139,9 @@ function ChatbotScreen(){
     }
     const scrollToBottomComponent = ()=>{
         return(
-            <FontAwesome name="angle-double-down" size={24} color="black" />
+            <View style={{ backgroundColor: COLORS.grayLight, elevation: 2 }} >
+                <FontAwesome name="angle-double-down" size={24} color="black" />
+            </View>
         );
     }
     const getData1 = async()=>{
