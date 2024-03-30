@@ -147,6 +147,7 @@ function LearningScreen() {
                 <Accordion.Item
                   value={`"a"${index + 1}`}
                   style={{ marginTop: 5, elevation: 5 }}
+                  key={index}
                 >
                   {console.log(Object.entries(item))}
                   <Accordion.Trigger
@@ -229,6 +230,7 @@ function LearningScreen() {
                           subHeading: subHeading,
                         });
                       }}
+                      key={index1}
                     >
                       <Accordion.Content
                         style={{
