@@ -26,7 +26,7 @@ function DetailLearningScreen({ route }) {
     setLoading(true);
     const db = getFirestore(app);
     const detail_page_description_data = await getDocs(
-      collection(db, "testing", "demo1", subHeading)
+      collection(db, "course", "chapter_data", subHeading)
     );
     // console.log(JSON.stringify(detail_page_description_data));
     setChaptersLength(detail_page_description_data.size);

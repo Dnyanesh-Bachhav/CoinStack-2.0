@@ -34,7 +34,7 @@ function LearningScreen() {
     setLoading(true);
     const db = getFirestore(app);
     // Get Access to course collection
-    const collection_ref = collection(db, "testing");
+    const collection_ref = collection(db, "course");
     // Get course description data i.e. needed on landing screen
     const course_description_data = await getDoc(doc(collection_ref,"description"));
     console.log(JSON.stringify(course_description_data.data()));
@@ -175,7 +175,7 @@ function LearningScreen() {
                                 {index + 1}
                               </Paragraph>
                             </Circle>
-                            <Paragraph size={"$5"} fontWeight={"bold"}>
+                            <Paragraph size={"$5"} fontWeight={"bold"} style={{ marginLeft: 5, width: '80%' }}>
                               {Object.entries(item)[0][0]}
                             </Paragraph>
                           </View>
@@ -183,6 +183,8 @@ function LearningScreen() {
                             style={{
                               backgroundColor: COLORS.primaryFaint,
                               borderRadius: 50,
+                              width: 30,
+                              height: 30,
                               justifyContent: "center",
                               alignItems: "center",
                               padding: 4,
