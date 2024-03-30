@@ -1,5 +1,5 @@
 import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Text, View, StyleSheet, FlatList, Dimensions, Image, TouchableOpacity, ScrollView, Linking, Alert } from "react-native";
 import app from "../firebaseConfig";
 import { ListItem, Progress, SizableText } from "tamagui";
@@ -8,6 +8,7 @@ import { COLORS } from "../components/constants";
 import { useNavigation } from "@react-navigation/native";
 import { Check, Link, Moon } from "@tamagui/lucide-icons";
 import RenderHTML from "react-native-render-html";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = WIDTH/1.9;
@@ -20,7 +21,15 @@ function DetailLearningScreen({ route }) {
   const [listData, setListData] = useState([]);
   const navigation = useNavigation();
   const [ progress, setProgress ] = useState(0);
+  const [playing, setPlaying] = useState(false);
   let chapterRef = null;
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+      Alert.alert("video has finished playing!");
+    }
+  }, []);
 
   async function getSubheadingData() {
     setLoading(true);
@@ -119,10 +128,11 @@ function DetailLearningScreen({ route }) {
                   </SizableText>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.success, color: COLORS.white }} >
                   <Check size="$1" color={COLORS.white} />
-                  <SizableText color={COLORS.white} style={{ padding: 4,  }} >{item.content.XP} XP</SizableText>
+                  <SizableText color={COLORS.white} style={{ padding: 4,  }}>{item.content.XP} XP</SizableText>
                 </View>
                 </View>
                 {
+                  item?.content?.Is_Image ?
                   <View
                     style={{
                       width: WIDTH * 0.96,
@@ -135,10 +145,17 @@ function DetailLearningScreen({ route }) {
                     <Image
                       style={styles.imgStyle}
                       source={{
-                        uri: item.content.img_url,
+                        uri: item?.content?.img_url,
                       }}
                     />
                   </View>
+                  : <YoutubePlayer
+                  height={210}
+                  style={{ borderWidth: 1 }}
+                  play={playing}
+                  videoId={item?.content?.video_url}
+                  onChangeState={onStateChange}
+                />
                 }
                 <View>
                 <RenderHTML style={{ marginTop: 10 }} contentWidth={ WIDTH } source={{ html: !item.content.description ?
