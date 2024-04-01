@@ -79,9 +79,7 @@ function CoinDetailedScreen({ route }) {
   const[predictionData, setPredictionData] = useState(null);
   const[predictionChartData, setPredictionChartData] = useState(null);
   const[fetchingPredictionData, setFetchingPredictionData] = useState(false);
-  const isPredictionChart = useRef(false);
-  const animationRef = useRef(null);
-  
+  const isPredictionChart = useRef(false);  
   const containerStyle = {backgroundColor: 'white', padding: 20};
   const [selectedRange, setSelectedRange] = useState("1");
   const [selectedPredictionRange, setSelectedPredictionRange] = useState("7");
@@ -224,9 +222,7 @@ function CoinDetailedScreen({ route }) {
       <View style={styles.btnGroup}>
         <Button button_text="Buy" backColor={COLORS.success} screenName={"BuyCoinScreen"} name={ route.params.coin } price={ currentPrice } symbol={ route.params.symbol } imgSrc={ route.params.imgUrl } />
         <Button button_text="Sell" backColor={COLORS.red} screenName={"SellCoinScreen"} name={ route.params.coin } price={ currentPrice } symbol={ route.params.symbol } imgSrc={ route.params.imgUrl } />
-      </View>
-      {
-            !fetchingPredictionData ?  
+      </View> 
       <View style={{ marginVertical: 5, marginBottom: 100 }}>
         <ScrollView style={{}} showsVerticalScrollIndicator={false}>
           
@@ -282,10 +278,7 @@ function CoinDetailedScreen({ route }) {
           </View>
           
           <View style={{ alignSelf: "center" }}>
-          <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} isPredictionChart={isPredictionChart.current} predictionChartData={predictionChartData} />
-            
-        
-        
+            <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} isPredictionChart={isPredictionChart.current} predictionChartData={predictionChartData} fetchingPredictionData={fetchingPredictionData} />
           </View>
             {
 
@@ -325,6 +318,8 @@ function CoinDetailedScreen({ route }) {
           </View>
               : null
             }
+
+
             {/* Full Screen Trading View Chart */}
             {
               chartType=="tab2" ?
@@ -361,26 +356,15 @@ function CoinDetailedScreen({ route }) {
           {/* <CoinData coinId={route.params.coinId} coinName={route.params.coin} /> */}
         </ScrollView>
       </View>
-      :
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-            <LottieView
-                ref={animationRef}
-                style={{
-                        width: '40%',
-                        height: '40%',
-                        alignSelf: 'center',
-                        color: COLORS.primary,
-                }}
-                autoPlay
-                loop
-                source={require('../assets/Loading (1).json')}
-            />
-        </View>
-      }
+      
+      
     </View>
   );
 }
-const ChartTabs = ({ coinMarketData, source, setChartType, isPredictionChart, predictionChartData }) => {
+const ChartTabs = ({ coinMarketData, source, setChartType, isPredictionChart, predictionChartData, fetchingPredictionData }) => {
+  
+  const animationRef = useRef(null);
+
   return (
     <Tabs
       defaultValue="tab1"
@@ -409,11 +393,12 @@ const ChartTabs = ({ coinMarketData, source, setChartType, isPredictionChart, pr
         </Tabs.Tab>
       </Tabs.List>
       <Separator />
+      
       <Tabs.Content flex={1} value="tab1">
         <View style={{ marginBottom: 20 }} >
-
-          {
-            !isPredictionChart
+      {
+        !fetchingPredictionData ? (
+          !isPredictionChart
           ?
             <VictoryChart
               containerComponent={
@@ -462,43 +447,62 @@ const ChartTabs = ({ coinMarketData, source, setChartType, isPredictionChart, pr
       /> */}
             </VictoryChart>
           : 
-          <VictoryChart
-              animate={{
-                duration: 2000,
-                onLoad: { duration: 1000 }
-              }}
-              containerComponent={
-                <VictoryZoomVoronoiContainer
-                  voronoiDimension="x"
-                  labels={({ datum }) => `${datum?.y} \n ${datum.x} `}
-                  labelComponent={
-                    <VictoryTooltip
-                      style={{ borderColor: "red" }}
-                      cornerRadius={2}
-                      flyoutPadding={{ top: 2, bottom: 2, left: 9, right: 9 }}
-                      flyoutStyle={{ fill: "white" }}
-                      renderInPortal={false}
-                    />
-                  }
-                />
-              }
-            >
-            <VictoryAxis
-              style={{
-                axis: { stroke: "transparent" },
-                ticks: { stroke: "transparent" },
-                tickLabels: { fill: "none" },
-              }}
+            <VictoryChart
+                animate={{
+                  duration: 2000,
+                  onLoad: { duration: 1000 }
+                }}
+                containerComponent={
+                  <VictoryZoomVoronoiContainer
+                    voronoiDimension="x"
+                    labels={({ datum }) => `${datum?.y} \n ${datum.x} `}
+                    labelComponent={
+                      <VictoryTooltip
+                        style={{ borderColor: "red" }}
+                        cornerRadius={2}
+                        flyoutPadding={{ top: 2, bottom: 2, left: 9, right: 9 }}
+                        flyoutStyle={{ fill: "white" }}
+                        renderInPortal={false}
+                      />
+                    }
+                  />
+                }
+              >
+              <VictoryAxis
+                style={{
+                  axis: { stroke: "transparent" },
+                  ticks: { stroke: "transparent" },
+                  tickLabels: { fill: "none" },
+                }}
+              />
+              
+              <VictoryLine
+                data={predictionChartData}
+              />
+            </VictoryChart>
+        )
+        :
+    
+      <View style={{ width: '100%', height: '100%', alignSelf: 'center', justifyContent: 'center', alignItems: 'center' }} >
+            <LottieView
+                ref={animationRef}
+                style={{
+                        width: '100%',
+                        height: '70%',
+                        // borderWidth: 1,
+                        alignSelf: 'center',
+                        color: COLORS.primary,
+                }}
+                autoPlay
+                loop
+                source={require('../assets/Loading (1).json')}
             />
-            
-            <VictoryLine
-              data={predictionChartData}
-            />
-        </VictoryChart>
-        }
+        </View>
+    }
         </View>
       </Tabs.Content>
-
+    
+      
       <Tabs.Content value="tab2">
         <View style={{ height: CHART_HEIGHT }}>
           <WebView
