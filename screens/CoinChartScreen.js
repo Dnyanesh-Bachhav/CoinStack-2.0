@@ -18,7 +18,7 @@ import {
 } from "../Services/requests";
 import Button from "../components/CoinDetailedScreen/Button";
 import candleStickChartLogo from "../assets/candlestick-chart.png";
-import { COLORS } from "../components/constants";
+import { COLORS, PREDICTION_AVAILABLE_COINS, PREDICTION_DATA } from "../components/constants";
 import CoinData from "../components/CoinDetailedScreen/coinData";
 import { WebView } from 'react-native-webview';
 import {
@@ -52,6 +52,7 @@ import { useWatchlist } from "../Contexts/WatchListContext";
 import { ToggleGroup } from "tamagui";
 import { Paragraph } from "tamagui";
 import { Modal, Portal } from 'react-native-paper';
+import axios from "axios";
 const { width } = Dimensions.get("window");
 const CHART_HEIGHT = Dimensions.get("window").height/1.6;
 
@@ -65,13 +66,22 @@ function CoinDetailedScreen({ route }) {
     { filterDay: "365", filterText: "1y" },
     { filterDay: "max", filterText: "All" },
   ];
+  const predictionFilterDaysArray = [
+    { filterDay: "7", filterText: "7d" },
+    { filterDay: "30", filterText: "30d" }
+  ];
   const [visible, setVisible] = useState(false);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
+  const[predictionData, setPredictionData] = useState(null);
+  const[predictionChartData, setPredictionChartData] = useState(null);
+  const[isPredictionChart, setIsPredictionChart] = useState(false);
   
   const containerStyle = {backgroundColor: 'white', padding: 20};
   const [selectedRange, setSelectedRange] = useState("1");
+  const [selectedPredictionRange, setSelectedPredictionRange] = useState("7");
   const [chartType, setChartType] = useState("tab1");
   const [coinMarketData, setCoinMarketData] = useState();
   const [loading, setLoading] = useState(false);
@@ -105,7 +115,9 @@ function CoinDetailedScreen({ route }) {
     <!-- TradingView Widget END -->`
 }
 
-  
+    function checkIfCoinPredictionIsAvailable(symbol){
+      return PREDICTION_AVAILABLE_COINS.some((coin_symbol)=> coin_symbol==symbol.toUpperCase());
+    }
   
     function checkIfCoinIsWatchListed(coinId){
         return watchlistCoinIds.some((coinIdValue)=> coinIdValue===coinId);
@@ -133,6 +145,21 @@ function CoinDetailedScreen({ route }) {
 
     setLoading(false);
   };
+  const fetchPredictionData = async (symbol = "BTC") => {
+    try {
+      const response = await axios.get(`https://prediction-api-78xq.onrender.com/prediction/${symbol}`);
+  
+      console.log("Prediction Data:");
+      console.log(response.data);
+      setPredictionData(response.data);
+      console.log(JSON.parse(response.data));
+  
+      // Use the response data for your app's functionality
+      // ...
+    } catch (error) {
+      console.error("Error fetching prediction data:", error);
+    }
+  };
   async function fetchdata() {
     getCoinDataById(route.params.coinId).then((data) => {
       // console.log("CoinName: "+route.params.coinId);
@@ -142,10 +169,44 @@ function CoinDetailedScreen({ route }) {
   useEffect(() => {
     // fetchdata();
     fetchMarketCoinData(1);
+    // if(checkIfCoinPredictionIsAvailable(route.params.symbol))
+    // {
+    //   setIsPredictionChart(true);
+    //   // fetchPredictionData();
+    // }
+    // else{
+    //   setIsPredictionChart(false);
+    // }
   }, []);
+
+  function getFormattedPredictionData(range)
+  {
+    const chart_data = [];
+    let x_axis_data = range=="7" ? PREDICTION_DATA.one_week_dates : PREDICTION_DATA.one_month_dates;
+    let y_axis_data = range=="7" ? PREDICTION_DATA.one_week_dollars : PREDICTION_DATA.one_month_dollars;
+    for(let i=0;i<x_axis_data.length;i++)
+    {
+      chart_data.push({
+        x: x_axis_data[i],
+        y: y_axis_data[i]
+      })
+    }
+    console.log(chart_data);
+    setPredictionChartData(chart_data);
+  }
+
   const onSelectedRangeChange = (selectedRangeValue) => {
     setSelectedRange(selectedRangeValue);
     fetchMarketCoinData(selectedRangeValue);
+  };
+  const onSelectedPredictionRangeChange = (range) => {
+    setSelectedPredictionRange(range);
+    if(PREDICTION_DATA)
+    {
+      getFormattedPredictionData(range);
+    }
+    console.log("Range: "+range);
+    // fetchMarketCoinData(selectedRangeValue);
   };
   const navigation = useNavigation();
 
@@ -185,11 +246,28 @@ function CoinDetailedScreen({ route }) {
                 {
                   handleWatchListCoin();
                 }} />
-              <FontAwesome name="magic" size={21} color={ COLORS.primary } style={{ marginTop: 5 }} />
+                
+                {
+                  checkIfCoinPredictionIsAvailable(route.params.symbol) 
+                  ?
+                  <View style={{ backgroundColor: isPredictionChart ? COLORS.primary : COLORS.primaryFaint, marginTop: 5, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 5 }} >
+                    <FontAwesome name="magic" size={18} color={ isPredictionChart ? COLORS.white : COLORS.primary } style={{ marginTop: 5 }} onPress={()=>{
+                      setIsPredictionChart(!isPredictionChart);
+                      if(isPredictionChart)
+                      {
+                        if(selectedRange==null)
+                        {
+                          setSelectedRange("7");
+                        }
+                      }
+                    }} />
+                  </View>
+                  : null  
+          }
             </View>
           </View>
           <View style={{ alignSelf: "center" }}>
-          <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} />
+          <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} isPredictionChart={isPredictionChart} predictionChartData={predictionChartData} />
             
         
         
@@ -198,7 +276,7 @@ function CoinDetailedScreen({ route }) {
 
             chartType == "tab1" ?
           <View style={styles.filterContainer}>
-              {filterDaysArray.map((day) => (
+              { !isPredictionChart ? filterDaysArray.map((day) => (
                 <FilterComponent
                 filterDay={day.filterDay}
                 filterText={day.filterText}
@@ -208,7 +286,22 @@ function CoinDetailedScreen({ route }) {
                 >
                 <Text>Day</Text>
                 </FilterComponent>
-                ))}
+                ))
+              : 
+              predictionFilterDaysArray.map((day) => (
+                <FilterComponent
+                filterDay={day.filterDay}
+                filterText={day.filterText}
+                selectedRange={selectedPredictionRange}
+                setSelectedRange={onSelectedPredictionRangeChange}
+                key={day.filterDay}
+                >
+                <Text>Day</Text>
+                </FilterComponent>
+                ))
+              }
+
+
             <TouchableOpacity
               style={{ backgroundColor: COLORS.primaryFaint, ...styles.filter }}
               >
@@ -256,7 +349,7 @@ function CoinDetailedScreen({ route }) {
     </View>
   );
 }
-const ChartTabs = ({ coinMarketData, source, setChartType }) => {
+const ChartTabs = ({ coinMarketData, source, setChartType, isPredictionChart, predictionChartData }) => {
   return (
     <Tabs
       defaultValue="tab1"
@@ -287,7 +380,11 @@ const ChartTabs = ({ coinMarketData, source, setChartType }) => {
       <Separator />
       <Tabs.Content flex={1} value="tab1">
         <View style={{ marginBottom: 20 }} >
-        <VictoryChart
+
+          {
+            !isPredictionChart
+          ?
+            <VictoryChart
               containerComponent={
                 <VictoryZoomVoronoiContainer
                   voronoiDimension="x"
@@ -333,6 +430,41 @@ const ChartTabs = ({ coinMarketData, source, setChartType }) => {
         data={data}
       /> */}
             </VictoryChart>
+          : 
+          <VictoryChart
+              animate={{
+                duration: 2000,
+                onLoad: { duration: 1000 }
+              }}
+              containerComponent={
+                <VictoryZoomVoronoiContainer
+                  voronoiDimension="x"
+                  labels={({ datum }) => `${datum?.y} \n ${datum.x} `}
+                  labelComponent={
+                    <VictoryTooltip
+                      style={{ borderColor: "red" }}
+                      cornerRadius={2}
+                      flyoutPadding={{ top: 2, bottom: 2, left: 9, right: 9 }}
+                      flyoutStyle={{ fill: "white" }}
+                      renderInPortal={false}
+                    />
+                  }
+                />
+              }
+            >
+            <VictoryAxis
+              style={{
+                axis: { stroke: "transparent" },
+                ticks: { stroke: "transparent" },
+                tickLabels: { fill: "none" },
+              }}
+            />
+            
+            <VictoryLine
+              data={predictionChartData}
+            />
+        </VictoryChart>
+        }
         </View>
       </Tabs.Content>
 
@@ -422,7 +554,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     paddingVertical: 5,
     borderRadius: 5,
     marginVertical: 10,
@@ -455,6 +587,7 @@ const styles = StyleSheet.create({
   coinInfoContainer: {
     flex: 1,
     flexDirection: "row",
+    marginVertical: 5,
     marginHorizontal: 10,
     justifyContent: 'space-between'
   },

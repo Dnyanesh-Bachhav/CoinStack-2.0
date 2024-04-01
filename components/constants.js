@@ -29,7 +29,7 @@ const COLORS = {
 }
 const MEME_COINS_IDS = ["dogecoin","shiba-inu","bonk","corgiai","pepe","floki","memecoin-2"];
 const TRUSTED_COINS_IDS = ["bitcoin","ethereum","binancecoin","solana","ripple","cardano","tron","uniswap","decentraland"];
-
+const PREDICTION_AVAILABLE_COINS = ["BTC","ETH","XLM","BCH","USDT","LTC","PDOT","DOGE","ADA","SHIB"];
 const MostGainedCoins = [
     {
       id: 1,
@@ -652,4 +652,89 @@ const bitcoin_data = [
     },
   ];
 
-export {COLORS,MostGainedCoins,MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins,banners, bitcoin_data, MEME_COINS_IDS, TRUSTED_COINS_IDS  };
+
+const PREDICTION_DATA = {
+  one_month_dates: [
+    "2024-04-02",
+    "2024-04-03",
+    "2024-04-04",
+    "2024-04-05",
+    "2024-04-06",
+    "2024-04-07",
+    "2024-04-08",
+    "2024-04-09",
+    "2024-04-10",
+    "2024-04-11",
+    "2024-04-12",
+    "2024-04-13",
+    "2024-04-14",
+    "2024-04-15",
+    "2024-04-16",
+    "2024-04-17",
+    "2024-04-18",
+    "2024-04-19",
+    "2024-04-20",
+    "2024-04-21",
+    "2024-04-22",
+    "2024-04-23",
+    "2024-04-24",
+    "2024-04-25",
+    "2024-04-26",
+    "2024-04-27",
+    "2024-04-28",
+    "2024-04-29",
+    "2024-04-30",
+    "2024-05-01"
+  ],
+  one_month_dollars: [
+    93555.71437888584,
+    93684.3174747099,
+    93724.21915413257,
+    93899.42618977744,
+    93679.61066214676,
+    93566.80787714783,
+    93574.15803027534,
+    93630.96114201786,
+    93646.65160211793,
+    93751.97423523136,
+    93783.40666511728,
+    93692.94916782917,
+    93895.82474257748,
+    93871.83087245224,
+    93824.51336227857,
+    94010.32184718024,
+    94014.20755602107,
+    94084.11388100412,
+    94091.85938994472,
+    94110.68656569048,
+    94196.49344880924,
+    94228.71297026277,
+    94241.76470615006,
+    94136.68345371407,
+    94321.82355497123,
+    94305.49688377937,
+    94262.56168142738,
+    94447.83749898584,
+    94440.48339141876,
+    94501.20953982059
+  ],
+  one_week_dates: [
+    "2024-04-02",
+    "2024-04-03",
+    "2024-04-04",
+    "2024-04-05",
+    "2024-04-06",
+    "2024-04-07",
+    "2024-04-08"
+  ],
+  one_week_dollars: [
+    93555.71,
+    93684.32,
+    93724.22,
+    93899.43,
+    93679.61,
+    93566.81,
+    93574.16
+  ]
+};
+export {COLORS,MostGainedCoins,MostGainedCoins2,profitCoins,lossCoins,trustedCoins,memeCoins,banners, bitcoin_data, MEME_COINS_IDS, TRUSTED_COINS_IDS, PREDICTION_AVAILABLE_COINS, PREDICTION_DATA };
