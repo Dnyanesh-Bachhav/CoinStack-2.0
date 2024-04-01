@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import react, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -49,6 +49,7 @@ import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
 import Converter from "../components/CoinDetailedScreen/Converter";
 import Statistics from "../components/CoinDetailedScreen/Statistics";
 import { useWatchlist } from "../Contexts/WatchListContext";
+import LottieView from 'lottie-react-native';
 import { ToggleGroup } from "tamagui";
 import { Paragraph } from "tamagui";
 import { Modal, Portal } from 'react-native-paper';
@@ -77,7 +78,9 @@ function CoinDetailedScreen({ route }) {
 
   const[predictionData, setPredictionData] = useState(null);
   const[predictionChartData, setPredictionChartData] = useState(null);
-  const[isPredictionChart, setIsPredictionChart] = useState(false);
+  const[fetchingPredictionData, setFetchingPredictionData] = useState(false);
+  const isPredictionChart = useRef(false);
+  const animationRef = useRef(null);
   
   const containerStyle = {backgroundColor: 'white', padding: 20};
   const [selectedRange, setSelectedRange] = useState("1");
@@ -146,19 +149,24 @@ function CoinDetailedScreen({ route }) {
     setLoading(false);
   };
   const fetchPredictionData = async (symbol = "BTC") => {
+    setFetchingPredictionData(true);
+    if(fetchingPredictionData)
+    {
+      return;
+    }
     try {
       const response = await axios.get(`https://prediction-api-78xq.onrender.com/prediction/${symbol}`);
   
       console.log("Prediction Data:");
       console.log(response.data);
-      setPredictionData(response.data);
+      setPredictionData(JSON.parse(response.data));
       console.log(JSON.parse(response.data));
-  
       // Use the response data for your app's functionality
       // ...
     } catch (error) {
       console.error("Error fetching prediction data:", error);
     }
+    setFetchingPredictionData(false);
   };
   async function fetchdata() {
     getCoinDataById(route.params.coinId).then((data) => {
@@ -182,8 +190,8 @@ function CoinDetailedScreen({ route }) {
   function getFormattedPredictionData(range)
   {
     const chart_data = [];
-    let x_axis_data = range=="7" ? PREDICTION_DATA.one_week_dates : PREDICTION_DATA.one_month_dates;
-    let y_axis_data = range=="7" ? PREDICTION_DATA.one_week_dollars : PREDICTION_DATA.one_month_dollars;
+    let x_axis_data = range=="7" ? predictionData.one_week_dates : predictionData.one_month_dates;
+    let y_axis_data = range=="7" ? predictionData.one_week_dollars : predictionData.one_month_dollars;
     for(let i=0;i<x_axis_data.length;i++)
     {
       chart_data.push({
@@ -201,7 +209,7 @@ function CoinDetailedScreen({ route }) {
   };
   const onSelectedPredictionRangeChange = (range) => {
     setSelectedPredictionRange(range);
-    if(PREDICTION_DATA)
+    if(predictionData)
     {
       getFormattedPredictionData(range);
     }
@@ -217,9 +225,12 @@ function CoinDetailedScreen({ route }) {
         <Button button_text="Buy" backColor={COLORS.success} screenName={"BuyCoinScreen"} name={ route.params.coin } price={ currentPrice } symbol={ route.params.symbol } imgSrc={ route.params.imgUrl } />
         <Button button_text="Sell" backColor={COLORS.red} screenName={"SellCoinScreen"} name={ route.params.coin } price={ currentPrice } symbol={ route.params.symbol } imgSrc={ route.params.imgUrl } />
       </View>
+      {
+            !fetchingPredictionData ?  
       <View style={{ marginVertical: 5, marginBottom: 100 }}>
         <ScrollView style={{}} showsVerticalScrollIndicator={false}>
-          {/* COIN INFO SECTION */}
+          
+          
           <View style={styles.coinInfoContainer}>
             <View style={{ flexDirection: 'row' }} >
             {/* LOGO */}
@@ -250,15 +261,18 @@ function CoinDetailedScreen({ route }) {
                 {
                   checkIfCoinPredictionIsAvailable(route.params.symbol) 
                   ?
-                  <View style={{ backgroundColor: isPredictionChart ? COLORS.primary : COLORS.primaryFaint, marginTop: 5, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 5 }} >
-                    <FontAwesome name="magic" size={18} color={ isPredictionChart ? COLORS.white : COLORS.primary } style={{ marginTop: 5 }} onPress={()=>{
-                      setIsPredictionChart(!isPredictionChart);
-                      if(isPredictionChart)
+                  <View style={{ backgroundColor: isPredictionChart.current ? COLORS.primary : COLORS.primaryFaint, marginTop: 5, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 5 }} >
+                    <FontAwesome name="magic" size={18} color={ isPredictionChart.current ? COLORS.white : COLORS.primary } style={{ marginTop: 5 }} onPress={()=>{
+                      isPredictionChart.current = !isPredictionChart.current;
+                      if(isPredictionChart.current)
                       {
                         if(selectedRange==null)
                         {
                           setSelectedRange("7");
                         }
+
+                        fetchPredictionData(route.params.symbol.toUpperCase());
+
                       }
                     }} />
                   </View>
@@ -266,8 +280,9 @@ function CoinDetailedScreen({ route }) {
           }
             </View>
           </View>
+          
           <View style={{ alignSelf: "center" }}>
-          <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} isPredictionChart={isPredictionChart} predictionChartData={predictionChartData} />
+          <ChartTabs coinMarketData={coinMarketData} source={source} setChartType={setChartType} isPredictionChart={isPredictionChart.current} predictionChartData={predictionChartData} />
             
         
         
@@ -276,7 +291,7 @@ function CoinDetailedScreen({ route }) {
 
             chartType == "tab1" ?
           <View style={styles.filterContainer}>
-              { !isPredictionChart ? filterDaysArray.map((day) => (
+              { !isPredictionChart.current ? filterDaysArray.map((day) => (
                 <FilterComponent
                 filterDay={day.filterDay}
                 filterText={day.filterText}
@@ -346,6 +361,22 @@ function CoinDetailedScreen({ route }) {
           {/* <CoinData coinId={route.params.coinId} coinName={route.params.coin} /> */}
         </ScrollView>
       </View>
+      :
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+            <LottieView
+                ref={animationRef}
+                style={{
+                        width: '40%',
+                        height: '40%',
+                        alignSelf: 'center',
+                        color: COLORS.primary,
+                }}
+                autoPlay
+                loop
+                source={require('../assets/Loading (1).json')}
+            />
+        </View>
+      }
     </View>
   );
 }
