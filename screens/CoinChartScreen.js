@@ -42,7 +42,6 @@ import {
   YStack,
   isWeb,
 } from "tamagui";
-import { AntDesign } from "@expo/vector-icons";
 import FilterComponent from "../components/CoinDetailedScreen/FilterComponent";
 import { CandlestickChart, ExternalLink, XSquare } from "@tamagui/lucide-icons";
 import NewsComponent from "../components/CoinDetailedScreen/NewsComponent";
@@ -50,8 +49,6 @@ import Converter from "../components/CoinDetailedScreen/Converter";
 import Statistics from "../components/CoinDetailedScreen/Statistics";
 import { useWatchlist } from "../Contexts/WatchListContext";
 import LottieView from 'lottie-react-native';
-import { ToggleGroup } from "tamagui";
-import { Paragraph } from "tamagui";
 import { Modal, Portal } from 'react-native-paper';
 import axios from "axios";
 const { width } = Dimensions.get("window");
@@ -80,7 +77,6 @@ function CoinDetailedScreen({ route }) {
   const[predictionChartData, setPredictionChartData] = useState(null);
   const[fetchingPredictionData, setFetchingPredictionData] = useState(false);
   const isPredictionChart = useRef(false);  
-  const containerStyle = {backgroundColor: 'white', padding: 20};
   const [selectedRange, setSelectedRange] = useState("1");
   const [selectedPredictionRange, setSelectedPredictionRange] = useState("7");
   const [chartType, setChartType] = useState("tab1");
