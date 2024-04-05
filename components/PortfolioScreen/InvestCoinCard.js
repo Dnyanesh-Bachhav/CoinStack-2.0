@@ -30,13 +30,13 @@ function InvestCoinCard({coinId,price,imgSrc,quantity,setInvested,setCurrent}){
                     style={styles.imgStyle}
                     />
                 <SizableText size="$7" style={styles.coinName}>{coinId}</SizableText>
-                <TouchableOpacity style={styles.iconStyle} onPress={()=>{
+                {/* <TouchableOpacity style={styles.iconStyle} onPress={()=>{
                     console.log("Hi there..."+coinId);
                     removeCoin();
                 }} >
 
                 <AntDesign name="delete" size={22} color="black" />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 {/* <Feather name="arrow-right" size={24} color={COLORS.grayDark} style={styles.iconStyle}/> */}
             </View>
             <View style={styles.bottomSection}>

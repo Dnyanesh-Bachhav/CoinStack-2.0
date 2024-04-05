@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS } from "../constants";
 import { useNavigation } from "@react-navigation/native";
 
-function Button({button_text,backColor, screenName, name, price, symbol, imgSrc })
+function Button({button_text,backColor, screenName, name, coinId, price, symbol, imgSrc })
 {
     const navigation = useNavigation();
     return(
@@ -12,6 +12,7 @@ function Button({button_text,backColor, screenName, name, price, symbol, imgSrc 
                     console.log("Hello there...");
                     navigation.navigate(screenName,{
                         name: name,
+                        coinId: coinId,
                         price: price,
                         symbol: symbol,
                         imgSrc: imgSrc

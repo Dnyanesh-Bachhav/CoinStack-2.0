@@ -22,6 +22,7 @@ import { portfolioContext } from "../Contexts/PortfolioContext";
 import NoCoin from "../components/PortfolioScreen/NoCoin";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SizableText } from "tamagui";
+import { getWatchlistedCoins } from "../Services/requests";
 function PortfolioScreen() {
   const { portfolioCoins, removeAllCoins } = useContext(portfolioContext);
   const [connected, setConnected] = useState(true);
@@ -54,12 +55,31 @@ function PortfolioScreen() {
       </Modal>
     );
   };
+  
+  const [loading, setLoading] = useState(false);
 
+  const transformCoinIds = () => {
+    console.log("Portfolio coins...");
+    console.log(portfolioCoins);
+    // watchlistCoinIds.join('%2C');
+  } 
+
+  const fetchWatchlistedCoins = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    const watchlistedCoinsData = await getWatchlistedCoins(1, transformCoinIds());
+    setCoins(watchlistedCoinsData);
+    setLoading(false);
+  };
+  
   useEffect(() => {
     checkConnection();
     console.log("Invested: "+invested);
     console.log("Current: "+current);
     calculatePortfolio(portfolioCoins);
+    transformCoinIds();
   }, []);
   return (
     <>
@@ -94,7 +114,7 @@ function PortfolioScreen() {
                 >
                   Portfolio
                 </Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
                     removeAllCoins();
                     setInvested(0);
@@ -123,7 +143,7 @@ function PortfolioScreen() {
                       style={{ marginLeft: 5 }}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
             <ModalPopUp visible={visible}>

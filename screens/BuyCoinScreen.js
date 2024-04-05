@@ -70,7 +70,8 @@ function BuyCoinScreen({ route }) {
     );
   }
   useEffect(()=>{
-    console.log("UseEffect of portfolio coins...");
+    console.log("UseEffect of portfolio coins... in buy screen");
+    console.log(route.params);
     // console.log(portfolioCoins);
     updateFirebasePortfolio();
   },[buyExecuted.current]);
@@ -244,6 +245,7 @@ function BuyCoinScreen({ route }) {
             } else {
               storePortfolioCoin({
                 name: route.params.name,
+                coinId: route.params.coinId,
                 price: route.params.price,
                 imgSrc: route.params.imgSrc,
                 quantity: itemQuantity,

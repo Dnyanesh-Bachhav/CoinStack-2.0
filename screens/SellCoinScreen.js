@@ -284,6 +284,7 @@ function SellCoinScreen({route}){
                         storePortfolioCoin(
                             { 
                                 name: route.params.name,
+                                coinId: route.params.coinId,
                                 price: route.params.price,
                                 imgSrc: route.params.imgSrc,
                                 quantity: itemQuantity
