@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 function Button({button_text,backColor, screenName, name, coinId, price, symbol, imgSrc })
 {
     const navigation = useNavigation();
+    console.log("In a button: ")
     return(
         <View style={styles.container}>
             <TouchableOpacity style={{...styles.buttonStyle,backgroundColor: backColor, shadowColor: backColor}} onPress={
