@@ -8,10 +8,12 @@ import Header from "../components/ReportScreen/Header";
 import { transactionContext } from "../Contexts/TransactionContext";
 import { Entypo } from "@expo/vector-icons";
 import LottieView from 'lottie-react-native';
+import { AuthContext } from "../Contexts/AuthProviderContext";
 
 function ReportScreen(){
     const [ loading, setLoading ] = useState(false);
     const { transactions, storeTransaction } = useContext(transactionContext);
+    const { user, firestoreUser, setFirestoreUser } = useContext(AuthContext);
     const [visible, setVisible] = useState(false);
     const animationRef = useRef(null);
     const ModalPopUp = ({ visible, children }) => {
@@ -54,6 +56,13 @@ function ReportScreen(){
                 resolve();
             }, 1600);
         });
+    }
+    function getFormattedDate(){
+        const d = new Date();
+        let day = d.getDate();
+        let month = d.getMonth() + 1;
+        let year = d.getUTCFullYear();
+        return day+"/"+month+"/"+year;
     }
     async function generateTradeReport(){
         setVisible(true);
@@ -153,19 +162,19 @@ function ReportScreen(){
         </div>
         <div class="info">
             <p class="title">Name:</p>
-            <div class="content">Dnyanesh Dipak Bachhav</div>
+            <div class="content">${ firestoreUser?.name }</div>
         </div>
         <div class="info">
             <p class="title">Email ID:</p>
-            <div class="content">dnyaneshbachhav2002@gmail.com</div>
+            <div class="content">${ firestoreUser?.email }</div>
         </div>
         <div class="info">
-            <p class="title">Duration:</p>
-            <div class="content">1-Apr-2023 to 1-Dec-2023</div>
+            <p class="title">Phone:</p>
+            <div class="content">${ firestoreUser?.phone }</div>
         </div>
         <div class="info">
             <p class="title">Date:</p>
-            <div class="content">29/12/2023</div>
+            <div class="content">${ getFormattedDate() }</div>
         </div>
     </div>
             <table id="transactions">

@@ -168,7 +168,7 @@ function BuyCoinScreen({ route }) {
             />
           </View>
           <View style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }} >
-              <SizableText style={{  }} size="$9" >=</SizableText>
+              <SizableText size="$9" >=</SizableText>
           </View>
           <View
             style={{
