@@ -8,7 +8,7 @@ const COLORS = {
     primary: "#892ECC",
     secondary: '#EBEBFE',
     white: '#ffffff',
-    black: '#000000',
+    black: '#212121',
     gray: '#C4C4C4',
     grayLight: "#d2d2d2",
     grayDark: '#A39F9F',

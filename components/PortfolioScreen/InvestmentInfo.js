@@ -1,10 +1,11 @@
-import react from "react";
+import react, { useRef, useState } from "react";
 import {View,Text,StyleSheet, Dimensions} from 'react-native';
 import { COLORS } from "../constants";
 import { SizableText } from "tamagui";
 const HEIGHT = Dimensions.get("window").height/6;
 function InvestmentInfo({invested,current}){
-
+    const returns = parseInt(current)-parseInt(invested);
+    const returnPercentage = (returns/parseInt(invested))*100;    
     return(
         <View style={styles.container}>
             <View style={{ flex: 1}}>
@@ -23,8 +24,8 @@ function InvestmentInfo({invested,current}){
                     <SizableText style={{marginRight: '5%', flex: 1, alignSelf: 'flex-start', ...styles.textStyle}}>Total Returns%</SizableText>
                 </View>
                 <View style={styles.headerVal}>
-                    <SizableText style={{marginLeft: '5%', flex: 1, ...styles.headerTextStyle}}>₹0</SizableText>
-                    <SizableText style={{marginRight: '5%', flex: 1, ...styles.headerTextStyle}}>0%</SizableText>
+                    <SizableText style={{marginLeft: '5%', flex: 1, color: returns<0 ? COLORS.red : COLORS.activeGreen, fontWeight: 'bold'}}>₹{ returns }</SizableText>
+                    <SizableText style={{marginRight: '5%', flex: 1, color: returnPercentage<0 ? COLORS.red : COLORS.activeGreen, fontWeight: 'bold'}}>{ returnPercentage.toFixed(2) }%</SizableText>
                 </View>
             </View>
         </View>
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
         color: COLORS.grayDark,
     },
     headerTextStyle:{
-        color: COLORS.black,
+        color: "#212121",
     },
     header:{
         // flex: 1,

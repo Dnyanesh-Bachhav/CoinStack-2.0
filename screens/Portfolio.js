@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import InvestCoinCard from "../components/PortfolioScreen/InvestCoinCard";
 import InvestmentInfo from "../components/PortfolioScreen/InvestmentInfo";
@@ -23,12 +24,19 @@ import NoCoin from "../components/PortfolioScreen/NoCoin";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SizableText } from "tamagui";
 import { getWatchlistedCoins } from "../Services/requests";
+import LottieView from 'lottie-react-native';
 function PortfolioScreen() {
   const { portfolioCoins, removeAllCoins } = useContext(portfolioContext);
   const [connected, setConnected] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
   const [invested, setInvested] = useState(0);
   const [current, setCurrent] = useState(0);
+  const [returns, setReturns] = useState(0);
+  const animationRef = useRef();
+  const [percentageReturns, setPercentageReturns] = useState(0);
+  const [coins, setCoins] = useState();
+
   const calculatePortfolio = (portfolioCoins) => {
     let invested1 = 0,
       current1 = 0;
@@ -60,8 +68,15 @@ function PortfolioScreen() {
 
   const transformCoinIds = () => {
     console.log("Portfolio coins...");
-    console.log(portfolioCoins);
-    // watchlistCoinIds.join('%2C');
+    console.log(JSON.stringify(portfolioCoins));
+    let array = [];
+    portfolioCoins.forEach((item,index)=>{
+      array.push(item.coinId);
+    })
+    console.log(array);
+    let response = array.join('%2C');
+    console.log(response);
+    return response;
   } 
 
   const fetchWatchlistedCoins = async () => {
@@ -69,9 +84,19 @@ function PortfolioScreen() {
       return;
     }
     setLoading(true);
+    setVisibleModal(true);
     const watchlistedCoinsData = await getWatchlistedCoins(1, transformCoinIds());
+    console.log("Watchlisted coins: ");
+    console.log(watchlistedCoinsData);
     setCoins(watchlistedCoinsData);
+    // Update portfolio values
+    let current = 0;
+    watchlistedCoinsData.forEach((item, index)=>{
+      current += item.current_price;
+    });
+    setCurrent(current);
     setLoading(false);
+    setVisibleModal(false);
   };
   
   useEffect(() => {
@@ -79,12 +104,29 @@ function PortfolioScreen() {
     console.log("Invested: "+invested);
     console.log("Current: "+current);
     calculatePortfolio(portfolioCoins);
-    transformCoinIds();
+    fetchWatchlistedCoins();
+    // transformCoinIds();
   }, []);
   return (
     <>
       {connected ? (
         <View style={styles.container}>
+          <ModalPopUp visible={visible}>
+                    <View style={{ width: '100%', height: '100%' }} >
+                        <LottieView
+                            ref={animationRef}
+                            style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    alignSelf: 'center',
+                                    color: COLORS.primary,
+                            }}
+                            autoPlay
+                            loop
+                            source={require('../assets/Loading (1).json')}
+                        />
+                    </View>
+                </ModalPopUp>
           <LinearGradient 
         colors={["#A154D9", COLORS.white ]}
         end={{
@@ -165,7 +207,7 @@ function PortfolioScreen() {
             >
               <View style={{ marginHorizontal: 10 }} >
                 {/* <Text>Hello</Text> */}
-                <InvestmentInfo invested={invested} current={current} />
+                <InvestmentInfo invested={invested.toFixed(2)} current={current.toFixed(2)} />
                 <InfoModal setVisible={setVisible} />
               </View>
               <View
