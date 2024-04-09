@@ -140,7 +140,7 @@ function DetailLearningScreen({ route }) {
                       width: WIDTH * 0.96,
                       height: HEIGHT,
                       justifyContent: "center",
-                      alignItems: "cent?er",
+                      alignItems: "center",
                       alignSelf: "center",
                     }}
                   >
