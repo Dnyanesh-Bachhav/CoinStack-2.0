@@ -34,12 +34,13 @@ function DetailLearningScreen({ route }) {
   async function getSubheadingData() {
     setLoading(true);
     const db = getFirestore(app);
+    
     const detail_page_description_data = await getDocs(
       collection(db, "course", "chapter_data", subHeading)
     );
     // console.log(JSON.stringify(detail_page_description_data));
     setChaptersLength(detail_page_description_data.size);
-    // console.log("Chapters: " + detail_page_description_data.size);
+    console.log("Chapters: " + detail_page_description_data.size);
     // console.log(detail_page_description_data);
     // console.log(typeof detail_page_description_data);
     
@@ -60,6 +61,7 @@ function DetailLearningScreen({ route }) {
     //   array.push(listData[i]);
     // }
     setListData(array?.reverse());
+    // console.log(array);
     setLoading(false);
   }
   function handleNextOnClick(index){
@@ -128,7 +130,7 @@ function DetailLearningScreen({ route }) {
                   </SizableText>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.success, color: COLORS.white }} >
                   <Check size="$1" color={COLORS.white} />
-                  <SizableText color={COLORS.white} style={{ padding: 4,  }}>{item.content.XP} XP</SizableText>
+                  <SizableText color={COLORS.white} style={{ padding: 4,  }}>{item?.content?.XP} XP</SizableText>
                 </View>
                 </View>
                 {
@@ -138,7 +140,7 @@ function DetailLearningScreen({ route }) {
                       width: WIDTH * 0.96,
                       height: HEIGHT,
                       justifyContent: "center",
-                      alignItems: "center",
+                      alignItems: "cent?er",
                       alignSelf: "center",
                     }}
                   >
@@ -158,15 +160,15 @@ function DetailLearningScreen({ route }) {
                 />
                 }
                 <View>
-                <RenderHTML style={{ marginTop: 10 }} contentWidth={ WIDTH } source={{ html: !item.content.description ?
+                <RenderHTML style={{ marginTop: 10 }} contentWidth={ WIDTH } source={{ html: !item?.content?.description ?
                         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam iusto doloremque dolores quis dolorum soluta id molestiae facere cumque ullam repellat ex, maiores perspiciatis? Reiciendis magnam quas possimus nemo at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui obcaecati cum explicabo est, suscipit architecto nam earum. Recusandae expedita iure consectetur sed nihil possimus, nisi optio alias sunt vel ducimus!"
-                        : `${item.content.description} `
+                        : `${item?.content?.description} `
                       }}
                       />
                       </View>
                 <SizableText size={"$5"} fontWeight={"bold"}>Links:</SizableText>
                 {
-                  Object.entries(item.content.links).map(([key, val])=>(
+                  Object.entries(item?.content?.links).map(([key, val])=>(
                     <ListItem hoverTheme icon={Link} style={{ marginTop: 10, elevation: 2, borderRadius: 5, width: '98%', alignSelf:'flex-end', marginRight: 4 }}  onPress={async ()=>{
                       const supported = await Linking.canOpenURL(val);
                       if (supported) {
