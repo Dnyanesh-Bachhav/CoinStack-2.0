@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator, Modal } from "react-native";
+import { View, Text, StyleSheet, Modal } from "react-native";
 import { COLORS } from "../components/constants";
 
 import RNSpeedometer from "react-native-speedometer";
